@@ -1,0 +1,19 @@
+{
+	"name": "melody-blog",
+	"version": "1.0.0",
+	"description": "a blog",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"docs:dev": "vuepress dev docs",
+		"docs:build": "vuepress build docs"
+	},
+	"keywords": [
+		"blog"
+	],
+	"author": "MelodyLLL",
+	"license": "ISC",
+	"devDependencies": {
+		"vuepress": "^2.0.0-beta.61"
+	}
+}

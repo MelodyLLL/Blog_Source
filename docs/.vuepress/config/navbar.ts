@@ -16,7 +16,7 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 	},
 	{
 		text: '笔记',
-		link: '/note/',
+		link: '/note/index.md',
 		icon: 'TagsOutlined',
 	},
 	// {

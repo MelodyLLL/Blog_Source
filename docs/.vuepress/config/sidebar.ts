@@ -1,25 +1,20 @@
-import { SidebarConfig } from 'vuepress';
+import { SidebarConfig } from "vuepress";
 
 const sidebar: SidebarConfig = {
-	// SidebarItem
-	'/note': [
-		{
-			text: 'Foo',
-			link: '/foo/',
-			children: [
-				// SidebarItem
-				{
-					text: 'github',
-					link: 'https://github.com',
-					children: [],
-				},
-				// 字符串 - 页面文件路径
-				'/foo/bar.md',
-			],
-		},
-		// 字符串 - 页面文件路径
-		'/bar/README.md',
-	],
+  // SidebarItem
+  "/note/": [
+    {
+      text: "React",
+      collapsible: true,
+      children: ["/note/note1.md", "/note/note2.md"],
+    },
+  ],
+  "/reference/": [
+    {
+      text: "Reference",
+      children: ["/reference/cli.md", "/reference/config.md"],
+    },
+  ],
 };
 
 export default sidebar;

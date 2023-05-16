@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <Transition name="modal">
+  <div name="modal">
     <div v-if="show" class="modal-mask"  @click="$emit('close')">
       <div class="modal-container">
         <div class="modal-header">
@@ -26,7 +26,7 @@ const props = defineProps({
         </div>
       </div>
     </div>
-  </Transition>
+  </div>
 </template>
 
 <style scoped lang="scss">

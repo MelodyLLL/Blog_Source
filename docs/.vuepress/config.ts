@@ -12,7 +12,7 @@ export default defineUserConfig({
 	description: 'Change is a good thing',
 	locales: {},
 	theme: defaultTheme({
-		logo: 'images/avator.webp',
+		logo: `${REPO}/images/avator.webp`,
 		// 在这里进行配置
 		navbar,
 		sidebar,

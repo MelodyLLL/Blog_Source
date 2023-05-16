@@ -10,14 +10,14 @@ html.dark {
 	--c-brand-light: #ffdca9;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+// @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
 @font-face {
-	// font-family: 'fontName';
+	font-family: 'Indie Flower';
 	// src: url('FontName.eot'); /* IE9 Compat Modes */
-	// src:
+	src:
 	// url('FontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	//  url('FontName.woff2') format('woff2'), /* Super Modern Browsers */
+	 url('fonts/IndieFlower.woff2') format('woff2'), /* Super Modern Browsers */
 	//  url('FontName.woff') format('woff'), /* Pretty Modern Browsers */
 	//  url('./fonts/hw.ttf')  format('truetype'), /* Safari, Android, iOS */
 	//  url('FontName.svg#svgFontName') format('svg'); /* Legacy iOS */

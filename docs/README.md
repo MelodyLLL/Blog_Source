@@ -1,5 +1,6 @@
 ---
 home: true
+layout: CustomLayout 
 heroImage: /images/avator.webp
 heroText: JINGQIAN's Blog
 actions:

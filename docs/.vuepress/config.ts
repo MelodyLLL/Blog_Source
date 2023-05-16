@@ -5,14 +5,14 @@ import { navbar, sidebar } from './config/index';
 
 const REPO = '/MelodyLLL_BLOG/';
 export default defineUserConfig({
-	head: [['link', { rel: 'icon', href: '/images/avator.webp' }]],
+	head: [['link', { rel: 'icon', href: `${REPO}images/avator.webp` }]],
 	lang: 'zh-CN',
 	base: REPO,
 	title: '改变 就是好事',
 	description: 'Change is a good thing',
 	locales: {},
 	theme: defaultTheme({
-		logo: `${REPO}/images/avator.webp`,
+		logo: `/images/avator.webp`,
 		// 在这里进行配置
 		navbar,
 		sidebar,

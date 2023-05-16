@@ -7,7 +7,6 @@ const props = defineProps({
 </script>
 
 <template>
-	<ClientOnly>
 		<Transition name="modal">
 			<div v-if="show" class="modal-mask" @click="$emit('close')">
 				<div class="modal-container">
@@ -30,7 +29,6 @@ const props = defineProps({
 				</div>
 			</div>
 		</Transition>
-	</ClientOnly>
 </template>
 
 <style scoped lang="scss">
@@ -41,7 +39,7 @@ const props = defineProps({
 	left: 0;
 	width: 100%;
 	height: 100%;
-	// background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
 	// transition: opacity 0.3s ease;
 }

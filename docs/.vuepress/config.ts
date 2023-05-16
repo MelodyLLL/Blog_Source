@@ -22,7 +22,7 @@ export default defineUserConfig({
 		contributorsText: '编写者',
 	}),
   alias: {
-    '@theme/HomeFooter.vue': path.resolve(__dirname, './components/CustomHomeHero.vue'),
+    '@theme/CustomHomeHero.vue': path.resolve(__dirname, './components/CustomHomeHero.vue'),
     '@theme/HomeHero.vue': path.resolve(__dirname, './components/CustomHomeHero.vue'),
   },
 });

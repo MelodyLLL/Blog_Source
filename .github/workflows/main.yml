@@ -21,7 +21,7 @@ jobs:
         # uses: pnpm/action-setup@v2
         with:
           # 选择要使用的 pnpm 版本
-          version: 6
+          version: 8
           # 使用 pnpm 安装依赖
           # run_install: true
           run: npm run install
@@ -30,9 +30,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           # 选择要使用的 node 版本
-          node-version: 18
+          node-version: 14
           # 缓存 pnpm 依赖
-          # cache: pnpm
+          cache: npm
 
       # 运行构建脚本
       - name: Build VuePress site

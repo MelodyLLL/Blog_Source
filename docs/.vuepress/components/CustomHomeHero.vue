@@ -77,59 +77,56 @@ const showModal = ref(false);
 </script>
 
 <template>
-	<ClientOnly>
-	  <header class="hero">
-  		<HomeHeroImage />
-  
-  		<h1 v-if="heroText" id="main-title" class="customFont">
-  			{{ heroText }}
-  		</h1>
-  
-  		<p v-if="tagline" class="description customFont">
-  			{{ tagline }}
-  		</p>
-  
-  		<p v-if="actions.length" class="actions">
-  			<template v-for="action in actions" :key="action.text">
-  				<button
-  					id="show-modal"
-  					class="modal-default-button"
-  					@click="showModal = true"
-  				>
-  					{{ action.text }}
-  				</button>
-  				<!-- <AutoLink class="action-button" :class="[action.type]" :item="action" /> -->
-  			</template>
-  		</p>
-  	</header>
-  
-  	<Teleport to="body">
-  		<!-- use the modal component, pass in the prop -->
-  		<CustomModal :show="showModal" @close="showModal = false">
-  			<template #header>
-  				<h3>关于站点！</h3>
-  			</template>
-  			<template #body
-  				><div class="modal_default_font">
-  					这是一个由vuepress2.0二次开发的个人博客站点，本人4年前端码农一枚。后续争取在该网站进行各种前端知识的归档，打造一个高质量的前端知识库个人博客站点
-  				</div></template
-  			>
-  			<!-- <template #footer>
+	<header class="hero">
+		<HomeHeroImage />
+
+		<h1 v-if="heroText" id="main-title" class="customFont">
+			{{ heroText }}
+		</h1>
+
+		<p v-if="tagline" class="description customFont">
+			{{ tagline }}
+		</p>
+
+		<p v-if="actions.length" class="actions">
+			<template v-for="action in actions" :key="action.text">
+				<button
+					id="show-modal"
+					class="modal-default-button"
+					@click="showModal = true"
+				>
+					{{ action.text }}
+				</button>
+				<!-- <AutoLink class="action-button" :class="[action.type]" :item="action" /> -->
+			</template>
+		</p>
+	</header>
+
+	<Teleport to="body">
+		<!-- use the modal component, pass in the prop -->
+		<CustomModal :show="showModal" @close="showModal = false">
+			<template #header>
+				<h3>关于站点！</h3>
+			</template>
+			<template #body
+				><div class="modal_default_font">
+					这是一个由vuepress2.0二次开发的个人博客站点，本人4年前端码农一枚。后续争取在该网站进行各种前端知识的归档，打造一个高质量的前端知识库个人博客站点
+				</div></template
+			>
+			<!-- <template #footer>
   				<button class="modal-default-button" @click="showModal = false">
   					我知道了
   				</button>
   			</template> -->
-  		</CustomModal>
-  	</Teleport>
-	</ClientOnly>
+		</CustomModal>
+	</Teleport>
 </template>
 <style scoped lang="scss">
-
-.customFont{
-  font-family: 'Indie Flower';
+.customFont {
+	font-family: 'Indie Flower';
 }
 .modal_default_font {
-  font-family: fontName;
+	font-family: fontName;
 	font-weight: bold;
 	font-size: 1.5rem;
 	color: var(--c-brand);

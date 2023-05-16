@@ -1,36 +1,32 @@
 <script setup>
-import { ClientOnly } from '@vuepress/client';
-
 const props = defineProps({
 	show: Boolean,
 });
 </script>
 
 <template>
-	<ClientOnly>
-		<Transition name="modal">
-			<div v-if="show" class="modal-mask" @click="$emit('close')">
-				<div class="modal-container">
-					<div class="modal-header">
-						<slot name="header">default header</slot>
-					</div>
+	<Transition name="modal">
+		<div v-if="show" class="modal-mask" @click="$emit('close')">
+			<div class="modal-container">
+				<div class="modal-header">
+					<slot name="header">default header</slot>
+				</div>
 
-					<div class="modal-body">
-						<slot name="body">default body</slot>
-					</div>
+				<div class="modal-body">
+					<slot name="body">default body</slot>
+				</div>
 
-					<div class="modal-footer">
-						<!-- <slot name="footer">
+				<div class="modal-footer">
+					<!-- <slot name="footer">
               <button
                 class="modal-default-button"
                 @click="$emit('close')"
               >ok</button>
             </slot> -->
-					</div>
 				</div>
 			</div>
-		</Transition>
-	</ClientOnly>
+		</div>
+	</Transition>
 </template>
 
 <style scoped lang="scss">

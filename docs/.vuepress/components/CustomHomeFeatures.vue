@@ -1,11 +1,9 @@
 <script setup>
-import { ClientOnly } from '@vuepress/client';
 
 const props = defineProps({});
 </script>
 <!-- horizontal -->
 <template>
-	<ClientOnly>
 	  <!-- <h4>Horizontal Flip</h4> -->
   	<p>
   	  <div class="flip_wrapper">
@@ -122,7 +120,6 @@ const props = defineProps({});
     		</div>
     	</div>
   	</p>
-	</ClientOnly>
 </template>
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');

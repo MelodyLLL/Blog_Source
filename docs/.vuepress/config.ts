@@ -1,19 +1,22 @@
-import { defaultTheme } from "@vuepress/theme-default";
-import { defineUserConfig } from "vuepress";
+import { defaultTheme } from '@vuepress/theme-default';
+import { defineUserConfig } from 'vuepress';
 
-import { navbar, sidebar } from "./config/index";
+import { navbar, sidebar } from './config/index';
 
+const REPO = "/MelodyLLL_BLOG/"
 export default defineUserConfig({
-  lang: "zh-CN",
-  title: "改变 就是好事",
-  description: "Change is a good thing",
-  locales: {},
-
-  theme: defaultTheme({
-    logo: "/images/avator.webp",
-    // 在这里进行配置
-    navbar,
-    sidebar,
-    // lastUpdatedText: "最近更新时间",
-  }),
+	head: [['link', { rel: 'icon', href: '/images/avator.webp' }]],
+	lang: 'zh-CN',
+  base: REPO,
+	title: '改变 就是好事',
+	description: 'Change is a good thing',
+	locales: {},
+	theme: defaultTheme({
+		logo: '/images/avator.webp',
+		// 在这里进行配置
+		navbar,
+		sidebar,
+		lastUpdatedText: '最后修改时间',
+		contributorsText: '编写者',
+	}),
 });

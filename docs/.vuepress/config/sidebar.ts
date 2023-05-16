@@ -16,6 +16,7 @@ const sidebar: SidebarConfig = {
 			children: [
 				'/note/engineering/Engineering1.md',
 				'/note/engineering/Engineering2.md',
+				'/note/engineering/Engineering3.md',
 			],
 		},
 	],

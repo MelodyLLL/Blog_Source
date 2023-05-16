@@ -6,7 +6,7 @@ const props = defineProps({
 
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div v-if="show" class="modal-mask"  @click="$emit('close')">
       <div class="modal-container">
         <div class="modal-header">
           <slot name="header">default header</slot>
@@ -17,19 +17,19 @@ const props = defineProps({
         </div>
 
         <div class="modal-footer">
-          <slot name="footer">
+          <!-- <slot name="footer">
             <button
               class="modal-default-button"
               @click="$emit('close')"
-            >OK</button>
-          </slot>
+            >ok</button>
+          </slot> -->
         </div>
       </div>
     </div>
   </Transition>
 </template>
 
-<style>
+<style scoped lang="scss">
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -37,20 +37,40 @@ const props = defineProps({
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  transition: opacity 0.3s ease;
+  // transition: opacity 0.3s ease;
 }
 
 .modal-container {
-  width: 300px;
-  margin: auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  // color: #fff;
+  width: 50%;
+  height: 50%;
+  padding: var(--c-padding);
+  border: 1px solid;
+  // height: 300px;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+  margin: auto;
+  margin-top: 4rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 10px rgba(0, 0, 0, 0.1);
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
+
+// .modal-container {
+//   width: 300px;
+//   margin: auto;
+//   padding: 20px 30px;
+//   background-color: #fff;
+//   border-radius: 2px;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+//   transition: all 0.3s ease;
+// }
 
 .modal-header h3 {
   margin-top: 0;

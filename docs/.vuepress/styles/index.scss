@@ -1,9 +1,25 @@
 :root {
-  --c-brand: #80489C;
-	--c-brand-light: #432C7A;
+	--c-padding: 24px;
+
+	--c-brand: #80489c;
+	--c-brand-light: #432c7a;
 }
 
 html.dark {
-	--c-brand: #ECA869;
-	--c-brand-light: #FFDCA9;
+	--c-brand: #eca869;
+	--c-brand-light: #ffdca9;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+
+
+@font-face {
+  font-family: 'fontName';
+  // src: url('FontName.eot'); /* IE9 Compat Modes */
+  src: 
+  // url('FontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      //  url('FontName.woff2') format('woff2'), /* Super Modern Browsers */
+      //  url('FontName.woff') format('woff'), /* Pretty Modern Browsers */
+       url('./fonts/hw.ttf')  format('truetype'), /* Safari, Android, iOS */
+      //  url('FontName.svg#svgFontName') format('svg'); /* Legacy iOS */
 }

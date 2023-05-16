@@ -102,7 +102,7 @@ const showModal = ref(false);
 		</p>
 	</header>
 
-	<Teleport to="body">
+	<!-- <Teleport to="body"> -->
 		<!-- use the modal component, pass in the prop -->
 		<CustomModal :show="showModal" @close="showModal = false">
 			<template #header>
@@ -119,7 +119,7 @@ const showModal = ref(false);
   				</button>
   			</template> -->
 		</CustomModal>
-	</Teleport>
+	<!-- </Teleport>  -->
 </template>
 <style scoped lang="scss">
 .customFont {

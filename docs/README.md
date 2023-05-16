@@ -4,7 +4,7 @@ home: true
 heroImage: /images/avator.webp
 heroText: JINGQIAN's Blog
 actions:
-  - text: 博客简介啊
+  - text: 博客简介
     modal: true
     link: /guide/
     type: primary

@@ -12,14 +12,13 @@ html.dark {
 
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
-
 @font-face {
-  font-family: 'fontName';
-  // src: url('FontName.eot'); /* IE9 Compat Modes */
-  src: 
-  // url('FontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-      //  url('FontName.woff2') format('woff2'), /* Super Modern Browsers */
-      //  url('FontName.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./fonts/hw.ttf')  format('truetype'), /* Safari, Android, iOS */
-      //  url('FontName.svg#svgFontName') format('svg'); /* Legacy iOS */
+	// font-family: 'fontName';
+	// src: url('FontName.eot'); /* IE9 Compat Modes */
+	// src:
+	// url('FontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	//  url('FontName.woff2') format('woff2'), /* Super Modern Browsers */
+	//  url('FontName.woff') format('woff'), /* Pretty Modern Browsers */
+	//  url('./fonts/hw.ttf')  format('truetype'), /* Safari, Android, iOS */
+	//  url('FontName.svg#svgFontName') format('svg'); /* Legacy iOS */
 }

@@ -4,8 +4,7 @@ layout: CustomLayout
 heroImage: /images/avator.webp
 heroText: JINGQIAN's Blog
 actions:
-  - text: 博客简介
-    modal: true
+  - text: about this
     link: /guide/
     type: primary
   # - text: 作者简介
@@ -26,3 +25,7 @@ features:
     details: make a friend with me, wx number is amazing-melody
 footer: MIT Licensed | Copyright © 2023-present MelodyLLL
 ---
+```vue
+import { ImportDialog } from './a.js'
+
+```

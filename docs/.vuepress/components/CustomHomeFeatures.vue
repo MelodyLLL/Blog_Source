@@ -41,7 +41,7 @@ const props = defineProps({});
 				</p>
 			</div>
 		</div>
-		<div class="flip">
+		<div class="flip flip-vertical oneline">
 			<div
 				class="front"
 				style="
@@ -66,7 +66,7 @@ const props = defineProps({});
 	<!-- vertical -->
 
 	<!-- <h4>Vertical Flip</h4> -->
-	<div class="flip_wrapper">
+	<!-- <div class="flip_wrapper">
 		<div class="flip flip-vertical">
 			<div
 				class="front"
@@ -118,7 +118,7 @@ const props = defineProps({});
 				</p>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </template>
 <style lang="scss" scoped>
 // @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
@@ -143,42 +143,23 @@ h1 {
 .flip_wrapper {
 	display: flex;
 	flex-wrap: wrap-reverse;
-
+	.oneline {
+		// flex-basis: 100%;
+	}
 	.flip {
-		flex: 1;
+		// flex: 1;
 		position: relative;
 		> .front,
 		> .back {
+      flex-basis: 50%;
 			display: block;
 			transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			-webkit-transition-timing-function: cubic-bezier(
-				0.175,
-				0.885,
-				0.32,
-				1.275
-			);
-			-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
 			transition-duration: 1.5s;
-			-ms-transition-duration: 1.5s;
-			-moz-transition-duration: 1.5s;
-			-webkit-transition-duration: 1.5s;
-			-o-transition-duration: 1.5s;
-
 			transition-property: transform, opacity;
-			-ms-transition-property: transform, opacity;
-			-moz-transition-property: transform, opacity;
-			-webkit-transition-property: transform, opacity;
-			-o-transition-property: transform, opacity;
+		
 		}
 		> .front {
 			transform: rotateY(0deg);
-			-ms-transform: rotateY(0deg);
-			-moz-transform: rotateY(0deg);
-			-webkit-transform: rotateY(0deg);
-			-o-transform: rotateY(0deg);
 		}
 		> .back {
 			position: absolute;
@@ -188,50 +169,26 @@ h1 {
 			width: 100%;
 			height: 100%;
 			transform: rotateY(-180deg);
-			-ms-transform: rotateY(-180deg);
-			-moz-transform: rotateY(-180deg);
-			-webkit-transform: rotateY(-180deg);
-			-o-transform: rotateY(-180deg);
 		}
 		&:hover {
 			> .front {
 				transform: rotateY(180deg);
-				-ms-transform: rotateY(-180deg);
-				-moz-transform: rotateY(-180deg);
-				-webkit-transform: rotateY(-180deg);
-				-o-transform: rotateY(-180deg);
 			}
 			> .back {
 				opacity: 1;
 				transform: rotateY(0deg);
-				-ms-transform: rotateY(0deg);
-				-moz-transform: rotateY(0deg);
-				-webkit-transform: rotateY(0deg);
-				-o-transform: rotateY(0deg);
 			}
 		}
 		&.flip-vertical {
 			> .back {
 				transform: rotateX(-180deg);
-				-ms-transform: rotateX(-180deg);
-				-moz-transform: rotateX(-180deg);
-				-webkit-transform: rotateX(-180deg);
-				-o-transform: rotateX(-180deg);
 			}
 			&:hover {
 				> .front {
 					transform: rotateX(180deg);
-					-ms-transform: rotateX(-180deg);
-					-moz-transform: rotateX(-180deg);
-					-webkit-transform: rotateX(-180deg);
-					-o-transform: rotateX(-180deg);
 				}
 				> .back {
 					transform: rotateX(0deg);
-					-ms-transform: rotateX(0deg);
-					-moz-transform: rotateX(0deg);
-					-webkit-transform: rotateX(0deg);
-					-o-transform: rotateX(0deg);
 				}
 			}
 		}

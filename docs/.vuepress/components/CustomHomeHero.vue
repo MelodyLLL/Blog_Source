@@ -106,11 +106,11 @@ const showModal = ref(false);
 		<!-- use the modal component, pass in the prop -->
 		<CustomModal :show="showModal" @close="showModal = false">
 			<template #header>
-				<h3>关于站点！</h3>
+				<div style="padding: 24px;"><h3>关于站点！</h3></div>
 			</template>
 			<template #body
 				><div class="modal_default_font">
-					这是一个由vuepress2.0二次开发的个人博客站点，本人4年前端码农一枚。后续争取在该网站进行各种前端知识的归档，打造一个高质量的前端知识库个人博客站点
+          还没想好写点啥
 				</div></template
 			>
 			<!-- <template #footer>
@@ -126,6 +126,7 @@ const showModal = ref(false);
 	font-family: 'Indie Flower';
 }
 .modal_default_font {
+  padding: 24px;
 	font-family: fontName;
 	font-weight: bold;
 	font-size: 1.5rem;

@@ -1,6 +1,7 @@
 <script setup>
-import { ClientOnly } from '@vuepress/client';
-
+import { ref } from 'vue';
+import { withBase } from '@vuepress/client';
+const wechatImg = ref('/images/WechatIMG67.jepg');
 const props = defineProps({});
 </script>
 <!-- horizontal -->
@@ -14,14 +15,11 @@ const props = defineProps({});
 					background-image: url(https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
 				"
 			>
-				<h1 class="text-shadow">MOUNTAIN</h1>
+				<h1 class="text-shadow">Welcome</h1>
 			</div>
 			<div class="back">
-				<h2>Angular</h2>
-				<p>
-					Good tools make application development quicker and easier to maintain
-					than if you did everything by hand..
-				</p>
+				<h2>我是谁</h2>
+				<p>互联网浪潮末端挣扎的不知名码农</p>
 			</div>
 		</div>
 		<div class="flip">
@@ -31,14 +29,11 @@ const props = defineProps({});
 					background-image: url(https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
 				"
 			>
-				<h1 class="text-shadow">LAKE</h1>
+				<h1 class="text-shadow">To my</h1>
 			</div>
 			<div class="back">
-				<h2>Angular</h2>
-				<p>
-					Good tools make application development quicker and easier to maintain
-					than if you did everything by hand..
-				</p>
+				<h2>我在哪</h2>
+				<p>广州，某公司就职的4年+前端开发</p>
 			</div>
 		</div>
 		<div class="flip flip-vertical oneline">
@@ -48,101 +43,52 @@ const props = defineProps({});
 					background-image: url(https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
 				"
 			>
-				<h1 class="text-shadow">OCEAN</h1>
+				<h1 class="text-shadow">Blog</h1>
 			</div>
-			<div class="back">
-				<h2>Angular</h2>
-				<p>
-					Good tools make application development quicker and easier to maintain
-					than if you did everything by hand..
-				</p>
+			<div class="back" style="display: flex; justify-content: center">
+				<h2
+					style="
+						writing-mode: tb-rl;
+						border-right: 1px solid var(--c-border);
+						border-bottom: none;
+					"
+				>
+					联系我
+				</h2>
+				<img
+					:src="$withBase('/images/WechatIMG67.jpeg')"
+					alt="wechat
+          "
+				/>
 			</div>
 		</div>
 	</div>
 
 	<br />
-	<br />
-
-	<!-- vertical -->
-
-	<!-- <h4>Vertical Flip</h4> -->
-	<!-- <div class="flip_wrapper">
-		<div class="flip flip-vertical">
-			<div
-				class="front"
-				style="
-					background-image: url(https://images.pexels.com/photos/38136/pexels-photo-38136.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
-				"
-			>
-				<h1 class="text-shadow">FOREST</h1>
-			</div>
-			<div class="back">
-				<h2>Angular</h2>
-				<p>
-					Good tools make application development quicker and easier to maintain
-					than if you did everything by hand..
-				</p>
-			</div>
-		</div>
-		<div class="flip flip-vertical">
-			<div
-				class="front"
-				style="
-					background-image: url(https://images.pexels.com/photos/34950/pexels-photo.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
-				"
-			>
-				<h1 class="text-shadow">TRACK</h1>
-			</div>
-			<div class="back">
-				<h2>Angular</h2>
-				<p>
-					Good tools make application development quicker and easier to maintain
-					than if you did everything by hand..
-				</p>
-			</div>
-		</div>
-		<div class="flip flip-vertical">
-			<div
-				class="front"
-				style="
-					background-image: url(https://images.pexels.com/photos/34546/sunset-lake-landscape-summer.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
-				"
-			>
-				<h1 class="text-shadow">SWAMP</h1>
-			</div>
-			<div class="back">
-				<h2>Angular</h2>
-				<p>
-					Good tools make application development quicker and easier to maintain
-					than if you did everything by hand..
-				</p>
-			</div>
-		</div>
-	</div> -->
 </template>
 <style lang="scss" scoped>
-// @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
-// * {
-// 	box-sizing: border-box;
-// 	font-weight: normal;
-// }
-
-// body {
-// 	color: #555;
-// 	background: #222;
-// 	text-align: center;
-// 	font-family: 'Indie Flower';
-// 	padding: 1em;
-// }
-
 h1 {
 	font-size: 2.2em;
 }
 
 // base
 .flip_wrapper {
+  color: #f0f0f0;
 	display: flex;
+	gap: 1rem;
+
 	flex-wrap: wrap-reverse;
+
+	img {
+		width: 200px;
+		height: 180px;
+		object-fit: contain;
+		cursor: pointer;
+		transition: all 0.6s;
+		&:hover {
+			transform: scale(1.5);
+		}
+	}
 	.oneline {
 		// flex-basis: 100%;
 	}
@@ -151,12 +97,10 @@ h1 {
 		position: relative;
 		> .front,
 		> .back {
-      flex-basis: 50%;
 			display: block;
 			transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 			transition-duration: 1.5s;
 			transition-property: transform, opacity;
-		
 		}
 		> .front {
 			transform: rotateY(0deg);
@@ -198,20 +142,23 @@ h1 {
 	.flip {
 		position: relative;
 		display: inline-block;
-		margin-right: 2px;
 		margin-bottom: 1em;
-		// width: 300px;
-		> .front,
-		> .back {
+		flex: 1;
+		> .front {
 			display: block;
+			overflow: hidden;
 			color: white;
-			width: inherit;
 			background-size: cover !important;
 			background-position: center !important;
 			height: 220px;
 			padding: 1em 2em;
 			background: #313131;
 			border-radius: 10px;
+		}
+		> .back {
+			background: #313131;
+			padding: 2em 2em;
+			box-sizing: border-box;
 			p {
 				font-size: 0.9125rem;
 				line-height: 160%;

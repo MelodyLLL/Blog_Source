@@ -199,7 +199,7 @@ rm(
 
 ## babel 配置
 
-babel7 的改变比较大，最明显的是包名的变化，v7 的包名都变成了@babel/xxx，参考[官方指南](https://babeljs.io/docs/v7-migration)，里面有提到 babel-upgrade 工具可进行自动升级，会替换 <font style="background:#f5f5f7">package.json</font> 与<font style="background:#f5f5f7">.babelrc</font> 中的配置，参考文档可以看到 @babel/preset-env 替换了之前零散的预设，Stage Preset包 和 polyfill 的引入也进行了变更。<font color="#dd0000">另外要注意 babel-plugin-transform-vue-jsx 对babel7的适配，因为有可能出现相关的报错。</font>看到 [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) 推荐的是v4.x的版本
+babel7 的改变比较大，最明显的是包名的变化，v7 的包名都变成了@babel/xxx，参考[官方指南](https://babeljs.io/docs/v7-migration)，里面有提到 babel-upgrade 工具可进行自动升级，会替换`package.json` 与`.babelrc`中的配置，参考文档可以看到 @babel/preset-env 替换了之前零散的预设，Stage Preset包 和 polyfill 的引入也进行了变更。<font color="#dd0000">另外要注意 babel-plugin-transform-vue-jsx 对babel7的适配，因为有可能出现相关的报错。</font>看到 [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) 推荐的是v4.x的版本
 
 ## 总结
 - 升级构建配置，可以重新拉一个仓库和新分支，因为要重新 npm i 替换大量依赖，这样比较方便

@@ -10,8 +10,8 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 	},
 	{
 		text: '面经',
-		link: '/interview/interview.md',
-		activeMatch: '/interview',
+		link: '/interview/interview0.md',
+		activeMatch: '/interview0',
 	},
 	{
 		text: '笔记',
@@ -27,7 +27,7 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 				text: '前端工程化',
 				link: '/note/engineering/Engineering1.md',
 			},
-      {
+			{
 				text: 'Typescript',
 				link: '/note/typescript/Typescript1.md',
 			},

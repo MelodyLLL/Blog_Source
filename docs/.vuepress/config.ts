@@ -9,7 +9,7 @@ const REPO = '/www.kangkang.fun/MelodyLLL_BLOG/';
 export default defineUserConfig({
 	head: [['link', { rel: 'icon', href: `${REPO}images/avator.webp` }]],
 	lang: 'zh-CN',
-	base: REPO,
+	base: '/',
 	title: '改变 就是好事',
 	description: 'Change is a good thing',
 	locales: {},

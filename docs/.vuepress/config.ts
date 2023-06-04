@@ -5,7 +5,7 @@ import { navbar, sidebar } from './config/index';
 import { getDirname, path } from '@vuepress/utils'
 const __dirname = getDirname(import.meta.url)
 
-const REPO = '/www.kangkang.fun/';
+const REPO = '/www.kangkang.fun/MelodyLLL_BLOG/';
 export default defineUserConfig({
 	head: [['link', { rel: 'icon', href: `${REPO}images/avator.webp` }]],
 	lang: 'zh-CN',

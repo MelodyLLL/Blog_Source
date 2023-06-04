@@ -77,7 +77,7 @@ h1 {
 	display: flex;
 	gap: 1rem;
 
-	flex-wrap: wrap-reverse;
+	flex-wrap:wrap;
 
 	img {
 		width: 200px;
@@ -86,7 +86,7 @@ h1 {
 		cursor: pointer;
 		transition: all 0.6s;
 		&:hover {
-			transform: scale(1.5);
+			transform: scale(1.6);
 		}
 	}
 	.oneline {
@@ -94,6 +94,7 @@ h1 {
 	}
 	.flip {
 		// flex: 1;
+    min-width: 200px;
 		position: relative;
 		> .front,
 		> .back {

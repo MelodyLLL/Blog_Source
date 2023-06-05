@@ -3,7 +3,6 @@ import { getFileName } from '../utils';
 import path from 'path';
 
 const fileNames = getFileName(path.resolve(__dirname, '../../interview'));
-console.log(fileNames,'aaa');
 
 const sidebar: SidebarConfig = {
 	// SidebarItem
@@ -36,8 +35,6 @@ const sidebar: SidebarConfig = {
 		{
 			text: '经常问到的那些',
 			children: fileNames.map((item) => {
-				console.log();
-
 				return '/' + item.split('/').slice(-2).join('/');
 			}),
 		},

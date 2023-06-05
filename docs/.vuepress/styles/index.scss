@@ -1,17 +1,6 @@
-:root {
-	// --c-padding: 24px;
-
-	--c-brand: #432c7a;
-	--c-brand-light: #80489c;
-}
-
-html.dark {
-	--c-brand: #eca869;
-	--c-brand-light: #ffdca9;
-}
-
 // @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
+@import url('https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.7.0/style.min.css');
 @font-face {
 	font-family: 'Indie Flower';
 	// src: url('FontName.eot'); /* IE9 Compat Modes */
@@ -21,4 +10,19 @@ html.dark {
 	//  url('FontName.woff') format('woff'), /* Pretty Modern Browsers */
 	//  url('./fonts/hw.ttf')  format('truetype'), /* Safari, Android, iOS */
 	//  url('FontName.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+:root {
+	// --c-padding: 24px;
+
+	// --c-brand: #432c7a;
+	// --c-brand-light: #80489c;
+
+  --font-family: "LXGW WenKai Screen";
+  --font-family-code: "LXGW WenKai Screen";
+}
+
+html.dark {
+	--c-brand: #eca869;
+	--c-brand-light: #ffdca9;
 }

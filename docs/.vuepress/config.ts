@@ -1,13 +1,24 @@
 import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress';
-import { createPage } from '@vuepress/core'
+import { createPage } from '@vuepress/core';
 import { navbar, sidebar } from './config/index';
-import { getDirname, path } from '@vuepress/utils'
-const __dirname = getDirname(import.meta.url)
+import { docsearchPlugin } from '@vuepress/plugin-docsearch';
+import { getDirname, path } from '@vuepress/utils';
+const __dirname = getDirname(import.meta.url);
 
 const REPO = '/MelodyLLL_BLOG/';
 export default defineUserConfig({
-	head: [['link', { rel: 'icon', href: `/images/avator.webp` }]],
+	head: [
+		['link', { rel: 'icon', href: `/images/avator.webp` }],
+		// [
+		// 	'link',
+		// 	{
+		// 		rel: 'stylesheet',
+		// 		href: 'https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css',
+		// 		media: 'all',
+		// 	},
+		// ],
+	],
 	lang: 'zh-CN',
 	base: '/',
 	title: '改变 就是好事',
@@ -21,8 +32,15 @@ export default defineUserConfig({
 		lastUpdatedText: '最后修改时间',
 		contributorsText: '编写者',
 	}),
-  alias: {
-    '@theme/CustomHomeHero.vue': path.resolve(__dirname, './components/CustomHomeHero.vue'),
-    '@theme/HomeHero.vue': path.resolve(__dirname, './components/CustomHomeHero.vue'),
-  },
+	alias: {
+		'@theme/CustomHomeHero.vue': path.resolve(
+			__dirname,
+			'./components/CustomHomeHero.vue'
+		),
+		'@theme/HomeHero.vue': path.resolve(
+			__dirname,
+			'./components/CustomHomeHero.vue'
+		),
+	},
+	// plugins: [docsearchPlugin({})],
 });

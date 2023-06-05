@@ -109,7 +109,7 @@ export function goBackUrl(
 
 1.使用 `set`function uniquearray(array) { let unique_array= Array.from(set(array)) return unique_array; } 2.使用 `filter`
 
-```
+```js
 function unque_array (arr) {
   let unique_array = arr.filter(function(elem, index, self) {
     return index == self.indexOf(elem);
@@ -122,7 +122,7 @@ function unque_array (arr) {
 
 3.使用 `for` 循环
 
-```
+```js
 Array dups_names = ['Ron', 'Pal', 'Fred', 'Rongo', 'Ron'];
 function dups_array(dups_names) {
  let unique = {};

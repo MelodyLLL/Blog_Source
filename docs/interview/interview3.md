@@ -1,133 +1,308 @@
-# HTML和CSS
 
-## 标签语义化
+# 框架层面
 
-- 什么是 HTML 语义化标签？
+## Vue
 
-语义化标签，就是让标签有自己的含义，利用本身传达它所包含内容的一些信息，使浏览器和搜索引擎直观的认识标签和属性的用途和作用。过去我们常常采用 DIV+CSS 的方式布局页面，但 DIV 标签本身没有独特的含义，这样做的结果就是文档结构不够清晰，不利于浏览器对页面的读取，在分离 CSS 样式后，用户体验不友好。所以
-HTML5 新增了很多语义化标签，使文档更具可读性，页面结构更清晰。
+### 有没有用过inject、provide api，解决了什么问题，能否响应式
 
-- 为什么要用 H5 语义化标签？
+- 主要解决数据跨层级传递的问题
+- 可以响应式，需要提供一个响应式对象
+- 衍生提问关于状态管理的话题
 
-代码结构清晰，可读性高，减少差异化，便于团队开发和维护。在页面没有加载 CSS 的情况下，也能呈现良好的内容结构，提升用户体验。对搜索引擎友好，良好的结构和语义，有助于爬虫抓取更多的有效信息。
+### vue的双向绑定是怎么实现的
 
-- HTML5 语义化标签有哪些？
+- vue 中的双向绑定其实是 v-model 指令的小 trick
+- 通过事件触发和 value 绑定可以达到类似双向绑定的效果
+- vue.js 采用数据劫持和订阅发布者模式，在初始化时，通过 object.defineproperty 来重新定义 data 中的所有属性，当页面使用对应属性时，首先会进行依赖收集，如果属性发生变化会通知相关依赖进行更新操作
 
-header 标签： 页眉，通常包括网站标志、主导航、全站链接以及搜索框
-  article 标签：用来定义独立于文档且有意义的来自外部的内容
-  section 标签：定义文档中的节（section、区段）。比如章节、页眉、页脚或文档中的其他部分。
-  aside 标签：定义 article 标签外的内容，可用作文章的侧边栏
-  footer 标签：页脚，只有当父级是 body 时，才是整个页面的页脚。
+### .vue文件的template部分编译之后是什么样的，在什么时候编译
 
-- 好处
+- render 函数
+- createElement
+- vue-loader 编译
 
-HTML 结构清晰
-代码可读性较好
-无障碍阅读
-搜索引擎可以根据标签的语言确定上下文和权重问题
-移动设备能够更完美的展现网页（对 css 支持较弱的设备）
-便于团队维护和开发
+### vue组件通讯
 
-## css 嵌套和标签嵌套过多的坏处
+- props+events 父子组件通信（parent/parent/parent/children），vuex 任何组件通信，事件中心 emit/emit / emit/on 任何组件的通信， attrs/attrs/attrs/listeners 后代通信（provide / inject）（越多越好）
 
-开放性问题，可以答结构不清晰，影响 dom 解析速度等
+### vuex(使用和源码，如何封装一个 vue 插件)
 
-## display、visibility 和 opacity 的区别
+### 路由懒加载原理
 
-**共同点：**都可以隐藏元素，让元素不可见
-**区别：**
-**display: none**
-（1）DOM 结构：浏览器不会渲染 display 属性为 none 的元素，不占据空间；
-（2）事件监听：无法进行 DOM 事件监听；
-（3）性能：动态改变此属性时会引起重排，性能较差；
-（4）继承：不会被子元素继承，毕竟子类也不会被渲染；
-（5）transition：transition 不支持 display。
-**visibility: hidden**
-（1）DOM 结构：元素被隐藏，但是会被渲染不会消失，占据空间；
-（2）事件监听：无法进行 DOM 事件监听；
-（3）性 能：动态改变此属性时会引起重绘，性能较高；
-（4）继 承：会被子元素继承，子元素可以通过设置 visibility: visible; 来取消隐藏；
-（5）transition：transition 支持 visibility。
-**opacity: 0**
-（1）DOM 结构：透明度为 100%，元素隐藏，占据空间；
-（2）事件监听：可以进行 DOM 事件监听；
-（3）性 能：提升为合成层，不会触发重绘，性能较高；
-（4）继 承：会被子元素继承,且，子元素并不能通过 opacity: 1 来取消隐藏；
-（5）transition：transition 支持 opacity。
+- **level1:**
+  1.  将需要懒加载的子模块，打包成单独的文件。ES6 的 import()。
+  2.  hashChange 时，根据 hash 变化执行特定的函数，加载子模块。
+- **level2:** 实现的三种方式，location.hash + hashChange()，HTML5 规范的 pushState(IE10) + popState 事件监听，abstract nodejs 默认值。
+- **level3: **源码分析。路由安装，利用 mixin 给每个组件注入 beforeCreated 和 destory 钩子函数，在 Vue 原型上定义 route 和 route 和 route 和 router，并进行响应式处理，定义全局的 roter-link 和 router-view 组件。根据路由配置创建映射关系。根据传入路径计算出新的路径，在路劲切换过程中，执行一系列的导航守卫函数，更改 Url，渲染对应组件。
 
-## 两种图片引用的方式 background-image 和 img 的区别
+### .vue 文件的编译过程
 
-- 是否占位
+### key 的作用： 提供唯一的标识，高效的更新虚拟 dom
 
-background-image 是背景图片，是 css 的一个样式，不占位；
-\<img />是一个块状元素，它是一个图片，是 html 的一个标签，占位；
+更准确：a.key === b.key
+更快速：key 的唯一性可以很好的被 map 函数利用，时间复杂度为 O(1)
+虚拟 DOM 本质就是用一个原生的 js 对象去描述一个 DOM 节点，是对真实 DOM 的一层抽象。
 
-- 是否可操作
+### computed和watch的区别和使用场景：
 
-（1）background-image 是只能看的，只能设置如下属性：
-background-position: 为每一个背景图片设置初始位置。 这个位置是相对于由 background-origin 定义的位置图层；
-background-attachment: 决定背景是在视口中固定的还是随包含它的区块滚动的；
-background-repeat: CSS 属性定义背景图像的重复方式。背景图像可以沿着水平轴，垂直轴，两个轴重复，或者根本不重复。
+计算属性当依赖的属性发生变化时就会更新视图，适用于比较消耗性能的场景。具有缓存性。watch 不会缓存，每当监听的数据发生变化时都会执行，可以监听某些数据执行回调。
 
-（2）\<img />是一个 document 对象，它是可以操作的。比如更换 img src 的路径可以达到更换图片的目的，也可以移动它的位置，从 document 中移除等等操作。
-所以如果是装饰性的图片就使用 background-img，如果和文体内容很相关就使用 img。
+### v-for与v-if优先级问题
 
-- 加载顺序不同
+v-for 优先于 v-if 被解析
 
-在网页加载的过程中，以 css 背景图存在的图片 background-image 会等到结构加载完成（网页的内容全部显示以后）才开始加载，而 html 中的标签 img 是网页结构（内容）的一部分会在加载结构的过程中加载，换句话讲，网页会先加载标签 img 的内容，再加载背景图片 background-image，如果你用引入了一个很大的图片，那么在这个图片下载完成之前，img 后的内容都不会显示。而如果用 css 来引入同样的图片，网页结构和内容加载完成之后，才开始加载背景图片，不会影响你浏览网页内容。
+### nextTick 原理：
 
-## 如何实现一个未知宽高元素的水平垂直居中？
+在下次 DOM 更新循环结束之后执行延迟回调。nextTick 主要使用了宏任务和微任务。根据执行环境分别尝试使用 Promise，MutationObserver，setImmediate，setTimeout。
 
-```css
-// 1 绝对定位
-.parent {
-  width: 100%;
-  height: 400px;
-  background: #666;
-  position: relative;
-}
-.children {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: red;
-  transform: translate(-50%, -50%);
-}
+### 怎么定义vue-router的动态路由？怎么获取传过来的动态参数？
 
-// 2 flex 布局
-// 3 grid 布局
+在 router 目录下的 index.js 文件中，对 path 属性加上/:id，使用 router 对象的 params.id。
 
-align-items: center;
-justify-content: center;
+### vuex是什么？怎么使用？哪种功能场景使用它？
+
+vue 框架中状态管理。在 main.js 中引入 store，注入。新建了一个目录 store。场景有：组件之间的状态，登录状态，按钮权限，用户信息。
+
+### vuex有哪些属性？
+
+有五种，分别是 state（存储变量），mutation（提交更新数据的方法，修改 vuex 中状态的唯一方法），action（提交 mutation，可以包含任意异步操作），getter，module（模块化 vuex）
+
+### $set方法是什么？
+
+$set方法相当于手动的去把set进去的属性处理成一个响应式的属性。this.$set(this.obj, 'b', 'obj.b')
+
+### vue-loader是什么？
+
+解析.vue 文件的一个加载器，让 js 可以写 es6，style 样式可以用 scss 或者 less。
+
+### 对vue.js的template编译的理解？
+
+就是先转化为 AST 树，在得到 render 函数返回 VNode。
+
+### name 的作用？
+
+1.注册组件使用组件名.name
+2.keep-alive exclude=‘name’ 3.使用 vue-tool 工具时显示的是 name
+
+### MVVM是什么:
+
+MVVM 是 Model-View-ViewModel 缩写，Model 代表数据模型，View 代表 UI 组件，ViewModel 是 View 和 Model 的桥梁，数据会绑定到 ViewModel 层并自动将数据渲染到页面中，视图变化时会通知 ViewModel 层更新数据。
+
+### vue2.x如何监测数组变化：
+
+使用了函数劫持的方式，重写了数组的方法，将 data 中的数组进行了原型链重写，指向自己定义的数组原型方法，这样当调用这些数组 api 时，可以通知依赖更新，如果数组中包含着引用类型，会对数组中的引用类 再次递归遍历进行监控，这样就能监测到数组的变化了。
+
+### proxy只会代理对象的第一层，vue3是怎么解决这个问题？
+
+判断当前 Reflect.get 的返回值是否为 Object，如果是则再通过 reactive 方法做代理，这样就实现深度观测。
+
+### vue生命周期：
+
+beforeCreate 是 new Vue()之后触发的第一个钩子，在当前阶段 data，computed，methods 以及 watch 上的数据和方法都不能被触发。
+created 在实例创建完成后发生，这个阶段可以使用数据，更改数据，但不会触发 update 函数，无法与 Dom 进行交互。
+mounted 在挂载完成后发生，数据完成双向绑定，可以访问到 Dom 节点，使用$ref 属性对 Dom 进行操作。
+beforeUpdate 发生在更新之前，响应式数据发生更新，虚拟 Dom 被渲染之前
+updated 发生在更新完成之后，Dom 更新完成
+beforeDestroy 发生在实例销毁之前，可以清除定时器。
+destroyed 发生在实例销毁之后，这个时候 Dom 是空的，组件被拆解，数据绑定被卸除，监听被移除，子实也 都销毁。
+
+### vue接口请求放在哪个生命周期？
+
+created，这个阶段已经能拿到数据，mounted，beforeUpdate 也可以。
+
+### v-if和v-show的区别？
+
+当条件不成立时，v-if 不会渲染 Dom 元素，v-show 操作的样式，通过 display 来切换当前 DOM 的显示和隐藏。
+
+### data为什么是个函数？
+
+为了保证组件不同的实例之间不冲突。一个组件被复用多次的话，也就会创建多个实例。本质上，这些实例用的都是同一个构造函数，如果 data 是一个对象的话，对象属于引用类型，会影响到所有的实例。
+
+### v-model的原理？
+
+v-model 可以看成时 value + input 方法的语法糖，可以通过 model 属性的 prop 和 event 属性来进行自定义。
+注: 在 checkbox 和 radio 中 v-model = checked 属性 + change 事件，在 select 中将 value 作为 prop 并将 change 作为事件
+
+### vue事件绑定的原理？
+
+原生事件绑定是通过 addEventListener 绑定给真实元素的，组件事件绑定是通过$on 实现的。
+
+### vue2.x和vue3.x渲染器的diff算法:
+
+diff 算法就是进行虚拟节点对比，并返回一个 patch 对象，用来存储两个节点不同的地方，最后用 patch 记录的消息去局部更新 Dom。
+diff 算法有以下过程：
+先同级比较，再比较子节点。
+先判断一方有子节点一方没有子节点的情况，这样就给新的节点移除或者新增上子节点。
+比较都有子节点的情况，递归的比较子节点。
+vue2 的核心 Diff 算法采用了双端比较的算法，同时从新旧 children 的两端开始进行比较，借助 key 找到可以复用的节点，在进行相关操作。
+vue3 在创建 VNode 的时候就确定其类型，在 patch 的过程中采用位运算来判断一个 VNode 的类型，再配合核心 diff 算法。
+
+### keep-alive：
+
+keep-alive 可以实现组件缓存，当组件切换时不会对组件进行卸载。
+常用的两个属性 include/exclude，允许组件有条件的进行缓存。
+两个生命周期 activated/deactivated，用来判断当前组件是否处于活跃状态。
+
+### vue中组件生命周期的调用顺序：
+
+调用顺序都是先父后子，渲染完成的顺序都是先子后父。组件的销毁操作是先父后子，销毁完成的顺序是先子后父
+加载渲染过程：父 beforeCreated->父 created->父 beforeMount->子 beforeCreated->子 created->子 beforeMounted->子 mounted->父 mounted
+子组件更新过程: 父 beforeUpdate->子 beforeUpdate->子 updated->父 updated
+销毁过程： 父 beforeDestroyed->子 beforeDestroyed->子 destroyed->父 destroyed
+
+### vue2.x组件之间通信方式：
+
+父子组件通信：父传子 props，子传父 $on $emit
+获取父子组件实例 $parent $children
+兄弟组件通信：Event bus
+跨组件通信：vuex
+
+### ssr了解吗？
+
+    ssr也就是服务端渲染，也就是把vue在客户端把标签渲染成HTML·的工作放在服务端完成，然后再把html直接返回给客户端。
+    服务器渲染只支持created和beforeCreated两个钩子，ssr有着更好的seo，首屏加载速度更快。
+
+### 写过vue自定义指令吗？
+
+### vue中的性能优化：
+
+    编码阶段：
+    1.尽量减少data中的数据，data中的数据都会增加getter和setter，会收集对应的依赖。
+    2.v-if和v-for不能连用
+    3.如果需要使用v-for给每项元素绑定事件时使用事件代理。
+    4.SPA页面采用keep-alive
+    5.在更多的情况下，使用v-if代替v-show
+    6.key保证唯一
+    7.使用路由懒加载，异步组件
+    8.防抖，节流
+    9.第三方模块按需导入
+    10.图片懒加载
+    11.css在前，js在后，css在前可以和dom树一起合成render树，js在后不阻塞dom渲染
+    12.减少http请求
+    打包优化：
+    1.压缩代码
+    2.使用cdn加载第三方模块
+
+### hash路由和history的实现原理
+
+    location.hash的值实际就是URL#后面的东西
+    history实际采用了HTML5中的提供的API来实现，主要有history.pushState()和history.replaceState().
+
+## React
+
+### 单页应用和多页面的优缺点
+
+### 虚拟dom的比较过程
+
+虚拟 dom 本质是一个 js 对象
+比较麻烦的写法
+
+```javascript
+React.createElement(type, [props], [...children]);
 ```
 
-## 父容器中固定宽度的元素，设置另一个元素填满剩余宽度
+实际上这个可以使用 jsx 的写法，然后通过 babel 转译成上面这样。优点是可以写方便的 jsx，缺点是依赖打包插件
+实际上原生 js 插入 dom 节点的操作 在万次操作上是比 react 要快的
+虚拟 dom 为什么比真实 dom 操作快
 
-[实现左边 div 固定宽度，右边 div 自适应撑满剩下的宽度的布局方式： - FEDeveloper - 博客园](https://www.cnblogs.com/yzhihao/p/6513022.html) 可利用下一题的 BFC 原理
+- 减少 dom 操作，将多次操作合并为一次
+- 借助 diff 算法减少多余操作
 
-## 什么是 BFC,有什么作用
+总结 操作原生 dom 开销比较大，而且会引发重绘或者重排，react 只是把这些操作放到了虚拟 dom 的比较上面，即 js 对象之间的比较计算，将 dom 操作缓存起来一次性去操作，最后也还是要操作 dom 的，只不过是减少了操作次数，优化了重绘和重排。
 
-[带你用最简单的方式理解最全面的 BFC\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1aZ4y1M7gW/?spm_id_from=333.788.recommend_more_video.6)
+### setState原理
 
-## 标准盒模型和怪异盒模型
+### hooks使用注意事项为什么？
 
-标准盒模型与怪异(IE)盒模型的区别在于计算盒子的宽高是不一样的
-怪异盒模型：width = content + padding + border、height = content + padding + border
-标准盒模型： width = content、height = content
-设置怪异盒模型： box-sizing: border-box;
-设置标准盒模型： box-sizing: content-box;
-规定从父元素继承 box-sizing：inhert;
+### reactFiber是什么
 
-## 如果要实现一个点击之后从左边平移到右边的过渡动画我可以怎么做
+[React Fiber 是什么?](https://zhuanlan.zhihu.com/p/297971861)
 
-css3 动画（不会重排），js 原生
+### setState是同步还是异步
 
-## flex 有哪些相关的属性，以及其作用
+[Component State – React](https://zh-hans.reactjs.org/docs/faq-state.html#when-is-setstate-asynchronous)
 
-参考阮一峰老师的这个即可[https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+### hooks与HOC
 
-## SVG 和 canvas 的区别
+逻辑抽离，然后会问如何抽离，和 HOC 的区别
 
-[https://www.w3school.com.cn/html/html5_canvas_vs_svg.asp](https://www.w3school.com.cn/html/html5_canvas_vs_svg.asp)
+### useEffect和useLayoutEffect的区别是什么
 
-## 为什么 css3 translate 不会导致重排
+执行时机不同，后者跟 didMount 一致，在 dom 更新后同步执行，useEffect 是异步执行
+后者能在服务端渲染中执行（但是无效）
+
+### setState 的执行时机，比如连续三次setState之后的值是什么，为什么
+
+在生命周期、事件触发等情况下，连续的 setState 并不会马上更新值，而是批量更新
+在 setTimeout 类似的回调中则会同步更新，性能差很多
+batchedUpdate 机制
+
+### 对redux的理解
+
+[完全理解 redux（从零实现一个 redux） · Issue #22 · brickspert/blog](https://github.com/brickspert/blog/issues/22)
+
+## WebPack等工程化
+
+### webPack常用配置
+
+[配置 | webpack 中文文档](https://www.webpackjs.com/configuration/)
+
+### webpack优化
+
+### webpack类似工具？为什么用webpack？
+
+### webpack构建流程？说完整一些。
+
+入口文件，依赖树构建，loader 加载对应文件，plugin 全局广播
+
+### webpack 的热更新怎么做到的？
+
+### webpack 中自定义 loader
+
+### require 和 import 区别，原理？
+
+- CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+- CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+- CommonJS 模块的`require()`是同步加载模块，ES6 模块的`import`命令是异步加载，有一个独立的模块依赖的解析阶段。
+
+### AMD 和 CMD？
+
+### Babel
+
+[Babel 是什么？ · Babel 中文文档 | Babel 中文网](https://www.babeljs.cn/docs/)
+
+### 写过的webpack插件、loader
+
+类似 eslint 插件，雪碧图 loader, 监控 loader
+
+## 小程序
+
+### 小程序怎么实现类似Vue的mixin的功能
+
+### 小程序怎么做启动优化
+
+### 小程序怎么做异常监控
+
+### 微信小程序底层实现原理是什么，什么是小程序的双线程模型
+
+[理解微信小程序的双线程模型 - JunpengZ - 博客园](https://www.cnblogs.com/ihardcoder/p/14778013.html)
+
+### 怎么做小程序的自动化集成和发布
+
+可以利用小程序的 jenkins 插件
+
+### 小程序怎么模拟 cookie
+
+### 小程序常用生命周期
+
+页面的，组件的，taro 等流行框架对应的。
+
+### 小程序的发布流程
+
+## rollup 工程化
+
+### 怎样实现一个组件库，怎样实现一个 js 库
+
+组件目录、编写，组件文档，组件打包，npm 发包方向
+
+### rollup 常见配置、插件

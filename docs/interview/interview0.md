@@ -1,580 +1,206 @@
 ---
 ---
 
+# Javascript语言基础
 
-# 算法和笔试题
+## 作用域是什么？
 
-## 手写继承
+JavaScript 的作用域分为以下几种：
 
-```javascript
-function Parent(name) {
-  this.name = name;
-  this.arr = [];
-}
-function Child() {}
-// 原型链继承 实质就是子类构造函数的prototype指向父类实例
-// 缺点:共享了父类构造函数的引用属性，而且实例化Child的时候不能传name
-// 优点:共享了父类构造函数的方法
-Child.prototype = new Parent();
-Child.prototype.constructor = Child;
+1. 全局作用域（Global Scope）：全局作用域是最外层的作用域，它在整个代码中都可访问。在浏览器环境中，全局作用域通常是指 `window` 对象的属性。
 
-// 构造函数继承 实质就是在子类构造函数里面call 父类的构造函数
-// 优点，不共享父类构造函数的引用属性，也可以传参
-// 父类原型上的方继承不到了
-function Child(name) {
-  Parent.call(this, name);
-}
+2. 函数作用域（Function Scope）：函数作用域是在函数内部声明的变量的作用域。函数内部的变量在函数执行过程中可见，但在函数外部不可访问。
 
-// 组合继承 实质就是上面两种加起来
-// 优点，上面的问题都解决了
-// 显而易见父类构造函数被执行了两次，搞了两份父类构造函数属性出来。
-function Child(name) {
-  Parent.call(this, name);
-}
-Child.prototype = new Parent();
-Child.prototype.constructor = Child;
+3. 块级作用域（Block Scope）：块级作用域是由花括号 `{}` 所定义的代码块内部的作用域。在 ES6 之前，JavaScript 中没有块级作用域，只有全局作用域和函数作用域。但在 ES6 中引入了 `let` 和 `const` 关键字，可以在块级作用域中声明变量。
 
-// 组合继承优化 实质是 Child.prototype = new Parent()变成了 Child.prototype = Parent.prototype;
-// 优点 解决了多余一份属性的冗余
-// 缺点 第三步修复的时候很明显把Parent.prototype.constructor也影响了
-function Child(name) {
-  Parent.call(this, name);
-}
-Child.prototype = Parent.prototype;
-Child.prototype.constructor = Child;
+4. 模块作用域（Module Scope）：模块作用域是 ES6 模块化引入的概念，每个模块都有自己的作用域，模块内部的变量对外部是不可见的，除非明确地导出和导入。
 
-// 寄生组合继承 实质是Child.prototype = Parent.prototype;
-// 变成了Child.prototype = Object.create(Parent.prototype);相当于新建对象阻隔了引用传递
-function Child(name) {
-  Parent.call(this, name);
-}
-Child.prototype = Object.create(Parent.prototype);
-Child.prototype.constructor = Child;
-```
+作用域决定了变量和函数的可见性和访问范围。变量的作用域可以是全局范围、函数内部范围或块级范围，而模块作用域是在模块级别上划分的。了解作用域的概念可以帮助我们正确地管理变量和避免命名冲突。
 
-## 手写 bind call apply
+## 作用域链
 
-```javascript
-Function.prototype.myCall = function (context, ...args) {
-  // 解构context 与arguments
-  if (typeof this !== "function") {
-    // this 必须是函数
-    throw new TypeError(`It's must be a function`);
-  }
-  if (!context) context = window; // 没有context，或者传递的是 null undefined，则重置为window
-  const fn = Symbol(); // 指定唯一属性，防止 delete 删除错误
-  context[fn] = this; // 将 this 添加到 context的属性上
-  const result = context[fn](...args); // 直接调用context 的 fn
-  delete context[fn]; // 删除掉context新增的symbol属性
-  return result; // 返回返回值
-};
-```
+一般情况下，变量取值到创建这个变量的函数的作用域中取值。但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。
+
+## 闭包的概念和作用
+
+函数访问上层作用域的变量就形成了闭包。
+
+## 基本类型和引用类型区别？基本类型怎么调用方法？知道包装类型吗？
+
+主要了解包装类型[Js 基本包装类型（含原理）\_js 包装类型的原理\_scluis 的博客-CSDN 博客](https://blog.csdn.net/weixin_42619772/article/details/122510569)
+
+## set与map是什么？应用场景？
+
+[ES6 的 Map 和 Object](https://www.runoob.com/w3cnote/es6-map-set.html)
+
+## 为什么会有变量提升
+
+1. 解析和预编译过程中的声明提升可以提高性能，让函数可以在执行时预先为变量分配栈空间
+2. 声明提升还可以提高 JS 代码的容错性，使一些不规范的代码也可以正常执行
+3. 变量提升的过程
+
+## 事件委托与事件冒泡
+
+事件委托的本质是，事件冒泡实际上是一个阶段，在这个阶段里的时候，当我们点击一个元素，会先查看这个事件有没有对应的处理函数，没有的话，他就会到他的父级上找有没有处理函数，如果有的话就执行,据此可以实现事件委托
+事件冒泡的概念是指：在最内层的元素上绑定的事件被触发后，会按照嵌套的层次由内向外逐步触发。因此，点击某个孩子节点可能会触发父节点的事件。一个阻止事件冒泡的办法就是使用`event.stopPropagation()`，在 IE<9 的浏览器上使用`event.cancelBubble`。
+
+## const声明的值可以修改么，为什么
+
+基本类型不可以，引用类型可以。const 指针指向的地址不可以改变，指向地址的内容是可以改变的。因为 const 只是保证对象的指针不改变，而对象的内容改变不会影响到指针的改变，所以对象的属性内容是可以修改的。
+
+## null和undefined的区别？
+
+null 是一个表示”无”的对象，转为数值时为 0；
+
+- null 表示”没有对象”，即该处不应该有值
+- 作为函数的参数，表示该函数的参数不是对象。
+- 作为对象原型链的终点。
+
+undefined 表示”缺省值”，就是此处应该有一个值，但是还没有定义,转为数值时为 NaN。
+
+- 变量被声明了，但没有赋值时，就等于 undefined。
+- 调用函数时，应该提供的参数没有提供，该参数等于 undefined。
+- 对象没有赋值的属性，该属性的值为 undefined。
+- 函数没有返回值时，默认返回 undefined。
+
+## JS的event loop，其在浏览器端与NodeJS端实现的区别？
+
+我们把宿主发起的任务称为宏观任务(浏览器 api setTimeout)，把 JavaScript 引擎发起的任务(promise)称为微观任务。许多的微观任务的队列组成了宏观任务。推荐看这个视频[2 分钟了解 JavaScript Event Loop | 面试必备\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1kf4y1U7Ln?from=search&seid=17290685586591017592)
+微任务始终优先于宏任务，示例：
 
 ```javascript
-Function.prototype.myBind = function (context, ...args) {
-  const fn = this;
-  if (typeof fn !== "function") {
-    throw new TypeError("It must be a function");
-  }
-  if (!context) context = window;
-  return function (...otherArgs) {
-    return fn.apply(context, [...args, ...otherArgs]);
-  };
-};
-```
-
-## url 跳转工具函数
-
-```javascript
-export function goBackUrl(
-  jumps = 0,
-  uri: string = window.location.pathname
-): string {
-  let newURI = uri;
-
-  // Remove trailing slash
-  while (newURI.endsWith("/")) {
-    newURI = newURI.slice(0, -1);
-  }
-  if (jumps === 0) {
-    return newURI;
-  }
-
-  // Go back !
-  return newURI.split("/").slice(0, -jumps).join("/");
-}
-```
-
-## 数组去重复的方法有哪些
-
-1.使用 `set`function uniquearray(array) { let unique_array= Array.from(set(array)) return unique_array; } 2.使用 `filter`
-
-```
-function unque_array (arr) {
-  let unique_array = arr.filter(function(elem, index, self) {
-    return index == self.indexOf(elem);
-  })
-  return unique_array;
-}
- console.log(unique_array(array_with_duplicates));
-复制代码
-```
-
-3.使用 `for` 循环
-
-```
-Array dups_names = ['Ron', 'Pal', 'Fred', 'Rongo', 'Ron'];
-function dups_array(dups_names) {
- let unique = {};
- names.forEach(function(i) {
-    If (!unique[i]) {
-      unique[i] = true;    }
-  });
-return Object.keys(unique);}   // Ron, Pal, Fred, Rongo
-Dups_array(names);
-```
-
-## 手写setTimeOut
-
-```javascript
-// setTimeout的实现
-function mySetTimeout(callback, timeout) {
-  let timer;
-  let time = new Date();
-  let endTime = timeout || 0;
-  const loop = () => {
-    timer = window.requestAnimationFrame(loop);
-    if (new Date() - time >= endTime) {
-      callback.call(this, timer);
-      window.cancelAnimationFrame(timer);
-    }
-  };
-  window.requestAnimationFrame(loop);
-}
-mySetTimeout(() => {
-  console.log("hh");
+setTimeout(() => console.log('d'), 0);
+var r = new Promise(function (resolve, reject) {
+	resolve();
+});
+r.then(() => {
+	var begin = Date.now();
+	while (Date.now() - begin < 1000);
+	console.log('c1');
+	new Promise(function (resolve, reject) {
+		resolve();
+	}).then(() => console.log('c2'));
 });
 ```
 
-## 手写深拷贝
+怎样分析
 
-```typescript
-function clone(target, map = new Map()) {
-    if (typeof target === 'object') {
-        let cloneTarget = Array.isArray(target) ? [] : {};
-        if (map.get(target)) {
-            return map.get(target);
-        }
-        map.set(target, cloneTarget);
-        for (const key in target) {
-            cloneTarget[key] = clone(target[key], map);
-        }
-        return cloneTarget;
-    } else {
-        return target;
-    }
-};
+- 首先我们分析有多少个宏任务；
+- 在每个宏任务中，分析有多少个微任务；
+- 根据调用次序，确定宏任务中的微任务执行次序；
+- 根据宏任务的触发规则和调用次序，确定宏任务的执行次序；
+- 确定整个顺序。
 
-链接：https://juejin.im/post/6844903929705136141
-来源：掘金
+## js创建对象的几种方式
+
+[javascript 中创建对象的几种方式\_丁码农的博客-CSDN 博客](https://blog.csdn.net/dinglang_2009/article/details/7913866)
+
+## new关键字做了啥
+
+```js
+//1、创建一个空的对象
+let obj = {}; // let obj = Object.create({});
+//2、将空对象的原型prototype指向构造函数的原型
+Object.setPrototypeOf(obj,Con.prototype); // obj.__proto__ = Con.prototype
+//3、改变构造函数的上下文（this）,并将剩余的参数传入
+let result = Con.apply(obj,args);
+//4、在构造函数有返回值的情况进行判断
+return result instanceof Object?result:obj;
 ```
 
-## 手写防抖
+## this的几种情况描述
 
-触发高频事件后 n 秒内函数只会执行一次，如果 n 秒内高频事件再次被触发，则重新计算时间
+1. 在浏览器里，在全局范围内 this 指向 window 对象；
+2. 对象方法调用中，this 指向最后调用他的那个对象；
+3. 构造函数中，this 指向 new 出来的那个新的对象；
+4. call、apply、bind 中的 this 被强绑定在指定的那个对象上；
+5. 箭头函数中 this 比较特殊,箭头函数 this 为父作用域的 this，不是调用时的 this.要知道前四种方式,都是调用时确定,也就是动态的,而箭头函数的 this 指向是静态的,声明的时候就确定了下来；
 
-```typescript
-function debounce(func, wait) {
-  let timeout;
-  return function () {
-    let context = this;
-    let args = arguments;
+## 什么叫IIFEs(Immediately Invoked Function Expressions)?
 
-    if (timeout) clearTimeout(timeout);
+该方法常用语避免污染全局的命名空间，因为所以在 IIFE 中使用的变量外部都无法访问。
 
-    timeout = setTimeout(() => {
-      func.apply(context, args);
-    }, wait);
-  };
-}
-```
+## 解释一下什么是promise？
 
-## 手写节流
+`promise`是 js 中的一个对象，用于生成可能在将来产生结果的值。 值可以是已解析的值，也可以是说明为什么未解析该值的原因。
+promise 可以有三种状态:
 
-高频事件触发，但在 n 秒内只会执行一次，所以节流会稀释函数的执行频率
+- pending：初始状态，既不是成功也不是失败
+- fulfilled：意味着操作完全成功
+- rejected：意味着操作失败
 
-```typescript
-function throttle(func, wait) {
-  let previous = 0;
-  return function () {
-    let now = Date.now();
-    let context = this;
-    let args = arguments;
-    if (now - previous > wait) {
-      func.apply(context, args);
-      previous = now;
-    }
-  };
-}
-```
+## Async函数实现原理
 
-## 手写 delay 函数
+[ES6 入门教程](https://es6.ruanyifeng.com/#docs/async)
 
-```typescript
-export function delay(millis: number) {
-  return new Promise((resolve) => {
-    const id = setTimeout(() => {
-      clearTimeout(id);
-      resolve(true);
-    }, millis);
-  });
-}
-```
+## JS垃圾回收
 
-## 累加的调用
+[Javascript 的垃圾回收机制总结 - zzzlight - 博客园](https://www.cnblogs.com/zzzlight/articles/16566806.html) 问的概率不大
 
-```typescript
-const Sum = (a) => (b) => b ? Sum(a + b) : a;
+## setTimeOut与setInterval的区别？
 
-console.log(Sum(3)(4)(2)(5)()); //14
+## 箭头函数和普通函数的区别
 
-console.log(Sum(3)(4)(1)()); //8
-```
+this 指向 arguements 参数
 
-```typescript
-// 这种是最后返回的函数没有被调用的，重点是
-// JavaScript中，打印和相加计算，会分别调用toString或valueOf函数
-var add = function (m) {
-  var temp = function (n) {
-    return add(m + n);
-  };
-  temp.toString = function () {
-    return m;
-  };
-  return temp;
-};
+## 解释原型链
 
-add(3)(4)(5); // 12
-add(3)(6)(9)(25); // 43
-```
+- 每个构造函数都有一个 prototype 属性，指向它的原型对象，而且构造函数生成的每个实例也都有一个指向原型对象的内部指针。原型对象上的属性和方法是它所属构造函数生成的实例共享的。
+- 在 JavaScript 中，每个实例对象都有一个私有属性 [[Prototype]]，该属性指向了这个实例对象的原型，你可以通过  ES6 的  Object.getPrototypeOf()  来访问该属性，许多浏览器也对 [[Prototype]] 进行了实现，也就是我们经常见到的 **proto**，没错，**proto** 指向了实例对象的原型，它也是一个对象。
+- JavaScript 对象（除了 null）在创建的时候就会关联一个对象，这个对象就是原型，每一个对象都会从原型上继承属性，原型也是对象，所以原型也有原型对象，层层往上，直到 Object.prototype，这就是原型链。对象都会有一个 **proto**   属性来访问自己的原型，同时这个原型就是生成该对象的构造函数的 prototype 属性值。每个原型对象都有一个 constructor 属性，指向相关联的构造函数。
 
-## 手写 LazyMan，类似实 Promise
+## 柯里化是什么
+
+柯里化（英语：Currying），又称为部分求值，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回一个新的函数的技术，新函数接受余下参数并返回运算结果。
+
+## 深拷贝浅拷贝的区别
+
+- 浅拷贝是创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址 ，所以**如果其中一个对象改变了这个地址，就会影响到另一个对象**。
+- 深拷贝是将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且**修改新对象不会影响原对象**。
+
+## axios、fetch、ajax区别
+
+[ajax 和 axios、fetch 的区别](https://www.jianshu.com/p/8bc48f8fde75)
+
+## ES6常用操作
+
+[ES6 入门教程](https://es6.ruanyifeng.com/)
+
+## typeof和instanceOf
+
+typeof 一般只能返回如下几个结果：
+'undefined' ：这个值未定义。
+'boolean'：这个值是布尔值。
+'string' ：这个值是字符串。
+'number' ：这个值是数值。
+'object'：这个值是对象或 null。
+'function' ：这个值是函数。
+
+instanceOf 会沿着原型链去找其对应构造函数的类型
+
+## 什么是AST
+
+AST 全名 abstract syntax tree(抽象语法树),抽象表示把 js 代码进行了结构化的转化,转化为一种类似树状数据结构的 json 对象。 js 是一种解释性语言,js 引擎将 js 代码交给解释器之前,要先进行格式化,也就是通过词法和语法分析后构建出抽象语法树(AST),之后会交给解释器,最终解释称计算机可以识别的机器码。
+
+## JS监听dom变化
+
+MutationObserver
+
+## Promise.all如何防止一个promise失败使整个promise失败
+
+第一种[怎么避免 Promise.all 其中一个 reject 让所有都取不到值\_landiyaaa 的博客-CSDN 博客](https://blog.csdn.net/landiyaaa/article/details/113633033)
+第二种是直接使用 api allsettled
+
+## 暂存性死区
 
 ```javascript
-class LazyMan {
-  constructor(name) {
-    this.name = name;
-    this.task = []; // 任务队列
-    console.log(`My named ${name}`);
-
-    // 这里使用异步调用next()是为了确保所有链式调用都被添加到task[]才开始执行任务
-    setTimeout(() => {
-      this.next();
-    });
-  }
-
-  sleep(time) {
-    this.task.push(() => {
-      console.log(`I am sleeping...`);
-      setTimeout(() => {
-        console.log(`after ${time} ms`);
-        this.next();
-      }, time);
-    });
-    return this;
-  }
-
-  eat(food) {
-    this.task.push(() => {
-      console.log(food);
-      this.next();
-    });
-    return this;
-  }
-
-  next() {
-    let fn = this.task.shift();
-    fn && fn(); // if(fn) fn()
-  }
+if(true){
+	let a = 1;
+  var b = 2;
 }
+打印a ,b的结果
 
-const lazyMan = new LazyMan("jack");
-lazyMan.eat("apple").sleep(5000).eat("hamburger").sleep(3000).eat("pear");
+ES6 明确规定，如果区块中存在let和const命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用
+域。凡是在声明之前就使用这些变量，就会报错。总之，在代码块内，使用let命令声明变量之前，该变量都是不可
+用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）。
 ```
-
-## 手写 Promise
-
-简单的实现
-
-```typescript
-function myPromise(constructor) {
-  let self = this;
-  self.status = "pending"; //定义状态改变前的初始状态
-  self.value = undefined; //定义状态为resolved的时候的状态
-  self.reason = undefined; //定义状态为rejected的时候的状态
-  function resolve(value) {
-    //两个==="pending"，保证了状态的改变是不可逆的
-    if (self.status === "pending") {
-      self.value = value;
-      self.status = "resolved";
-    }
-  }
-  function reject(reason) {
-    //两个==="pending"，保证了状态的改变是不可逆的
-    if (self.status === "pending") {
-      self.reason = reason;
-      self.status = "rejected";
-    }
-  }
-  //捕获构造异常
-  try {
-    constructor(resolve, reject);
-  } catch (e) {
-    reject(e);
-  }
-}
-// 定义链式调用的then方法
-myPromise.prototype.then = function (onFullfilled, onRejected) {
-  let self = this;
-  switch (self.status) {
-    case "resolved":
-      onFullfilled(self.value);
-      break;
-    case "rejected":
-      onRejected(self.reason);
-      break;
-    default:
-  }
-};
-```
-
-考虑了异步函数执行的情况
-
-```typescript
-const PENDING = 'PENDING';
-const FULFILLED = 'FULFILLED';
-const REJECTED = 'REJECTED';
-
-class Promise {
-  constructor(executor) {
-    this.status = PENDING;
-    this.value = undefined;
-    this.reason = undefined;
-    // 存放成功的回调
-    this.onResolvedCallbacks = [];
-    // 存放失败的回调
-    this.onRejectedCallbacks= [];
-
-    let resolve = (value) => {
-      if(this.status ===  PENDING) {
-        this.status = FULFILLED;
-        this.value = value;
-        // 依次将对应的函数执行
-        this.onResolvedCallbacks.forEach(fn=>fn());
-      }
-    }
-
-    let reject = (reason) => {
-      if(this.status ===  PENDING) {
-        this.status = REJECTED;
-        this.reason = reason;
-        // 依次将对应的函数执行
-        this.onRejectedCallbacks.forEach(fn=>fn());
-      }
-    }
-
-    try {
-      executor(resolve,reject)
-    } catch (error) {
-      reject(error)
-    }
-  }
-
-  then(onFulfilled, onRejected) {
-    if (this.status === FULFILLED) {
-      onFulfilled(this.value)
-    }
-
-    if (this.status === REJECTED) {
-      onRejected(this.reason)
-    }
-
-    if (this.status === PENDING) {
-      // 如果promise的状态是 pending，需要将 onFulfilled 和 onRejected 函数存放起来，等待状态确定后，再依次将对应的函数执行
-      this.onResolvedCallbacks.push(() => {
-        onFulfilled(this.value)
-      });
-
-      // 如果promise的状态是 pending，需要将 onFulfilled 和 onRejected 函数存放起来，等待状态确定后，再依次将对应的函数执行
-      this.onRejectedCallbacks.push(()=> {
-        onRejected(this.reason);
-      })
-    }
-  }
-}
-
-new Promise(resolve=>setTime(()=>resolve('aaa'),1000))).then((rsp)=>console.log(rsp))
-```
-
-## 实现 Promise.all
-
-```javascript
-Promise.prototype.all = function (promises) {
-  let results = [];
-  let promiseCount = 0;
-  let promisesLength = promises.length;
-  return new Promise(function (resolve, reject) {
-    for (let val of promises) {
-      Promise.resolve(val).then(
-        function (res) {
-          promiseCount++;
-          // results.push(res);
-          results[i] = res;
-          // 当所有函数都正确执行了，resolve输出所有返回结果。
-          if (promiseCount === promisesLength) {
-            return resolve(results);
-          }
-        },
-        function (err) {
-          return reject(err);
-        }
-      );
-    }
-  });
-};
-```
-
-## 数组转Tree（递归和reduce实现）
-
-```javascript
-export const generateTree = (
-  treeData,
-  props = {
-    pId: "pId",
-    id: "id",
-  }
-) => {
-  // // 把跟节点首先放进数组
-  const tmpTree = treeData.filter(
-    (node) => node[props.pId] === null || node[props.pId] === ""
-  );
-  // 递归生成节点及子节点数据
-  const findChildren = (tree) => {
-    tree.forEach((node) => {
-      node.children = treeData.filter(
-        (cNode) => cNode[props.pId] === node[props.id]
-      );
-      // 还有children就继续往下找
-      if (node.children.length) {
-        findChildren(node.children);
-      }
-    });
-  };
-
-  findChildren(tmpTree);
-
-  return tmpTree;
-};
-```
-
-```javascript
-let treeList = Arr.reduce((prev, cur) => {
-  prev[cur["id"]] = cur;
-  return prev;
-}, {});
-// console.log(treeList)
-let result = Arr.reduce((prev, cur) => {
-  let pid = cur.parent_id;
-  // pid为0的就找不到父对象，找到当前cur的父对象
-  // 对象的浅拷贝，引用关系存在，在后面处理parent的时候也会导致cur的改变，达到递归的效果
-  let parent = treeList[pid];
-  // console.log(parent,1)
-  // 如果父对象存在，就将cur压到父对象的children属性中
-  if (parent) {
-    // parent和cur存在引用关系
-    parent.children ? parent.children.push(cur) : (parent.children = [cur]);
-  } else if (pid === 0) {
-    // 没有父对象，则此cur为树的根元素
-    prev.push(cur);
-  }
-  return prev;
-}, []);
-// console.log(result)
-```
-
-## 冒泡排序
-
-```javascript
-function pop(array) {
-  var len = array.length,
-    i,
-    j,
-    tmp,
-    result;
-  result = array.slice(0);
-  for (i = 0; i < len; i++) {
-    for (j = len - 1; j > i; j--) {
-      if (result[j] < result[j - 1]) {
-        tmp = result[j - 1];
-        result[j - 1] = result[j];
-        result[j] = tmp;
-      }
-    }
-  }
-  return [result, array];
-}
-```
-
-## 插入排序
-
-```javascript
-function insert(array) {
-  var len = array.length,
-    i,
-    j,
-    tmp,
-    result;
-  // 设置数组副本
-  result = array.slice(0);
-  console.log(result);
-  for (i = 1; i < len; i++) {
-    //数组第一个值为默认的衡量值
-    tmp = result[i]; //从第二个值开始与之前的值进行比较
-    j = i - 1; //之前已经排好序的数组的最后一个
-    while (j >= 0 && tmp < result[j]) {
-      //如果j大于等于零（否则越界） 与最后一个值进行比较，如果小于
-      result[j + 1] = result[j]; //则将最后一个值后移一位
-      j--; //j往前移动一位
-    }
-    result[j + 1] = tmp; //比较完成 这时result[j]<temp或者j已经为-1，则将tmp的值赋给j+1
-  }
-  return result;
-}
-```
-
-## 快速排序
-
-```javascript
-function quickSort(arr) {
-  if (arr.length < 2) {
-    return arr;
-  }
-
-  var left = [],
-    right = [],
-    mid = arr.splice(Math.floor(arr.length / 2), 1);
-
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] < mid) {
-      left.push(arr[i]);
-    } else {
-      right.push(arr[i]);
-    }
-  }
-  return quickSort(left).concat(mid, quickSort(right));
-}
-```
-
-## 各种排序算法以及解析
-
-[十大排序算法总结](https://zhuanlan.zhihu.com/p/378430869)

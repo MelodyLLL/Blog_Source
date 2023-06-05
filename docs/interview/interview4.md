@@ -4,18 +4,18 @@
 
 [为什么浏览器要限制跨域访问? - 知乎](https://www.zhihu.com/question/26379635)
 
-## preload 和 prefetch 了解么
+## preload和prefetch了解么
 
 [一站式理解 - prefetch preconnect prerender preload](https://www.jianshu.com/p/4a5f50addccb)
 
-## 状态码 501,502,503？
+## 状态码501,502,503？
 
-## http 状态码 301 和 302 了解么
+## http状态码301和302了解么
 
 http 状态吗 301：永久重定向，意为旧的 URL 已经不在使用，已永久转移至新的地址。
 http 状态吗 302：临时重定向，意为某个时间段因为某些原因临时进行的跳转行为，旧的 URL 地址依然使用并存在。
 
-**网站什么时候使用 301 重定向?**
+**网站什么时候使用301重定向?**
 1、网站进行了改版，新的 URL 结构和旧的 URL 结构不一致，此时，需要讲所有旧网站的 URL 全部 301 到新的网站上，并且要保持 URL 的一一对应，万不可全部跳转至首页，或跳转对应错误。
 
 2、不带 www 的主域名跳转至到 www 的网址版本，如：http://googlenb.com 301 至 http://www.googlenb.com 。 需注意的是，此时跳转也需全站跳转，不要只做首页跳转。
@@ -24,16 +24,16 @@ http 状态吗 302：临时重定向，意为某个时间段因为某些原因�
 
 4、内容重复，内容合并等跳转，同一篇内容存在多个 URL 都能到达访问，此时需要设置跳转至标准且唯一的 URL 版本，避免网站权重分散。
 
-**网站什么时候使用 302 重定向？**
+**网站什么时候使用302重定向？**
 1、移动端访问 PC 端的网站，或 PC 端访问移动端网站，此时建议使用 302 跳转，如移动端访问http://www.163.com， 302 至 http://3g.163.com。
 
 2、临时活动或临时跳转，在举行重大活动，需对活动进行宣传，如：用户访问首页或某些页面时时临时跳转至活动专页，待活动结束后取消跳转。
 
-## localStorage, sessionStorage, Cookie, Session 区别
+## LocalStorage、SessionStorage、Cookie、Session 区别
 
 [细说 localStorage, sessionStorage, Cookie, Session - 掘金](https://juejin.cn/post/6844903587764502536)
 
-## 什么是 DOM 和 BOM？
+## 什么是DOM和BOM？
 
 - DOM 指的是文档对象模型，它指的是把文档当做一个对象来对待，这个对象主要定义了处理网页内容的方法和接口。
 - BOM 指的是浏览器对象模型，它指的是把浏览器当做一个对象来对待，这个对象主要定义了与浏览器进行交互的法和接口。BOM 的核心是 window，而 window 对象具有双重角色，它既是通过 js 访问浏览器窗口的一个接口，又是一个 Global（全局） 对象。这意味着在网页中定义的任何对象，变量和函数，都作为全局对象的一个属性或者方法存在。window 对象含有 locati on 对象、navigator 对象、screen 对象等子对象，并且 DOM 的最根本的对象 document 对象也是 BOM 的 window 对 象的子对象。
@@ -82,7 +82,7 @@ HTTP/1.1 新增字段，表示文件唯一标识，只要文件内容改动，ET
 当 DOM 的变化引发了元素几何属性的变化，比如改变元素的宽高，元素的位置，导致浏览器不得不重新计算元素的几何属性，并重新构建渲染树，这个过程称为“重排”。完成重排后，要将重新构建的渲染树渲染到屏幕上，这个过程就是“重绘”。
 简单的说，重排负责元素的几何属性更新，重绘负责元素的样式更新。而且，重排必然带来重绘，但是重绘未必带来重排。比如，改变某个元素的背景，这个就不涉及元素的几何属性，所以只发生重绘。
 
-## TCP 三次握手四次挥手
+## TCP三次握手四次挥手
 
 [面试官，不要再问我三次握手和四次挥手](https://segmentfault.com/a/1190000020610336)
 
@@ -90,7 +90,7 @@ HTTP/1.1 新增字段，表示文件唯一标识，只要文件内容改动，ET
 
 键盘 鼠标事件来答
 
-## DNS 工作原理
+## DNS工作原理
 
 第一步：客户机提出域名解析请求，并将该请求发送给本地的域名服务器。
 第二步：当本地的域名服务器收到请求后，就先查询本地的缓存，如果有该纪录项，则本地的域名服务器就直接把查询的结果返回。
@@ -99,15 +99,15 @@ HTTP/1.1 新增字段，表示文件唯一标识，只要文件内容改动，ET
 第五步：重复第四步，直到找到正确的纪录。
 第六步：本地域名服务器把返回的结果保存到缓存，以备下一次使用，同时还将结果返回给客户机。
 
-## http 请求 get 和 post 的区别是什么
+## http请求get和post的区别是什么
 
 [get 和 post 请求有哪些区别？ - 踏步 - 博客园](https://www.cnblogs.com/mjtabu/p/12090419.html)
 
-## https 协议跟 http 有什么区别
+## https协议跟http有什么区别
 
 [我是这样理解 HTTP 和 HTTPS 区别的 - Jesse131 - 博客园](https://www.cnblogs.com/jesse131/p/9080925.html)
 
-## https 协议认证过程
+## https协议认证过程
 
 见上一题
 
@@ -115,20 +115,20 @@ HTTP/1.1 新增字段，表示文件唯一标识，只要文件内容改动，ET
 
 问的比较少
 
-## tcp 和 udp 的区别，分别适合在什么业务场景
+## tcp和udp区别，分别适合的业务场景
 
-## socket 是什么？websocket 是什么
+## socket与websocket是什么？
 
-## 介绍一下 http2.0，跟 http1.1 有什么区别
+## 介绍下http2.0，跟http1.1的区别？
 
 [一文读懂 HTTP/2 特性](https://zhuanlan.zhihu.com/p/26559480)
 归纳三大特性：多路复用、主动推送、头部压缩
 
-## xss csrf 等网络安全问题
+## xss、csrf等网络安全问题
 
 [如何用简洁生动的语言说明 XSS 和 CSRF 的区别？ - 知乎](https://www.zhihu.com/question/34445731)
 
-## 什么是 token 鉴权
+## 什么是token鉴权
 
 [基于 token 的登陆验证机制 - 程序员自由之路 - 博客园](https://www.cnblogs.com/54chensongxia/p/13491214.html)
 [微信链接](https://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&mid=2651580141&idx=1&sn=418b943b6765e6ea790cc65764153645&chksm=8025312cb752b83a78dfd28754f567dab743b7b9098055f5819cd440dc39a96b999fcaf3c325&mpshare=1&scene=1&srcid=0905SZ6TYNzqMBA9OuN4OWGb&sharer_sharetime=1630842381432&sharer_shareid=78202e0bfa0a107bbf1a59f370aafdfb&key=553a45c3e4e7e5ae2ef2b15ba4d4fac96a06ba71c75764cf5993da3cfe1234df0cc00dcd47ca9e366bb3980e1456ec0cf10c4d91f0942745c1741afb5e9142c96069f1daf67b1251033b9d8a466e442832f2b5e239c1f9332de449453af6a30d98a1457bd8bb704200226299fa53e916ef1add8bd48ab301d92c1fc349bbf7e2&ascene=1&uin=MjM4NjkxODkwOQ%3D%3D&devicetype=Windows+10&version=62080079&lang=zh_CN&exportkey=A2P1fIDYCZtZKygIyhpmyyU%3D&pass_ticket=uMmLu94W0HjFyvsKEPNN%2BQKBeMR7c%2FFcPmxmoPOG9FyvVFq6EK6EuDcyPlXgXpay&wx_header=0)

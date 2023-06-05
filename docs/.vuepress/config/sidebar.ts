@@ -3,6 +3,7 @@ import { getFileName } from '../utils';
 import path from 'path';
 
 const fileNames = getFileName(path.resolve(__dirname, '../../interview'));
+console.log(fileNames,'aaa');
 
 const sidebar: SidebarConfig = {
 	// SidebarItem

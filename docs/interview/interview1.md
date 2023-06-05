@@ -1,206 +1,133 @@
----
----
+# HTML和CSS
 
-# Javascript语言基础
+## 标签语义化
 
-## 作用域是什么？
+- 什么是 HTML 语义化标签？
 
-JavaScript 的作用域分为以下几种：
+语义化标签，就是让标签有自己的含义，利用本身传达它所包含内容的一些信息，使浏览器和搜索引擎直观的认识标签和属性的用途和作用。过去我们常常采用 DIV+CSS 的方式布局页面，但 DIV 标签本身没有独特的含义，这样做的结果就是文档结构不够清晰，不利于浏览器对页面的读取，在分离 CSS 样式后，用户体验不友好。所以
+HTML5 新增了很多语义化标签，使文档更具可读性，页面结构更清晰。
 
-1. 全局作用域（Global Scope）：全局作用域是最外层的作用域，它在整个代码中都可访问。在浏览器环境中，全局作用域通常是指 `window` 对象的属性。
+- 为什么要用 H5 语义化标签？
 
-2. 函数作用域（Function Scope）：函数作用域是在函数内部声明的变量的作用域。函数内部的变量在函数执行过程中可见，但在函数外部不可访问。
+代码结构清晰，可读性高，减少差异化，便于团队开发和维护。在页面没有加载 CSS 的情况下，也能呈现良好的内容结构，提升用户体验。对搜索引擎友好，良好的结构和语义，有助于爬虫抓取更多的有效信息。
 
-3. 块级作用域（Block Scope）：块级作用域是由花括号 `{}` 所定义的代码块内部的作用域。在 ES6 之前，JavaScript 中没有块级作用域，只有全局作用域和函数作用域。但在 ES6 中引入了 `let` 和 `const` 关键字，可以在块级作用域中声明变量。
+- HTML5 语义化标签有哪些？
 
-4. 模块作用域（Module Scope）：模块作用域是 ES6 模块化引入的概念，每个模块都有自己的作用域，模块内部的变量对外部是不可见的，除非明确地导出和导入。
+header 标签： 页眉，通常包括网站标志、主导航、全站链接以及搜索框
+  article 标签：用来定义独立于文档且有意义的来自外部的内容
+  section 标签：定义文档中的节（section、区段）。比如章节、页眉、页脚或文档中的其他部分。
+  aside 标签：定义 article 标签外的内容，可用作文章的侧边栏
+  footer 标签：页脚，只有当父级是 body 时，才是整个页面的页脚。
 
-作用域决定了变量和函数的可见性和访问范围。变量的作用域可以是全局范围、函数内部范围或块级范围，而模块作用域是在模块级别上划分的。了解作用域的概念可以帮助我们正确地管理变量和避免命名冲突。
+- 好处
 
-## 作用域链
+HTML 结构清晰
+代码可读性较好
+无障碍阅读
+搜索引擎可以根据标签的语言确定上下文和权重问题
+移动设备能够更完美的展现网页（对 css 支持较弱的设备）
+便于团队维护和开发
 
-一般情况下，变量取值到创建这个变量的函数的作用域中取值。但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。
+## css 嵌套和标签嵌套过多的坏处
 
-## 闭包的概念和作用
+开放性问题，可以答结构不清晰，影响 dom 解析速度等
 
-函数访问上层作用域的变量就形成了闭包。
+## display、visibility 和 opacity 的区别
 
-## 基本类型和引用类型区别？基本类型怎么调用方法？知道包装类型吗？
+**共同点：**都可以隐藏元素，让元素不可见
+**区别：**
+**display: none**
+（1）DOM 结构：浏览器不会渲染 display 属性为 none 的元素，不占据空间；
+（2）事件监听：无法进行 DOM 事件监听；
+（3）性能：动态改变此属性时会引起重排，性能较差；
+（4）继承：不会被子元素继承，毕竟子类也不会被渲染；
+（5）transition：transition 不支持 display。
+**visibility: hidden**
+（1）DOM 结构：元素被隐藏，但是会被渲染不会消失，占据空间；
+（2）事件监听：无法进行 DOM 事件监听；
+（3）性 能：动态改变此属性时会引起重绘，性能较高；
+（4）继 承：会被子元素继承，子元素可以通过设置 visibility: visible; 来取消隐藏；
+（5）transition：transition 支持 visibility。
+**opacity: 0**
+（1）DOM 结构：透明度为 100%，元素隐藏，占据空间；
+（2）事件监听：可以进行 DOM 事件监听；
+（3）性 能：提升为合成层，不会触发重绘，性能较高；
+（4）继 承：会被子元素继承,且，子元素并不能通过 opacity: 1 来取消隐藏；
+（5）transition：transition 支持 opacity。
 
-主要了解包装类型[Js 基本包装类型（含原理）\_js 包装类型的原理\_scluis 的博客-CSDN 博客](https://blog.csdn.net/weixin_42619772/article/details/122510569)
+## 图片引用方式background-image和img的区别
 
-## set 与 map 是什么？应用场景？
+- 是否占位
 
-[ES6 的 Map 和 Object](https://www.runoob.com/w3cnote/es6-map-set.html)
+background-image 是背景图片，是 css 的一个样式，不占位；
+\<img />是一个块状元素，它是一个图片，是 html 的一个标签，占位；
 
-## 为什么会有变量提升
+- 是否可操作
 
-1. 解析和预编译过程中的声明提升可以提高性能，让函数可以在执行时预先为变量分配栈空间
-2. 声明提升还可以提高 JS 代码的容错性，使一些不规范的代码也可以正常执行
-3. 变量提升的过程
+（1）background-image 是只能看的，只能设置如下属性：
+background-position: 为每一个背景图片设置初始位置。 这个位置是相对于由 background-origin 定义的位置图层；
+background-attachment: 决定背景是在视口中固定的还是随包含它的区块滚动的；
+background-repeat: CSS 属性定义背景图像的重复方式。背景图像可以沿着水平轴，垂直轴，两个轴重复，或者根本不重复。
 
-## 事件委托与事件冒泡
+（2）\<img />是一个 document 对象，它是可以操作的。比如更换 img src 的路径可以达到更换图片的目的，也可以移动它的位置，从 document 中移除等等操作。
+所以如果是装饰性的图片就使用 background-img，如果和文体内容很相关就使用 img。
 
-事件委托的本质是，事件冒泡实际上是一个阶段，在这个阶段里的时候，当我们点击一个元素，会先查看这个事件有没有对应的处理函数，没有的话，他就会到他的父级上找有没有处理函数，如果有的话就执行,据此可以实现事件委托
-事件冒泡的概念是指：在最内层的元素上绑定的事件被触发后，会按照嵌套的层次由内向外逐步触发。因此，点击某个孩子节点可能会触发父节点的事件。一个阻止事件冒泡的办法就是使用`event.stopPropagation()`，在 IE<9 的浏览器上使用`event.cancelBubble`。
+- 加载顺序不同
 
-## const 声明的值可以修改么，为什么
+在网页加载的过程中，以 css 背景图存在的图片 background-image 会等到结构加载完成（网页的内容全部显示以后）才开始加载，而 html 中的标签 img 是网页结构（内容）的一部分会在加载结构的过程中加载，换句话讲，网页会先加载标签 img 的内容，再加载背景图片 background-image，如果你用引入了一个很大的图片，那么在这个图片下载完成之前，img 后的内容都不会显示。而如果用 css 来引入同样的图片，网页结构和内容加载完成之后，才开始加载背景图片，不会影响你浏览网页内容。
 
-基本类型不可以，引用类型可以。const 指针指向的地址不可以改变，指向地址的内容是可以改变的。因为 const 只是保证对象的指针不改变，而对象的内容改变不会影响到指针的改变，所以对象的属性内容是可以修改的。
+## 如何实现一个未知宽高元素的水平垂直居中？
 
-## null 和 undefined 的区别？
-
-null 是一个表示”无”的对象，转为数值时为 0；
-
-- null 表示”没有对象”，即该处不应该有值
-- 作为函数的参数，表示该函数的参数不是对象。
-- 作为对象原型链的终点。
-
-undefined 表示”缺省值”，就是此处应该有一个值，但是还没有定义,转为数值时为 NaN。
-
-- 变量被声明了，但没有赋值时，就等于 undefined。
-- 调用函数时，应该提供的参数没有提供，该参数等于 undefined。
-- 对象没有赋值的属性，该属性的值为 undefined。
-- 函数没有返回值时，默认返回 undefined。
-
-## JS的event loop，其在浏览器端与NodeJS端实现的区别？
-
-我们把宿主发起的任务称为宏观任务(浏览器 api setTimeout)，把 JavaScript 引擎发起的任务(promise)称为微观任务。许多的微观任务的队列组成了宏观任务。推荐看这个视频[2 分钟了解 JavaScript Event Loop | 面试必备\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1kf4y1U7Ln?from=search&seid=17290685586591017592)
-微任务始终优先于宏任务，示例：
-
-```javascript
-setTimeout(() => console.log('d'), 0);
-var r = new Promise(function (resolve, reject) {
-	resolve();
-});
-r.then(() => {
-	var begin = Date.now();
-	while (Date.now() - begin < 1000);
-	console.log('c1');
-	new Promise(function (resolve, reject) {
-		resolve();
-	}).then(() => console.log('c2'));
-});
-```
-
-怎样分析
-
-- 首先我们分析有多少个宏任务；
-- 在每个宏任务中，分析有多少个微任务；
-- 根据调用次序，确定宏任务中的微任务执行次序；
-- 根据宏任务的触发规则和调用次序，确定宏任务的执行次序；
-- 确定整个顺序。
-
-## js 创建对象的几种方式
-
-[javascript 中创建对象的几种方式\_丁码农的博客-CSDN 博客](https://blog.csdn.net/dinglang_2009/article/details/7913866)
-
-## new 关键字做了啥
-
-```js
-//1、创建一个空的对象
-let obj = {}; // let obj = Object.create({});
-//2、将空对象的原型prototype指向构造函数的原型
-Object.setPrototypeOf(obj,Con.prototype); // obj.__proto__ = Con.prototype
-//3、改变构造函数的上下文（this）,并将剩余的参数传入
-let result = Con.apply(obj,args);
-//4、在构造函数有返回值的情况进行判断
-return result instanceof Object?result:obj;
-```
-
-## this 的几种情况描述
-
-1. 在浏览器里，在全局范围内 this 指向 window 对象；
-2. 对象方法调用中，this 指向最后调用他的那个对象；
-3. 构造函数中，this 指向 new 出来的那个新的对象；
-4. call、apply、bind 中的 this 被强绑定在指定的那个对象上；
-5. 箭头函数中 this 比较特殊,箭头函数 this 为父作用域的 this，不是调用时的 this.要知道前四种方式,都是调用时确定,也就是动态的,而箭头函数的 this 指向是静态的,声明的时候就确定了下来；
-
-## 什么叫 IIFEs(Immediately Invoked Function Expressions)?
-
-该方法常用语避免污染全局的命名空间，因为所以在 IIFE 中使用的变量外部都无法访问。
-
-## 解释一下什么是 promise？
-
-`promise`是 js 中的一个对象，用于生成可能在将来产生结果的值。 值可以是已解析的值，也可以是说明为什么未解析该值的原因。
-promise 可以有三种状态:
-
-- pending：初始状态，既不是成功也不是失败
-- fulfilled：意味着操作完全成功
-- rejected：意味着操作失败
-
-## Async 函数实现原理
-
-[ES6 入门教程](https://es6.ruanyifeng.com/#docs/async)
-
-## JS 垃圾回收
-
-[Javascript 的垃圾回收机制总结 - zzzlight - 博客园](https://www.cnblogs.com/zzzlight/articles/16566806.html) 问的概率不大
-
-## setTimeOut 与 setInterval 的区别？
-
-## 箭头函数和普通函数的区别
-
-this 指向 arguements 参数
-
-## 解释原型链
-
-- 每个构造函数都有一个 prototype 属性，指向它的原型对象，而且构造函数生成的每个实例也都有一个指向原型对象的内部指针。原型对象上的属性和方法是它所属构造函数生成的实例共享的。
-- 在 JavaScript 中，每个实例对象都有一个私有属性 [[Prototype]]，该属性指向了这个实例对象的原型，你可以通过  ES6 的  Object.getPrototypeOf()  来访问该属性，许多浏览器也对 [[Prototype]] 进行了实现，也就是我们经常见到的 **proto**，没错，**proto** 指向了实例对象的原型，它也是一个对象。
-- JavaScript 对象（除了 null）在创建的时候就会关联一个对象，这个对象就是原型，每一个对象都会从原型上继承属性，原型也是对象，所以原型也有原型对象，层层往上，直到 Object.prototype，这就是原型链。对象都会有一个 **proto**   属性来访问自己的原型，同时这个原型就是生成该对象的构造函数的 prototype 属性值。每个原型对象都有一个 constructor 属性，指向相关联的构造函数。
-
-## 柯里化是什么
-
-柯里化（英语：Currying），又称为部分求值，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回一个新的函数的技术，新函数接受余下参数并返回运算结果。
-
-## 深拷贝浅拷贝的区别
-
-- 浅拷贝是创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址 ，所以**如果其中一个对象改变了这个地址，就会影响到另一个对象**。
-- 深拷贝是将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且**修改新对象不会影响原对象**。
-
-## axios,fetch,ajax 区别
-
-[ajax 和 axios、fetch 的区别](https://www.jianshu.com/p/8bc48f8fde75)
-
-## ES6 常用操作
-
-[ES6 入门教程](https://es6.ruanyifeng.com/)
-
-## typeof 和 instanceOf
-
-typeof 一般只能返回如下几个结果：
-'undefined' ：这个值未定义。
-'boolean'：这个值是布尔值。
-'string' ：这个值是字符串。
-'number' ：这个值是数值。
-'object'：这个值是对象或 null。
-'function' ：这个值是函数。
-
-instanceOf 会沿着原型链去找其对应构造函数的类型
-
-## 什么是 AST
-
-AST 全名 abstract syntax tree(抽象语法树),抽象表示把 js 代码进行了结构化的转化,转化为一种类似树状数据结构的 json 对象。 js 是一种解释性语言,js 引擎将 js 代码交给解释器之前,要先进行格式化,也就是通过词法和语法分析后构建出抽象语法树(AST),之后会交给解释器,最终解释称计算机可以识别的机器码。
-
-## JS 监听 dom 变化
-
-MutationObserver
-
-## Promise.all 如何防止某一个 promise 失败而使整个 promise 失败
-
-第一种[怎么避免 Promise.all 其中一个 reject 让所有都取不到值\_landiyaaa 的博客-CSDN 博客](https://blog.csdn.net/landiyaaa/article/details/113633033)
-第二种是直接使用 api allsettled
-
-## 暂存性死区
-
-```javascript
-if(true){
-	let a = 1;
-  var b = 2;
+```css
+// 1 绝对定位
+.parent {
+  width: 100%;
+  height: 400px;
+  background: #666;
+  position: relative;
 }
-打印a ,b的结果
+.children {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: red;
+  transform: translate(-50%, -50%);
+}
 
-ES6 明确规定，如果区块中存在let和const命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用
-域。凡是在声明之前就使用这些变量，就会报错。总之，在代码块内，使用let命令声明变量之前，该变量都是不可
-用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）。
+// 2 flex 布局
+// 3 grid 布局
+
+align-items: center;
+justify-content: center;
 ```
+
+## 父容器中固定宽度的元素，设置另一个元素填满剩余宽度
+
+[实现左边 div 固定宽度，右边 div 自适应撑满剩下的宽度的布局方式： - FEDeveloper - 博客园](https://www.cnblogs.com/yzhihao/p/6513022.html) 可利用下一题的 BFC 原理
+
+## 什么是BFC,有什么作用
+
+[带你用最简单的方式理解最全面的 BFC\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1aZ4y1M7gW/?spm_id_from=333.788.recommend_more_video.6)
+
+## 标准盒模型和怪异盒模型
+
+标准盒模型与怪异(IE)盒模型的区别在于计算盒子的宽高是不一样的
+怪异盒模型：width = content + padding + border、height = content + padding + border
+标准盒模型： width = content、height = content
+设置怪异盒模型： box-sizing: border-box;
+设置标准盒模型： box-sizing: content-box;
+规定从父元素继承 box-sizing：inhert;
+
+## 如果要实现一个点击之后从左边平移到右边的过渡动画我可以怎么做
+
+css3 动画（不会重排），js 原生
+
+## flex 有哪些相关的属性，以及其作用
+
+参考阮一峰老师的这个即可[https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+
+## SVG和canvas 的区别
+
+[https://www.w3school.com.cn/html/html5_canvas_vs_svg.asp](https://www.w3school.com.cn/html/html5_canvas_vs_svg.asp)
+
+## 为什么css3 translate不会导致重排

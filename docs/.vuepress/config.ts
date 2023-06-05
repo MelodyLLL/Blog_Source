@@ -7,7 +7,7 @@ const __dirname = getDirname(import.meta.url)
 
 const REPO = '/MelodyLLL_BLOG/';
 export default defineUserConfig({
-	head: [['link', { rel: 'icon', href: `images/avator.webp` }]],
+	head: [['link', { rel: 'icon', href: `/images/avator.webp` }]],
 	lang: 'zh-CN',
 	base: '/',
 	title: '改变 就是好事',

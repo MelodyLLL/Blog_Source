@@ -42,5 +42,30 @@ export default defineUserConfig({
 			'./components/CustomHomeHero.vue'
 		),
 	},
-	// plugins: [docsearchPlugin({})],
+	plugins: [
+		docsearchPlugin({
+			appId: 'P4GU92VB5C',
+			apiKey: 'ae197cd22ef4b0b10b98df21f8e17725',
+			indexName: 'kangkangfun',
+			locales: {
+				'/en': {
+					placeholder: 'Search Documentation',
+					translations: {
+						button: {
+							buttonText: 'Search Documentation',
+						},
+					},
+				},
+				'/': {
+					placeholder: '搜索文档',
+					translations: {
+						button: {
+							buttonText: '搜索文档',
+						},
+            
+					},
+				},
+			},
+		}),
+	],
 });

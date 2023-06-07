@@ -1,10 +1,10 @@
 import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress';
-import { createPage } from '@vuepress/core';
 import { navbar, sidebar } from './config/index';
 import { searchPlugin } from '@vuepress/plugin-search';
 import { commentPlugin } from 'vuepress-plugin-comment2'
 import { getDirname, path } from '@vuepress/utils';
+import { commentPlugin } from 'vuepress-plugin-comment2';
 const __dirname = getDirname(import.meta.url);
 
 const REPO = '/MelodyLLL_BLOG/';

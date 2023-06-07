@@ -1,9 +1,10 @@
 import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress';
-import { createPage } from '@vuepress/core';
 import { navbar, sidebar } from './config/index';
 import { docsearchPlugin } from '@vuepress/plugin-docsearch';
+import { searchPlugin } from '@vuepress/plugin-search';
 import { getDirname, path } from '@vuepress/utils';
+import { commentPlugin } from 'vuepress-plugin-comment2';
 const __dirname = getDirname(import.meta.url);
 
 const REPO = '/MelodyLLL_BLOG/';
@@ -43,29 +44,46 @@ export default defineUserConfig({
 		),
 	},
 	plugins: [
-		docsearchPlugin({
-			appId: 'P4GU92VB5C',
-			apiKey: 'ae197cd22ef4b0b10b98df21f8e17725',
-			indexName: 'kangkangfun',
+		searchPlugin({
 			locales: {
-				'/en': {
-					placeholder: 'Search Documentation',
-					translations: {
-						button: {
-							buttonText: 'Search Documentation',
-						},
-					},
-				},
 				'/': {
-					placeholder: '搜索文档',
-					translations: {
-						button: {
-							buttonText: '搜索文档',
-						},
-            
-					},
+					placeholder: 'S键可聚焦搜索',
+				},
+				'/zh/': {
+					placeholder: 'Search',
 				},
 			},
 		}),
+		commentPlugin({
+			provider: 'Giscus',
+			repo: 'MelodyLLL/MelodyLLL_BLOG',
+			repoId: 'R_kgDOJVWgfQ',
+			category: 'Announcements',
+			categoryId: 'DIC_kwDOJVWgfc4CW_RA',
+		})
+		// docsearchPlugin({
+		// 	appId: 'P4GU92VB5C',
+		// 	apiKey: 'ae197cd22ef4b0b10b98df21f8e17725',
+		// 	indexName: 'kangkangfun',
+		// 	locales: {
+		// 		'/en': {
+		// 			placeholder: 'Search Documentation',
+		// 			translations: {
+		// 				button: {
+		// 					buttonText: 'Search Documentation',
+		// 				},
+		// 			},
+		// 		},
+		// 		'/': {
+		// 			placeholder: '搜索文档',
+		// 			translations: {
+		// 				button: {
+		// 					buttonText: '搜索文档',
+		// 				},
+
+		// 			},
+		// 		},
+		// 	},
+		// }),
 	],
 });

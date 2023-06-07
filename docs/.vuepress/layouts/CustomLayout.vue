@@ -4,18 +4,23 @@ import Layout from '@vuepress/theme-default/lib/client/layouts/Layout.vue';
 import HomeFooter from '@theme/HomeFooter.vue';
 import HomeHero from '../components/CustomHomeHero.vue';
 import HomeFeatures from '../components/CustomHomeFeatures.vue';
-// import { ClientOnly } from '@vuepress/client';
+
 </script>
 
 <template>
 	<Layout>
+		<template #navbar-before>
+			<!-- <SearchBox /> -->
+		</template>
 		<template #page>
 			<main class="home">
 				<HomeHero />
 				<HomeFeatures />
-				<!-- <HomeContent /> -->
 				<HomeFooter />
 			</main>
 		</template>
+		<!-- <template #page-content-bottom>
+			<div class="my-footer">123</div>
+		</template> -->
 	</Layout>
 </template>

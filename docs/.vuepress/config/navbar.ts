@@ -33,6 +33,11 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 			},
 		],
 	},
+  {
+		text: '留言',
+		link: '/comment.md',
+		activeMatch: '/comment',
+	},
 ];
 
 export default navbar;

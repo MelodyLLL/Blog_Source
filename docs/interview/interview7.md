@@ -1,5 +1,10 @@
 # 持续化集成，基建和团队管理
 
+## package.json中的属性
+- devDependencies
+- dependencies
+- peerDependencies
+
 ## git rebase有没有用过
 ## mac上高效使用git
 ```bash

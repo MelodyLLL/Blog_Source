@@ -1,3 +1,7 @@
+---
+lastUpdated: false
+contributors: false
+---
 # 留言板子
 
  ![嘿嘿嘿](/images/3.jpg)

@@ -2,13 +2,13 @@
 lastUpdated: false
 contributors: false
 ---
-# 留言板子
+# <center>留言板子</center>
 
- ![嘿嘿嘿](/images/3.jpg)
- ![嘿嘿嘿](/images/2.jpg)
- ![嘿嘿嘿](/images/1.jpg)
+# <center>富强、民主、文明、和谐</center>
 
+# <center>自由、平等、公正、法治</center>
 
+# <center>爱国、敬业、诚信、友善</center>
 
 <CommentService :darkmode="isDarkMode" />
 

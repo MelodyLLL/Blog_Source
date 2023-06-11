@@ -31,9 +31,16 @@
 
   --search-input-width: 9.5rem !important;
   --search-result-width: 20rem;
+
+  --content-width: 80%;
+
+  .page .theme-default-content{
+    padding: 2rem 1rem;
+  }
 }
 
 html.dark {
 	--c-brand: #eca869;
 	--c-brand-light: #ffdca9;
 }
+

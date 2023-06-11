@@ -4,6 +4,7 @@ import path from 'path';
 
 const fileNames = getFileName(path.resolve(__dirname, '../../interview'));
 
+
 const sidebar: SidebarConfig = {
 	// SidebarItem
 	'/note/react/': [
@@ -34,9 +35,10 @@ const sidebar: SidebarConfig = {
 	'/interview/': [
 		{
 			text: '经常问到的那些',
-			children: fileNames.map((item) => {
-				return '/' + item.split('/').slice(-2).join('/');
-			}),
+			// children: fileNames.map((item) => {
+			// 	return '/' + item.split('/').slice(-2).join('/');
+			// }),
+			children: ['interview0.md'],
 		},
 	],
 };

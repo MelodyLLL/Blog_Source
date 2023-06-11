@@ -80,7 +80,7 @@ h1 {
 	flex-wrap:wrap;
 
 	img {
-		width: 200px;
+		width: auto;
 		height: 180px;
 		object-fit: contain;
 		cursor: pointer;

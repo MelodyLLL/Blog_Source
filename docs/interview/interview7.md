@@ -6,6 +6,7 @@
 - peerDependencies
 
 ## git rebase有没有用过
+[git rebase和git merge有什么区别？](https://joyohub.com/2020/04/06/git-rebase/)
 ## mac上高效使用git
 ```bash
 alias g='git'

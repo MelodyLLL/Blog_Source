@@ -20,6 +20,9 @@ git commit -m "Deploy dist"
 # 将远程仓库的 URL 替换为你自己的 GitHub 仓库 URL
 git remote add origin https://github.com/MelodyLLL/MelodyLLL_BLOG.git
 
+git checkout -b gh-pages
+
+git pull origin gh-pages --allow-unrelated-histories
 # 强制推送到远程仓库的 gh-pages 分支
 git push -f origin gh-pages
 

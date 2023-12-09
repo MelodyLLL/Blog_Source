@@ -19,6 +19,7 @@ export default defineUserConfig({
 		// 	},
 		// ],
 	],
+	pagePatterns: ['**/*.md', '!.vuepress', '!node_modules','!**/_*.md'],
 	lang: 'zh-CN',
 	base: '/',
 	title: '改变 就是好事',
@@ -49,7 +50,7 @@ export default defineUserConfig({
 		searchPlugin({
 			locales: {
 				'/': {
-					placeholder: 'S键可聚焦搜索',
+					placeholder: 'S键聚焦',
 				},
 				'/zh/': {
 					placeholder: 'Search',

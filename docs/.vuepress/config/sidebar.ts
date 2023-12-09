@@ -4,7 +4,6 @@ import path from 'path';
 
 const fileNames = getFileName(path.resolve(__dirname, '../../interview'));
 
-
 const sidebar: SidebarConfig = {
 	// SidebarItem
 	'/note/react/': [
@@ -38,7 +37,19 @@ const sidebar: SidebarConfig = {
 			// children: fileNames.map((item) => {
 			// 	return '/' + item.split('/').slice(-2).join('/');
 			// }),
-			children: ['interview0.md'],
+			children: [
+				'interview0.md',
+				'interview1.md',
+				'interview2.md',
+				'interview3.md',
+				'interview4.md',
+				'interview5.md',
+        
+				'interview6.md',
+				'interview8.md',
+				'interview9.md',
+				'interview10.md',
+			],
 		},
 	],
 };

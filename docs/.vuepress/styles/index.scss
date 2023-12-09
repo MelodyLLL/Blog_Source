@@ -13,34 +13,82 @@
 }
 
 :root {
-	// --c-padding: 24px;
+	--font-family: 'LXGW WenKai Screen';
+	--font-family-code: 'LXGW WenKai Screen';
 
-	// --c-brand: #432c7a;
-	// --c-brand-light: #80489c;
+	--search-input-width: 9.5rem !important;
+	--search-result-width: 20rem;
 
-  --font-family: "LXGW WenKai Screen";
-  --font-family-code: "LXGW WenKai Screen";
+	--content-width: 80%;
 
-  --search-bg-color: #ffffff;
-  --search-accent-color: #3eaf7c;
-  --search-text-color: #2c3e50;
-  --search-border-color: #eaecef;
+	// --bg-gradient-home: 20, 20, 20;
+	--bg-gradient: 255, 255, 255, 0.1;
 
-  --search-item-text-color: #5d81a5;
-  --search-item-focus-bg-color: #f3f4f5;
+	.page .theme-default-content {
+		padding: 2rem 1rem;
+	}
 
-  --search-input-width: 9.5rem !important;
-  --search-result-width: 20rem;
+	.navbar {
+		transition: all 0.3s;
+		background-color: rgba(var(--bg-gradient));
+	}
 
-  --content-width: 80%;
+	.sidebar {
+		transition: all 0.3s;
+		background-color: rgba(var(--bg-gradient));
+	}
 
-  .page .theme-default-content{
-    padding: 2rem 1rem;
-  }
+	// .theme-container {
+	// 	opacity: 0.8;
+	//   background: radial-gradient(ellipse,rgba(var(--bg-gradient-home),1) 0%,rgba(var(--bg-gradient-home),0) 700%) !important;
+	// }
 }
 
 html.dark {
+	--font-family: 'LXGW WenKai Screen';
+	--font-family-code: 'LXGW WenKai Screen';
+
 	--c-brand: #eca869;
 	--c-brand-light: #ffdca9;
+
+	--bg-gradient: 20, 20, 20, 0.7;
+	.navbar {
+		transition: all 0.3s;
+		background-color: rgba(var(--bg-gradient));
+	}
+
+	.sidebar {
+		transition: all 0.3s;
+		background-color: rgba(var(--bg-gradient));
+	}
 }
 
+// .theme-container:before {
+// 	content: '';
+// 	right: 0;
+// 	bottom: 0;
+// 	left: 0;
+// 	position: fixed;
+// 	top: 0;
+// 	z-index: -1;
+// 	background-image: url('/images/pexels-khairul-nizam-16516.jpg');
+// 	// background-repeat: repeat;
+//   background-size: cover;
+//   background-position: center;
+// 	min-height: 100%;
+// 	// filter: blur(1px);
+// }
+
+// .theme-container {
+//   opacity: 0.99;
+// 	// background: radial-gradient(
+// 	// 	ellipse,
+// 	// 	rgba(var(--bg-gradient-home), 1) 0%,
+// 	// 	rgba(var(--bg-gradient-home), 0) 700%
+// 	// );
+//   // background: radial-gradient(ellipse,rgba(var(--bg-gradient-home),1) 0%,rgba(var(--bg-gradient-home),0) 700%) !important;
+// }
+
+img {
+	transition: opacity 0.5s ease-in-out;
+}

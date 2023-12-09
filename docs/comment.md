@@ -1,7 +1,9 @@
 ---
 lastUpdated: false
 contributors: false
+anchor: false
 ---
+
 # <center>留言板子</center>
 
 # <center>富强、民主、文明、和谐</center>

@@ -4,9 +4,9 @@ layout: CustomLayout
 heroImage: /images/avator.webp
 heroText: JINGQIAN's Blog
 actions:
-  - text: So Why?
-    link: /guide/
-    type: primary
+  # - text: So Why?
+  #   link: /guide/
+  #   type: primary
   # - text: 作者简介
   #   link: /guide/
   #   type: secondary

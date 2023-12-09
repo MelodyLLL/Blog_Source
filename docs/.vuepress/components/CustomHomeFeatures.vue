@@ -63,8 +63,6 @@ const props = defineProps({});
 			</div>
 		</div>
 	</div>
-
-	<br />
 </template>
 <style lang="scss" scoped>
 h1 {
@@ -73,11 +71,12 @@ h1 {
 
 // base
 .flip_wrapper {
-  color: #f0f0f0;
+	color: #f0f0f0;
 	display: flex;
 	gap: 1rem;
-
-	flex-wrap:wrap;
+	padding: 1.2rem 0;
+	margin-top: 2.5rem;
+	flex-wrap: wrap;
 
 	img {
 		width: auto;
@@ -94,7 +93,8 @@ h1 {
 	}
 	.flip {
 		// flex: 1;
-    min-width: 200px;
+		height: 100%;
+		min-width: 200px;
 		position: relative;
 		> .front,
 		> .back {
@@ -143,7 +143,7 @@ h1 {
 	.flip {
 		position: relative;
 		display: inline-block;
-		margin-bottom: 1em;
+		// margin-bottom: 1em;
 		flex: 1;
 		> .front {
 			display: block;
@@ -160,6 +160,7 @@ h1 {
 			background: #313131;
 			padding: 2em 2em;
 			box-sizing: border-box;
+			border-radius: 10px;
 			p {
 				font-size: 0.9125rem;
 				line-height: 160%;

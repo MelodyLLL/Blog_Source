@@ -9,7 +9,7 @@ import HomeFeatures from '../components/CustomHomeFeatures.vue';
 <template>
 	<!-- <div class="background"></div> -->
 
-	<div class="overlay"></div>
+	<!-- <div class="overlay"></div> -->
 	<Layout class="background">
 		<template #navbar-before>
 			<!-- <SearchBox /> -->
@@ -30,9 +30,9 @@ import HomeFeatures from '../components/CustomHomeFeatures.vue';
 .background {
 	/* width: 100vw;
 	height: 100vh; */
-	background-image: url('https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb');
+	/* background-image: url('https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb');
 	background-size: cover;
-	background-position: center;
+	background-position: center; */
 }
 .overlay {
 	position: fixed;

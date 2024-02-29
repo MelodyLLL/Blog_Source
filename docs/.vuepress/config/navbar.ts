@@ -1,5 +1,15 @@
 import { NavbarGroup, NavbarItem } from 'vuepress';
+import { resolve } from 'path';
+import fs from 'fs';
+const interviewDir = resolve(__dirname, '../../interview');
+const files = fs.readdirSync(interviewDir);
 
+let firstInterviewFile = '';
+if (files.length > 0) {
+	firstInterviewFile = files.find((item) => item.endsWith('.md') && !item.startsWith('_')) || '';
+}
+
+console.log(firstInterviewFile);
 interface NavbarItems extends NavbarItem {
 	icon?: any;
 }
@@ -10,7 +20,7 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 	},
 	{
 		text: '面经',
-		link: '/interview/interview0.md',
+		link: `/interview/${firstInterviewFile}`,
 		activeMatch: '/interview0',
 	},
 	{
@@ -33,7 +43,7 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 			},
 		],
 	},
-  {
+	{
 		text: '留言',
 		link: '/comment.md',
 		activeMatch: '/comment',

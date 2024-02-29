@@ -33,23 +33,12 @@ const sidebar: SidebarConfig = {
 	],
 	'/interview/': [
 		{
-			text: '经常问到的那些',
-			// children: fileNames.map((item) => {
-			// 	return '/' + item.split('/').slice(-2).join('/');
-			// }),
-			children: [
-				'interview0.md',
-				'interview1.md',
-				'interview2.md',
-				'interview3.md',
-				'interview4.md',
-				'interview5.md',
-        
-				'interview6.md',
-				'interview8.md',
-				'interview9.md',
-				'interview10.md',
-			],
+			text: '',
+			children: fileNames
+				.filter((item) => item.endsWith('.md') && !item.includes('/_'))
+				.map((item) => {
+					return '/interview/' + path.basename(item);
+				}),
 		},
 	],
 };

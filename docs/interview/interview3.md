@@ -2,82 +2,53 @@
 
 ## Vue
 
-### 有没有用过 inject、provide api，解决了什么问题，能否响应式
-
-- 主要解决数据跨层级传递的问题
-- 可以响应式，需要提供一个响应式对象
-- 衍生提问关于状态管理的话题
-
-### vue 的双向绑定是怎么实现的
-
-- vue 中的双向绑定其实是 v-model 指令的小 trick
-- 通过事件触发和 value 绑定可以达到类似双向绑定的效果
-- vue.js 采用数据劫持和订阅发布者模式，在初始化时，通过 object.defineproperty 来重新定义 data 中的所有属性，当页面使用对应属性时，首先会进行依赖收集，如果属性发生变化会通知相关依赖进行更新操作
-
-### vue 组件通讯
-
-- props+events 父子组件通信（parent/parent/parent/children），
-- vuex 任何组件通信，
-- 事件中心 emit/emit / emit/on 任何组件的通信，
-- attrs/attrs/attrs/listeners
-- 后代通信（provide / inject）
-
-### vuex(使用和源码，如何封装一个 vue 插件)
-
-待补充
-
-### key 的作用： 提供唯一的标识，高效的更新虚拟 dom
-
-更准确：a.key === b.key
-更快速：key 的唯一性可以很好的被 map 函数利用，时间复杂度为 O(1)
-虚拟 DOM 本质就是用一个原生的 js 对象去描述一个 DOM 节点，是对真实 DOM 的一层抽象。
-
-### computed 和 watch 的区别和使用场景：
-
-计算属性当依赖的属性发生变化时就会更新视图，适用于比较消耗性能的场景。具有缓存性。watch 不会缓存，每当监听的数据发生变化时都会执行，可以监听某些数据执行回调。
-
-### v-for 与 v-if 优先级问题
-
-v-for 优先于 v-if 被解析
-
-### nextTick 原理：
-
-在下次 DOM 更新循环结束之后执行延迟回调。nextTick 主要使用了宏任务和微任务。根据执行环境分别尝试使用 Promise，MutationObserver，setImmediate，setTimeout。
-
-### 怎么定义 vue-router 的动态路由？怎么获取传过来的动态参数？
-
-在 router 目录下的 index.js 文件中，对 path 属性加上/:id，使用 router 对象的 params.id。
-
-### vuex 是什么？怎么使用？哪种功能场景使用它？
-
-vue 框架中状态管理。在 main.js 中引入 store，注入。新建了一个目录 store。场景有：组件之间的状态，登录状态，按钮权限，用户信息。
-
-### vuex 有哪些属性？
-
-有五种，分别是 state（存储变量），mutation（提交更新数据的方法，修改 vuex 中状态的唯一方法），action（提交 mutation，可以包含任意异步操作），getter，module（模块化 vuex）
-
-### $set 方法是什么？
-
-$set方法相当于手动的去把set进去的属性处理成一个响应式的属性。this.$set(this.obj, 'b', 'obj.b')
-
-### vue-loader 是什么？
-
-解析.vue 文件的一个加载器，让 js 可以写 es6，style 样式可以用 scss 或者 less。
-
-### 对 vue.js 的 template 编译的理解？
-
-就是先转化为 AST 树，在得到 render 函数返回 VNode。
-
-### name 的作用？
-
-1.注册组件使用组件名.name
-2.keep-alive exclude=‘name’ 3.使用 vue-tool 工具时显示的是 name
-
 ### MVVM 是什么:
 
 MVVM 是 Model-View-ViewModel 缩写，Model 代表数据模型，View 代表 UI 组件，ViewModel 是 View 和 Model 的桥梁，数据会绑定到 ViewModel 层并自动将数据渲染到页面中，视图变化时会通知 ViewModel 层更新数据。
 
-### vue2.x 如何监测数组变化：
+### vue 的双向绑定原理
+
+1. 初始化 data，把 vm.data.xxx 代理到 vm.xxx
+2. 调用 observe 方法观测整个 data，给非 VNode 的对象类型数据添加一个 Observer
+3. Observer： 会把自身实例添加到对象的 `__ob__` 属性上，遍历对象类型数据通过 `Object.defineProperty` 添加 getter 和 setter
+4. Dep：收集依赖，在 getter 中把每一个调用过该属性的地方记录为依赖（即触发 getter 的地方进行收集并且让 watcher 订阅对应依赖）
+5. Watcher：更改数据后触发 setter，让所有 wathcer 都去通知组件进行更新
+
+### vue 组件通讯
+
+- props+events 父子组件通信（parent/parent/parent/children）
+- vuex 任何组件通信
+- 事件中心 emit/emit / emit/on 任何组件的通信
+- attrs/listeners 传递属性和事件
+- 跨层级通信（provide / inject）
+
+### key 的作用
+
+待补充
+
+### computed 和 watch 的区别和使用场景
+
+- 计算属性当依赖的属性发生变化时就会更新视图，适用于比较消耗性能的场景。具有缓存性。
+- watch 不会缓存，每当监听的数据发生变化时都会执行，可以监听某些数据执行回调。
+
+### nextTick api：
+
+在下次 DOM 更新循环结束之后执行延迟回调。nextTick 主要使用了宏任务和微任务。原理是根据执行环境分别尝试使用 Promise，MutationObserver，setImmediate，setTimeout。
+
+### vuex 有哪些属性
+
+有五种，分别是 state（存储变量），mutation（提交更新数据的方法，修改 vuex 中状态的唯一方法），action（提交 mutation，可以包含任意异步操作），getter，module（模块化 vuex）
+
+### $set 方法是什么
+
+$set方法相当于手动的去把set进去的属性处理成一个响应式的属性。this.$set(this.obj, 'b', 'obj.b')
+
+### name 的作用
+
+1.注册组件使用组件名.name
+2.keep-alive exclude=‘name’ 3.使用 vue-tool 工具时显示的是 name
+
+### vue2.x 如何监测数组变化
 
 使用了函数劫持的方式，重写了数组的方法，将 data 中的数组进行了原型链重写，指向自己定义的数组原型方法，这样当调用这些数组 api 时，可以通知依赖更新，如果数组中包含着引用类型，会对数组中的引用类 再次递归遍历进行监控，这样就能监测到数组的变化了。
 
@@ -302,6 +273,7 @@ batchedUpdate 机制
 [配置 | webpack 中文文档](https://www.webpackjs.com/configuration/)
 
 ### webpack 构建流程？说完整一些。
+
 webpack 构建流程：
 
 初始化： 读取配置文件，初始化参数，加载插件。
@@ -333,11 +305,13 @@ Webpack 的热更新（Hot Module Replacement，HMR）是一种在应用运行�
 客户端支持： 在浏览器中通过 WebSocket 等技术与服务器建立连接，当模块发生变化时，服务器通过连接通知客户端更新。
 
 ### webpack 中自定义 loader
+
 自定义 loader 是通过编写 Node.js 模块来实现的，这个模块需要导出一个函数。这个函数会在文件转换过程中被调用，并且接收文件内容作为参数。自定义 loader 的主要工作是将输入的文件内容进行转换，然后返回新的内容。
 
 在 webpack 配置中，通过 module.rules 配置项来指定 loader
 
 ### AMD 和 CMD？
+
 这两者都是 JavaScript 模块化规范，但在模块定义和加载的时机上存在一些区别。
 
 ## Babel

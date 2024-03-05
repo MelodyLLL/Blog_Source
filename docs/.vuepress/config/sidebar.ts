@@ -10,7 +10,7 @@ const sidebar: SidebarConfig = {
 		{
 			text: 'React笔记',
 			// collapsible: true,
-			children: ['/note/react/React1.md', '/note/react/React2.md'],
+			children: ['/note/react/React1.md'],
 		},
 	],
 	'/note/engineering/': [
@@ -21,6 +21,8 @@ const sidebar: SidebarConfig = {
 				'/note/engineering/Engineering1.md',
 				'/note/engineering/Engineering2.md',
 				'/note/engineering/Engineering3.md',
+				'/note/engineering/Engineering4.md',
+
 			],
 		},
 	],

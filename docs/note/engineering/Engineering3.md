@@ -127,7 +127,8 @@ entry: ['src/main.js', 'babel-polyfill'];
 - 新加入 VueLoaderPlugin、WebpackBar
 - 另外如 DllPlugin 发现使用后构建速度提升十多秒，并没有很大的提升
 
-注意一定要升级所有的插件，下面的这个 warning 就是因为 CopyWebpackPlugin 还在 v4.x 导致的，找了很久的原因
+<font color="#dd0000">注意一定要升级所有的插件，下面的这个 warning 就是因为 CopyWebpackPlugin 还在 v4.x 导致的，找了很久的原因</font>
+
 ::: danger
 (node:81863) [DEP_WEBPACK_COMPILATION_ASSETS] DeprecationWarning: Compilation.assets will be frozen in future, all modifications are deprecated.
 BREAKING CHANGE: No more changes should happen to Compilation.assets after sealing the Compilation.
@@ -199,10 +200,14 @@ rm(
 
 ## babel 配置
 
-babel7 的改变比较大，最明显的是包名的变化，v7 的包名都变成了@babel/xxx，参考[官方指南](https://babeljs.io/docs/v7-migration)，里面有提到 babel-upgrade 工具可进行自动升级，会替换`package.json` 与`.babelrc`中的配置，参考文档可以看到 @babel/preset-env 替换了之前零散的预设，Stage Preset包 和 polyfill 的引入也进行了变更。<font color="#dd0000">另外要注意 babel-plugin-transform-vue-jsx 对babel7的适配，因为有可能出现相关的报错。</font>看到 [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) 推荐的是v4.x的版本
+babel7 的改变比较大，最明显的是包名的变化，v7 的包名都变成了@babel/xxx，参考[官方指南](https://babeljs.io/docs/v7-migration)，里面有提到 babel-upgrade 工具可进行自动升级，会替换`package.json` 与`.babelrc`中的配置，参考文档可以看到 @babel/preset-env 替换了之前零散的预设，Stage Preset 包 和 polyfill 的引入也进行了变更。<font color="#dd0000">另外要注意 babel-plugin-transform-vue-jsx 对 babel7 的适配，因为有可能出现相关的报错。</font>看到 [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) 推荐的是 v4.x 的版本
 
 ## 总结
+
 - 升级构建配置，可以重新拉一个仓库和新分支，因为要重新 npm i 替换大量依赖，这样比较方便
 - 一定要检查所有的包是否都有更新，不然有一些还未升级的包会导致各种莫名其妙的错误
-- vue可以直接使用vite构建，这样开发构建带来的体验冲击感会更大...，虽然社区可能没有那么的完善，但是其实常规项目都够用了
-- 还有一些关于 postcss scss 相关的变化，mac 可能会因为 node-sass 版本原因出现诸如此类的报错 Node Sass does not yet support your current environment: OS X Unsupported architecture (arm64) with Unsupported runtime (102)
+- vue 可以直接使用 vite 构建，这样开发构建带来的体验冲击感会更大...，虽然社区可能没有那么的完善，但是其实常规项目都够用了
+- 还有一些关于 postcss scss 相关的变化，mac 可能会因为 node-sass 版本原因出现诸如此类的报错
+  ::: danger
+  Node Sass does not yet support your current environment: OS X Unsupported architecture (arm64) with Unsupported runtime (102)
+  ::: 

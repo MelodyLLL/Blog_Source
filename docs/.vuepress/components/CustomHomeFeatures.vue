@@ -43,7 +43,7 @@ const props = defineProps({});
 					background-image: url(https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
 				"
 			>
-				<h1 class="text-shadow">Blog</h1>
+				<h1 class="text-shadow">Zone</h1>
 			</div>
 			<div class="back" style="display: flex; justify-content: center">
 				<h2

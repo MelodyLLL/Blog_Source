@@ -1,6 +1,6 @@
 # NodeJS 和服务器
 
-## node 导出模块的两种方式有什么区别？
+## js模块导出的两种方式？
 
 在 Node.js 中，有两种主要的导出模块的方式：CommonJS 和 ES6 的导出方式。下面是它们的主要区别：
 
@@ -95,3 +95,8 @@ app.listen(3000, () => {
 	console.log('Server is running on http://localhost:3000');
 });
 ```
+
+## ssr 了解吗？
+
+ssr 也就是服务端渲染，也就是把 vue 在客户端把标签渲染成 HTML·的工作放在服务端完成，然后再把 html 直接返回给客户端。
+服务器渲染只支持 created 和 beforeCreated 两个钩子，ssr 有着更好的 seo，首屏加载速度更快。

@@ -217,6 +217,26 @@ function throttle(func, wait) {
 }
 ```
 
+## 手写 flat 函数
+
+```js
+function flat(arr, depth = 1) {
+	if (!Array.isArray(arr)) {
+		return arr;
+	}
+
+	const result = [];
+	for (let i = 0; i < arr.length; i++) {
+		if (Array.isArray(arr[i]) && depth > 0) {
+			result.push(...flat(arr[i], depth - 1));
+		} else {
+			result.push(arr[i]);
+		}
+	}
+	return result;
+}
+```
+
 ## 手写 delay 函数
 
 ```typescript

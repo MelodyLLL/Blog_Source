@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { withBase } from '@vuepress/client';
-const wechatImg = ref('/images/WechatIMG67.jepg');
+const dd = ref('/images/image2.jpg');
 const props = defineProps({});
 </script>
 <!-- horizontal -->
@@ -41,6 +41,7 @@ const props = defineProps({});
 				class="front"
 				style="
 					background-image: url(https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb);
+          /* background-image: dd; */
 				"
 			>
 				<h1 class="text-shadow">Zone</h1>

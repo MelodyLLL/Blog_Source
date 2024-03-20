@@ -4,7 +4,7 @@ tag: 面试
 
 # Javascript 语言基础
 
-<img src="/images/javascript (1).gif" style="zoom:55%;display:block;margin:0 auto"/>
+<img src="/images/javascript.gif" style="zoom:55%;display:block;margin:0 auto"/>
 
 
 ## 作用域是什么？

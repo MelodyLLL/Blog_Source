@@ -50,8 +50,28 @@ Webpack 的热更新（Hot Module Replacement，HMR）是一种在应用运行�
 
 > [Babel 是什么？ · Babel 中文文档 | Babel 中文网](https://www.babeljs.cn/docs/)
 
-## 写过的 webpack 插件、loader
+## 写过的 webpack 插件、loader？
 
 类似 eslint 插件，雪碧图 loader, 监控 loader
 
 ## rollup 常见配置、插件
+
+Rollup 是一个 JavaScript 模块打包器，它专注于将小块代码编译成更大、更复杂的代码块。下面是一些常见的 Rollup 配置和插件：
+
+### 常见配置
+
+- `input`：指定入口文件的路径。
+- `output`：指定输出文件的配置，包括文件路径、格式等。
+- `plugins`：配置使用的插件，例如处理 CSS、压缩代码等。
+
+### 常见插件
+
+- `rollup-plugin-babel`：用于将 ES6+ 代码转换为兼容的 JavaScript 代码。
+- `rollup-plugin-commonjs`：将 CommonJS 模块转换为 ES6 模块。
+- `rollup-plugin-node-resolve`：解析第三方模块的路径。
+- `rollup-plugin-terser`：压缩 JavaScript 代码。
+- `rollup-plugin-postcss`：处理 CSS 文件。
+- `rollup-plugin-sass`：处理 Sass 文件。
+- `rollup-plugin-json`：处理 JSON 文件。
+
+这些是一些常见的 Rollup 配置和插件。

@@ -34,10 +34,11 @@ HTML5 新增了很多语义化标签，使文档更具可读性，页面结构�
 
 ## display、visibility 和 opacity 的区别
 
-**共同点：**
+#### **共同点：**
 
 都可以隐藏元素，让元素不可见
-**区别：**
+
+#### **区别：**
 
 **display: none**
 
@@ -192,3 +193,7 @@ CSS3 中的 `translate()` 函数可以实现元素的平移，它不会导致页
 相比之下，如果使用传统的方法（如修改元素的 `left` 或 `top` 属性），会触发浏览器的重排和重绘，因为这些操作需要浏览器重新计算元素的布局和样式，然后更新渲染树和页面内容。
 
 因此，使用 `translate()` 函数来实现元素的平移可以更加高效地进行动画和交互效果的实现，并且能够提升页面的性能表现。
+
+## css 选择器语法
+
+<img src="/images/cssselectorcheatsheet.png" style="zoom:55%;display:block;margin:0 auto"/>

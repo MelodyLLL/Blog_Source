@@ -1,5 +1,14 @@
 # React
 
+## React 与 Vue 的区别
+
+- 模版语法与 jsx
+- 事件绑定，vue 绑定到 vm 上，react 类组件还需要自己处理 this 指向
+- vue 有双向绑定，响应式更加便利，react 单纯的单向数据流，需要手动 setState，有一定的心理负担
+- vue 有一些小 trick，事件修饰符，组件属性自动挂到最外层节点等
+- diff 算法差异
+- 生态对比
+
 ## 虚拟 dom 的比较过程
 
 虚拟 dom 本质是一个 js 对象
@@ -103,8 +112,7 @@ console.log(state); // Subsequent-render: ['Rudi', 'Yardley']
 
 ## useEffect 和 useLayoutEffect 的区别是什么
 
-执行时机不同，后者跟 didMount 一致，在 dom 更新后同步执行，useEffect 是异步执行
-后者能在服务端渲染中执行（但是无效）
+> [useLayoutEffect和useEffect的区别](https://zhuanlan.zhihu.com/p/348701319)
 
 ## setState 的执行时机与同步异步
 

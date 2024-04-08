@@ -1,7 +1,7 @@
 <!-- ---
 sidebar: auto
 --- -->
-# 前端工程化一
+# 前端基建规范
 ## 配置eslint
 - 安装eslint或者其他相关包（使用框架react,vue等）或者
 - 使用npx eslint --init自动生成

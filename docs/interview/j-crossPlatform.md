@@ -1,10 +1,17 @@
-# 跨平台
+# 跨平台与插件开发
 
-## 写过 vscode 插件吗？
+## vscode 插件
+
+单独写到笔记里面了
 
 ## chrome 插件开发？
 
+了解过，暂未有这方面的开发刚需
+
 ## 跨平台技术了解
 
-移动端 ReactNative，flutter
-桌面端 electron
+- uni-app
+- taro
+- ReactNative
+- flutter
+- electron

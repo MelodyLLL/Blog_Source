@@ -6,7 +6,8 @@ const files = fs.readdirSync(interviewDir);
 
 let firstInterviewFile = '';
 if (files.length > 0) {
-	firstInterviewFile = files.find((item) => item.endsWith('.md') && !item.startsWith('_')) || '';
+	firstInterviewFile =
+		files.find((item) => item.endsWith('.md') && !item.startsWith('_')) || '';
 }
 
 console.log(firstInterviewFile);
@@ -21,7 +22,7 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 	{
 		text: '面经',
 		link: `/interview/${firstInterviewFile}`,
-		activeMatch: '/interview0',
+		activeMatch: '/interview',
 	},
 	{
 		text: '笔记',
@@ -40,6 +41,10 @@ const navbar: (NavbarItems | NavbarGroup | string)[] = [
 			{
 				text: 'Typescript',
 				link: '/note/typescript/Typescript1.md',
+			},
+			{
+				text: '技术前线',
+				link: '/note/new/svelte.md',
 			},
 		],
 	},

@@ -277,7 +277,7 @@ add(3)(4)(5); // 12
 add(3)(6)(9)(25); // 43
 ```
 
-## 手写 LazyMan，类似实现 Promise
+## 手写 LazyMan（类似Promise）
 
 ```javascript
 class LazyMan {
@@ -463,9 +463,175 @@ Promise.prototype.all = function (promises) {
 };
 ```
 
-## 数组转 Tree（递归和 reduce 实现）
+## 发布订阅者模式
 
-递归
+#### 简单实现
+
+```js
+// 创建一个发布者对象
+class Publisher {
+  constructor() {
+    this.subscribers = {}; // 订阅者列表
+  }
+
+  // 添加订阅者
+  subscribe(event, callback) {
+    if (!this.subscribers[event]) {
+      this.subscribers[event] = [];
+    }
+    this.subscribers[event].push(callback);
+  }
+
+  // 发布消息
+  publish(event, data) {
+    if (this.subscribers[event]) {
+      this.subscribers[event].forEach(callback => callback(data));
+    }
+  }
+}
+
+// 创建一个订阅者对象
+class Subscriber {
+  constructor(name) {
+    this.name = name;
+  }
+
+  // 订阅事件
+  subscribeTo(publisher, event) {
+    publisher.subscribe(event, data => {
+      console.log(`${this.name} 收到了消息：${event} - ${data}`);
+    });
+  }
+}
+
+// 测试
+const publisher = new Publisher();
+const subscriber1 = new Subscriber("Subscriber 1");
+const subscriber2 = new Subscriber("Subscriber 2");
+
+subscriber1.subscribeTo(publisher, "news");
+subscriber2.subscribeTo(publisher, "news");
+
+publisher.publish("news", "今天的新闻是...");
+
+// 输出：
+// Subscriber 1 收到了消息：news - 今天的新闻是...
+// Subscriber 2 收到了消息：news - 今天的新闻是...
+```
+
+#### vue3的事件总线处理类库mitt的源码
+
+```js
+/**
+ * copy to https://github.com/developit/mitt
+ * Expand clear method
+ */
+
+export type EventType = string | symbol;
+
+// An event handler can take an optional event argument
+// and should not return a value
+export type Handler<T = any> = (event?: T) => void;
+export type WildcardHandler = (type: EventType, event?: any) => void;
+
+// An array of all currently registered event handlers for a type
+export type EventHandlerList = Array<Handler>;
+export type WildCardEventHandlerList = Array<WildcardHandler>;
+
+// A map of event types and their corresponding event handlers.
+export type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
+
+export interface Emitter {
+  all: EventHandlerMap;
+
+  $on<T = any>(type: EventType, handler: Handler<T>): void;
+  $on(type: '*', handler: WildcardHandler): void;
+
+  $off<T = any>(type: EventType, handler: Handler<T>): void;
+  $off(type: '*', handler: WildcardHandler): void;
+
+  $emit<T = any>(type: EventType, event?: T): void;
+  $emit(type: '*', event?: any): void;
+  $clear(): void;
+}
+
+/**
+ * Mitt: Tiny (~200b) functional event emitter / pubsub.
+ * @name mitt
+ * @returns {Mitt}
+ */
+export default function mitt(all?: EventHandlerMap): Emitter {
+  all = all || new Map();
+
+  return {
+    /**
+     * A Map of event names to registered handler functions.
+     */
+    all,
+
+    /**
+     * Register an event handler for the given type.
+     * @param {string|symbol} type Type of event to listen for, or `"*"` for all events
+     * @param {Function} handler Function to call in response to given event
+     * @memberOf mitt
+     */
+    $on<T = any>(type: EventType, handler: Handler<T>) {
+      const handlers = all?.get(type);
+      const added = handlers && handlers.push(handler);
+      if (!added) {
+        all?.set(type, [handler]);
+      }
+    },
+
+    /**
+     * Remove an event handler for the given type.
+     * @param {string|symbol} type Type of event to unregister `handler` from, or `"*"`
+     * @param {Function} handler Handler function to remove
+     * @memberOf mitt
+     */
+    $off<T = any>(type: EventType, handler: Handler<T>) {
+      const handlers = all?.get(type);
+      if (handlers) {
+        // 省略if的写法
+        handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+      }
+    },
+
+    /**
+     * Invoke all handlers for the given type.
+     * If present, `"*"` handlers are invoked after type-matched handlers.
+     *
+     * Note: Manually firing "*" handlers is not supported.
+     *
+     * @param {string|symbol} type The event type to invoke
+     * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
+     * @memberOf mitt
+     */
+    $emit<T = any>(type: EventType, evt: T) {
+      ((all?.get(type) || []) as EventHandlerList).slice().map((handler) => {
+        handler(evt);
+      });
+      ((all?.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => {
+        handler(type, evt);
+      });
+    },
+
+    /**
+     * Clear all
+     */
+    $clear() {
+      this.all.clear();
+    },
+  };
+}
+```
+#### 延伸问题：观察者模式和订阅发布模式的区别
+
+> [观察者模式 vs 发布订阅模式](https://zhuanlan.zhihu.com/p/51357583)
+
+## 数组转 Tree（两种方式）
+
+#### 递归方式：
 
 ```javascript
 export const generateTree = (
@@ -498,7 +664,7 @@ export const generateTree = (
 };
 ```
 
-reduce 实现
+#### reduce 实现：
 
 ```javascript
 let treeList = Arr.reduce((prev, cur) => {

@@ -22,7 +22,8 @@ const sidebar: SidebarConfig = {
 				'/note/engineering/Engineering2.md',
 				'/note/engineering/Engineering3.md',
 				'/note/engineering/Engineering4.md',
-
+        '/note/engineering/vscode.md',
+        '/note/engineering/i18n-util.md',
 			],
 		},
 	],
@@ -31,6 +32,13 @@ const sidebar: SidebarConfig = {
 			text: 'Typescript笔记',
 			// collapsible: true,
 			children: ['/note/typescript/Typescript1.md'],
+		},
+	],
+  '/note/new/': [
+		{
+			text: '技术前线',
+			// collapsible: true,
+			children: ['/note/new/svelte.md'],
 		},
 	],
 	'/interview/': [

@@ -30,7 +30,7 @@
 
 2、临时活动或临时跳转，在举行重大活动，需对活动进行宣传，如：用户访问首页或某些页面时时临时跳转至活动专页，待活动结束后取消跳转。
 
-## LocalStorage、Cookie等区别？
+## LocalStorage、Cookie 等区别？
 
 > [细说 localStorage, sessionStorage, Cookie, Session - 掘金](https://juejin.cn/post/6844903587764502536)
 
@@ -149,8 +149,9 @@ HTTP/1.1 新增字段，表示文件唯一标识，只要文件内容改动，ET
 
 ## http2.0 与 http1.1 的区别？
 
+归纳三大特性：多路复用、主动推送、头部压缩
+
 > [一文读懂 HTTP/2 特性](https://zhuanlan.zhihu.com/p/26559480)
-> 归纳三大特性：多路复用、主动推送、头部压缩
 
 ## xss，csrf 等网络安全问题
 

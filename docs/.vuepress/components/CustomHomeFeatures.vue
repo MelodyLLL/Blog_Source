@@ -33,7 +33,7 @@ const props = defineProps({});
 			</div>
 			<div class="back">
 				<h2>我在哪</h2>
-				<p>广州，某公司就职的4年+前端开发</p>
+				<p>广州，某公司就职的5年+前端开发</p>
 			</div>
 		</div>
 		<div class="flip flip-vertical oneline">

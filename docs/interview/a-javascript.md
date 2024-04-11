@@ -28,13 +28,14 @@ JavaScript 的作用域分为以下几种：
 
 ## 闭包的概念和作用
 
-1. 我的理解：全局作用域外的函数访问上层作用域的变量就形成了闭包。此函数称作闭包函数，变量称为闭包。
+1. 我的理解：**全局作用域外**的函数访问上层作用域的变量就形成了闭包。此函数称作闭包函数，变量称为闭包。
 
 2. 官方理解：闭包（closure）是一个函数以及其捆绑的周边环境状态（lexical environment，词法环境）的引用的组合。换而言之，闭包让开发者可以从内部函数访问外部函数的作用域。在 JavaScript 中，闭包会随着函数的创建而被同时创建。
    简述：闭包是由函数以及声明该函数的词法环境组合而成的
 
 官方理解中，可能比较难理解的是 `词法作用域`
 它是什么？ 词法作用域（Lexical Scope） 是定义表达式并能被访问的区间。一个声明（定义变量、函数等）的词法作用域就是它被定义时所在的作用域。
+因此 `myName` 的词法作用域是全局作用域，而不是被调用的函数作用域。只有词法作用域内的代码才可以访问该作用域内部的代码。
 
 ```js
 // 定义一个全局作用域变量：
@@ -48,9 +49,10 @@ function getName() {
 console.log(getName()); // 'myName'
 ```
 
-因此 `myName` 的词法作用域是全局作用域，而不是被调用的函数作用域。只有词法作用域内的代码才可以访问该作用域内部的代码,我理解这可能就是和闭包函数访问闭包一样的道理。
+我一直认为上图中的也算一种闭包，但是当我考虑到闭包的两个特点：
+**闭包的第一个作用即可以创建私有变量，这也是模块化的一个基石。第二个作用就是延长变量的生命周期。** 因此我把`我的理解`中加上了**全局作用域外**这个修饰。
 
-闭包的第一个作用即可以创建私有变量，这也是模块化的一个基石？第二个作用就是延长变量的生命周期。
+但是其实上图确实算是闭包，因为它确实符合官方的概念，只不过它完整的表现形式应该还需要有一个内部的**闭包函数**，我想这样理解应该也算是对的
 
 ## 解释原型链
 
@@ -83,7 +85,8 @@ Object.prototype.__proto__ === null;
 3. **Boolean**：布尔类型，表示逻辑上的 true 或 false。
 4. **Undefined**：表示未定义或未初始化的值。
 5. **Null**：表示空值。
-6. **Symbol**：表示唯一的、不可变的值。
+6. **Symbol(ES6)**：表示唯一的、不可变的值。
+7. **bigint(ES10)**：可以表示任意大的整数。
 
 基本类型的值直接存储在变量访问的位置，因此它们是按值访问的。当你将一个基本类型的值赋给另一个变量时，会创建一个新的值的副本。基本类型的比较是根据它们的值进行的。
 
@@ -114,7 +117,19 @@ console.log(obj1.name); // 输出 'Bob'
 
 ## js 的包装类型？
 
+注意：我们不能给基本包装类型添加属性和方法
+
+```js
+let s = 'JavaScript';
+s.language = 'ECMAScript';
+console.log(s.language); // undefined
+```
+
 > [Js 基本包装类型（含原理）\_js 包装类型的原理\_scluis 的博客-CSDN 博客](https://blog.csdn.net/weixin_42619772/article/details/122510569)
+
+## 关于 js 中的循环语句
+
+> [Looping over Arrays: for vs. for-in vs. .forEach() vs. for-of](https://link.zhihu.com/?target=https%3A//2ality.com/2021/01/looping-over-arrays.html)
 
 ## set 与 map 是什么？应用场景？
 
@@ -284,23 +299,50 @@ return result instanceof Object ? result : obj;
 
 ## 解释一下什么是 promise？
 
-Promise 是 JavaScript 中一种用于处理异步操作的对象，它代表了一个异步操作的最终完成（或失败）及其结果的表示。Promise 对象可以认为是一个占位符，用来表示一个尚未完成的异步操作，它可以让异步操作的结果以更加直观和方便的方式来处理。
+1. **Promise 的概念：** Promise 是 ES6 中新增的一种用于处理异步操作的对象。它代表了一个异步操作的最终完成或失败，并且可以获取异步操作的结果。
 
-Promise 对象有三种状态：
+2. **Promise 的状态：** Promise 有三种状态：pending（进行中）、fulfilled（已成功）和 rejected（已失败）。当一个 Promise 被创建时，它处于 pending 状态；当异步操作成功完成时，Promise 的状态会变为 fulfilled，并且会调用 `resolve` 方法；当异步操作失败时，Promise 的状态会变为 rejected，并且会调用 `reject` 方法。
 
-1. **Pending（进行中）**：初始状态，表示异步操作尚未完成。
-2. **Fulfilled（已完成）**：表示异步操作成功完成。
-3. **Rejected（已拒绝）**：表示异步操作失败。
+3. **Promise 的基本语法：** Promise 的基本语法是使用 `new Promise()` 来创建一个 Promise 对象，它接受一个带有 `resolve` 和 `reject` 两个参数的执行器函数。执行器函数会立即执行，并且通常包含异步操作。示例：
 
-Promise 对象可以通过调用 `then()` 方法来注册成功（fulfilled）和失败（rejected）状态的回调函数，分别处理异步操作成功和失败的情况。同时，Promise 还提供了一些其他方法，如 `catch()`、`finally()` 等，用于处理异常情况和清理资源。
+   ```javascript
+   let promise = new Promise((resolve, reject) => {
+   	// 异步操作
+   	setTimeout(() => {
+   		resolve('成功'); // 成功时调用 resolve 方法
+   		// 或者 reject('失败'); // 失败时调用 reject 方法
+   	}, 1000);
+   });
+   ```
 
-Promise 的主要优点包括：
+4. **Promise 的链式调用（Promise chaining）：** Promise 提供了 `then()` 方法来处理异步操作的结果。通过链式调用 `then()` 方法，可以依次处理多个异步操作的结果。示例：
 
-1. **更加直观和可读**：通过 Promise 对象，可以将异步操作的状态以更加直观和可读的方式来表示和处理。
-2. **避免回调地狱**：通过链式调用的方式，可以避免回调地狱（callback hell），使代码更加清晰和易于维护。
-3. **更好的异常处理**：Promise 提供了专门的 `catch()` 方法来处理异常情况，使异常处理更加规范和统一。
+   ```javascript
+   promise.then(
+   	(result) => {
+   		console.log('成功：', result);
+   	},
+   	(error) => {
+   		console.log('失败：', error);
+   	}
+   );
+   ```
 
-总的来说，Promise 是一种用于处理异步操作的标准化方式，在异步编程中起着重要的作用，帮助开发者更加轻松地处理异步操作和异步代码流程。
+5. **Promise 的错误处理：** 可以使用 `catch()` 方法来处理 Promise 链中的任何错误。`catch()` 方法接收一个回调函数，用于处理 Promise 链中的错误。示例：
+
+   ```javascript
+   promise
+   	.then((result) => {
+   		console.log('成功：', result);
+   	})
+   	.catch((error) => {
+   		console.log('失败：', error);
+   	});
+   ```
+
+6. **Promise 的其他方法：** 除了 `then()` 和 `catch()` 方法外，Promise 还提供了其他一些方法，如 `finally()`、`all()`、`race()` 等，用于处理多个 Promise 实例的情况。
+
+7. **示例代码：** 在讲解时最好给出一些示例代码，以便面试官更好地理解你的解释。可以通过简单的示例演示 Promise 的创建、状态转换、链式调用等操作。
 
 ## Async 函数实现原理
 
@@ -397,18 +439,15 @@ remove(); //删除。
 Ajax、Axios 和 Fetch 都是用于发送 HTTP 请求的工具，但它们有一些区别：
 
 1. **Ajax**：
-
-   - Ajax（Asynchronous JavaScript and XML）是一种在无需重新加载整个网页的情况下，通过后台与服务器进行数据交换的技术。它通常使用 XMLHttpRequest 对象来实现异步通信。
-   - Ajax 最初是基于原生的 JavaScript 实现的，它可以实现跨域请求和上传文件等操作。但使用原生的 Ajax 需要编写大量的代码，并且在处理请求错误和超时等方面较为繁琐。
+   Ajax（Asynchronous JavaScript and XML）是一种在无需重新加载整个网页的情况下，通过后台与服务器进行数据交换的技术。它通常使用 XMLHttpRequest 对象来实现异步通信。
+   Ajax 最初是基于原生的 JavaScript 实现的，它可以实现跨域请求和上传文件等操作。但使用原生的 Ajax 需要编写大量的代码，并且在处理请求错误和超时等方面较为繁琐。
 
 2. **Axios**：
-
-   - Axios 是一个基于 Promise 的 HTTP 客户端，可以用于浏览器和 Node.js 环境。它支持异步请求和 Promise API，并且提供了简洁的 API 接口，能够轻松处理请求和响应数据。
-   - Axios 提供了丰富的功能，包括自动转换 JSON 数据、拦截请求和响应、设置请求超时等，使得发送 HTTP 请求变得更加方便和高效。
+   Axios 是一个基于 Promise 的 HTTP 客户端，可以用于浏览器和 Node.js 环境。它支持异步请求和 Promise API，并且提供了简洁的 API 接口，能够轻松处理请求和响应数据。
+   Axios 提供了丰富的功能，包括自动转换 JSON 数据、拦截请求和响应、设置请求超时等，使得发送 HTTP 请求变得更加方便和高效。
 
 3. **Fetch**：
-   - Fetch 是 Web API 的一部分，是一种用于发送和接收网络请求的新型接口。它使用 Promise 来处理请求和响应，提供了一种更加现代化和简洁的方式来处理网络请求。
-   - Fetch 是原生的 Web API，不需要额外的库或插件，因此具有更好的性能和可移植性。但它也有一些限制，比如不支持请求超时、不支持上传文件等。
+   Fetch 是 Web API 的一部分，是一种用于发送和接收网络请求的新型接口。它使用 Promise 来处理请求和响应，提供了一种更加现代化和简洁的方式来处理网络请求。Fetch 是原生的 Web API，不需要额外的库或插件，因此具有更好的性能和可移植性。但它也有一些限制，比如不支持请求超时、不支持上传文件等。
 
 综上所述，Ajax 是一种传统的异步通信技术，Axios 是一个基于 Promise 的 HTTP 客户端库，而 Fetch 是原生的 Web API。Axios 和 Fetch 相比于原生的 Ajax 提供了更加方便和现代化的方式来处理 HTTP 请求。
 
@@ -431,7 +470,7 @@ typeof 一般只能返回如下几个结果：
 - 'object'：这个值是对象或 null。
 - 'function' ：这个值是函数。
 
-instanceOf 会沿着原型链去找其对应构造函数的类型
+而 instanceOf 会沿着原型链去找其对应构造函数的类型
 
 ## 什么是 AST
 
@@ -445,9 +484,11 @@ AST 全名 abstract syntax tree(抽象语法树),抽象表示把 js 代码进行
 
 ## Promise.all 如何防止一个 promise 失败使整个 promise 失败
 
-第一种[怎么避免 Promise.all 其中一个 reject 让所有都取不到值\_landiyaaa 的博客-CSDN 博客](https://blog.csdn.net/landiyaaa/article/details/113633033)
+第一种是直接使用 api allsettled
 
-第二种是直接使用 api allsettled
+第二种用 Promsie 先包装一次
+
+> [怎么避免 Promise.all 其中一个 reject 让所有都取不到值\_landiyaaa 的博客-CSDN 博客](https://blog.csdn.net/landiyaaa/article/details/113633033)
 
 ## 暂存性死区
 
@@ -477,6 +518,4 @@ if (true) {
 }
 ```
 
-这个例子中， a is not defined，b 打印为 2
-
-因此，为了避免暂存性死区，应该在使用 `let` 或 `const` 声明的变量之前进行声明和初始化。
+这个例子中， a is not defined，b 打印为 2，因此，为了避免暂存性死区，应该在使用 `let` 或 `const` 声明的变量之前进行声明和初始化。

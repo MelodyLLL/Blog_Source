@@ -22,7 +22,6 @@ const sidebar: SidebarConfig = {
 				'/note/engineering/Engineering2.md',
 				'/note/engineering/Engineering3.md',
 				'/note/engineering/Engineering4.md',
-        '/note/engineering/vscode.md',
         '/note/engineering/i18n-util.md',
 			],
 		},

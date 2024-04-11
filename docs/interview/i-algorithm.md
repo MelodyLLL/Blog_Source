@@ -106,7 +106,13 @@ export function goBackUrl(
 
 ## 数组去重复的方法有哪些
 
-1.使用 `set`function uniquearray(array) { let unique_array= Array.from(set(array)) return unique_array; } 2.使用 `filter`
+1.使用 `set`
+
+```js
+function uniquearray(array) { let unique_array= Array.from(set(array)) return unique_array; }
+```
+
+2.使用 `filter`
 
 ```js
 function unque_array(arr) {
@@ -116,7 +122,6 @@ function unque_array(arr) {
 	return unique_array;
 }
 console.log(unique_array(array_with_duplicates));
-复制代码;
 ```
 
 3.使用 `for` 循环
@@ -131,6 +136,58 @@ function dups_array(dups_names) {
   });
 return Object.keys(unique);}   // Ron, Pal, Fred, Rongo
 Dups_array(names);
+```
+
+## 找出数组中重复两次以上的数字
+
+```js
+function findDuplicates(arr) {
+	let duplicates = [];
+	let count = {};
+
+	for (let i = 0; i < arr.length; i++) {
+		if (count[arr[i]]) {
+			count[arr[i]]++;
+		} else {
+			count[arr[i]] = 1;
+		}
+	}
+
+	for (let num in count) {
+		if (count[num] > 1) {
+			duplicates.push(parseInt(num));
+		}
+	}
+
+	return duplicates;
+}
+
+const arr = [1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8];
+const duplicates = findDuplicates(arr);
+console.log(duplicates);
+```
+
+空间复杂度 O(1)的解法，重点是利用数组的下标
+
+```js
+function findDuplicates(arr) {
+	let duplicates = [];
+
+	for (let i = 0; i < arr.length; i++) {
+		let num = Math.abs(arr[i]);
+		if (arr[num] < 0) {
+			duplicates.push(num);
+		} else {
+			arr[num] = -arr[num];
+		}
+	}
+
+	return duplicates;
+}
+
+const arr = [1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8];
+const duplicates = findDuplicates(arr);
+console.log(duplicates);
 ```
 
 ## 手写 setTimeOut
@@ -157,26 +214,56 @@ mySetTimeout(() => {
 
 ## 手写深拷贝
 
+1. 考虑到了数组情况
+2. 考虑到循环引用
+
 ```typescript
 function clone(target, map = new Map()) {
-    if (typeof target === 'object') {
-        let cloneTarget = Array.isArray(target) ? [] : {};
-        if (map.get(target)) {
-            return map.get(target);
-        }
-        map.set(target, cloneTarget);
-        for (const key in target) {
-            cloneTarget[key] = clone(target[key], map);
-        }
-        return cloneTarget;
-    } else {
-        return target;
-    }
-};
-
-链接：https://juejin.im/post/6844903929705136141
-来源：掘金
+	if (typeof target === 'object') {
+		let cloneTarget = Array.isArray(target) ? [] : {};
+		if (map.get(target)) {
+			return map.get(target);
+		}
+		map.set(target, cloneTarget);
+		for (const key in target) {
+			cloneTarget[key] = clone(target[key], map);
+		}
+		return cloneTarget;
+	} else {
+		return target;
+	}
+}
 ```
+
+进阶版本，考虑到了对于 for in 循坏的性能优化，来自下方参考链接
+
+```js
+function clone(target, map = new WeakMap()) {
+	if (typeof target === 'object') {
+		const isArray = Array.isArray(target);
+		let cloneTarget = isArray ? [] : {};
+
+		if (map.get(target)) {
+			return map.get(target);
+		}
+		map.set(target, cloneTarget);
+
+		const keys = isArray ? undefined : Object.keys(target);
+		forEach(keys || target, (value, key) => {
+			if (keys) {
+				key = value;
+			}
+			cloneTarget[key] = clone2(target[key], map);
+		});
+
+		return cloneTarget;
+	} else {
+		return target;
+	}
+}
+```
+
+> [如何写出一个惊艳面试官的深拷贝?](https://juejin.im/post/6844903929705136141)
 
 ## 手写防抖
 
@@ -277,7 +364,7 @@ add(3)(4)(5); // 12
 add(3)(6)(9)(25); // 43
 ```
 
-## 手写 LazyMan（类似Promise）
+## 手写 LazyMan（类似 Promise）
 
 ```javascript
 class LazyMan {
@@ -437,6 +524,10 @@ new Promise(resolve=>setTime(()=>resolve('aaa'),1000))).then((rsp)=>console.log(
 
 ## 实现 Promise.all
 
+注意 Promise.resolve()的作用：
+
+Promise.resolve() 静态方法将给定的值转换为一个 Promise。如果该值本身就是一个 Promise，那么该 Promise 将被返回；如果该值是一个 thenable 对象，Promise.resolve() 将调用其 then() 方法及其两个回调函数；否则，返回的 Promise 将会以该值兑现。
+
 ```javascript
 Promise.prototype.all = function (promises) {
 	let results = [];
@@ -470,56 +561,56 @@ Promise.prototype.all = function (promises) {
 ```js
 // 创建一个发布者对象
 class Publisher {
-  constructor() {
-    this.subscribers = {}; // 订阅者列表
-  }
+	constructor() {
+		this.subscribers = {}; // 订阅者列表
+	}
 
-  // 添加订阅者
-  subscribe(event, callback) {
-    if (!this.subscribers[event]) {
-      this.subscribers[event] = [];
-    }
-    this.subscribers[event].push(callback);
-  }
+	// 添加订阅者
+	subscribe(event, callback) {
+		if (!this.subscribers[event]) {
+			this.subscribers[event] = [];
+		}
+		this.subscribers[event].push(callback);
+	}
 
-  // 发布消息
-  publish(event, data) {
-    if (this.subscribers[event]) {
-      this.subscribers[event].forEach(callback => callback(data));
-    }
-  }
+	// 发布消息
+	publish(event, data) {
+		if (this.subscribers[event]) {
+			this.subscribers[event].forEach((callback) => callback(data));
+		}
+	}
 }
 
 // 创建一个订阅者对象
 class Subscriber {
-  constructor(name) {
-    this.name = name;
-  }
+	constructor(name) {
+		this.name = name;
+	}
 
-  // 订阅事件
-  subscribeTo(publisher, event) {
-    publisher.subscribe(event, data => {
-      console.log(`${this.name} 收到了消息：${event} - ${data}`);
-    });
-  }
+	// 订阅事件
+	subscribeTo(publisher, event) {
+		publisher.subscribe(event, (data) => {
+			console.log(`${this.name} 收到了消息：${event} - ${data}`);
+		});
+	}
 }
 
 // 测试
 const publisher = new Publisher();
-const subscriber1 = new Subscriber("Subscriber 1");
-const subscriber2 = new Subscriber("Subscriber 2");
+const subscriber1 = new Subscriber('Subscriber 1');
+const subscriber2 = new Subscriber('Subscriber 2');
 
-subscriber1.subscribeTo(publisher, "news");
-subscriber2.subscribeTo(publisher, "news");
+subscriber1.subscribeTo(publisher, 'news');
+subscriber2.subscribeTo(publisher, 'news');
 
-publisher.publish("news", "今天的新闻是...");
+publisher.publish('news', '今天的新闻是...');
 
 // 输出：
 // Subscriber 1 收到了消息：news - 今天的新闻是...
 // Subscriber 2 收到了消息：news - 今天的新闻是...
 ```
 
-#### vue3的事件总线处理类库mitt的源码
+#### vue3 的事件总线处理类库 mitt 的源码
 
 ```js
 /**
@@ -625,16 +716,19 @@ export default function mitt(all?: EventHandlerMap): Emitter {
   };
 }
 ```
+
 #### 延伸问题：观察者模式和订阅发布模式的区别
 
 > [观察者模式 vs 发布订阅模式](https://zhuanlan.zhihu.com/p/51357583)
 
 ## 数组转 Tree（两种方式）
 
+pid为父节点，id为当前节点
+
 #### 递归方式：
 
 ```javascript
-export const generateTree = (
+const generateTree = (
 	treeData,
 	props = {
 		pId: 'pId',
@@ -662,6 +756,21 @@ export const generateTree = (
 
 	return tmpTree;
 };
+const treeData = [
+	{ id: 1, name: 'Node 1', pId: null },
+	{ id: 2, name: 'Node 2', pId: 1 },
+	{ id: 3, name: 'Node 3', pId: 1 },
+	{ id: 4, name: 'Node 4', pId: 2 },
+	{ id: 5, name: 'Node 5', pId: 2 },
+	{ id: 6, name: 'Node 6', pId: 3 },
+	{ id: 7, name: 'Node 7', pId: 3 },
+	{ id: 8, name: 'Node 8', pId: 4 },
+	{ id: 9, name: 'Node 9', pId: 4 },
+	{ id: 10, name: 'Node 10', pId: 5 },
+];
+
+const tree = generateTree(treeData);
+console.log(tree);
 ```
 
 #### reduce 实现：
@@ -691,7 +800,9 @@ let result = Arr.reduce((prev, cur) => {
 // console.log(result)
 ```
 
-## 冒泡排序
+## 排序算法
+
+#### 冒泡排序：
 
 ```javascript
 function pop(array) {
@@ -712,9 +823,26 @@ function pop(array) {
 	}
 	return [result, array];
 }
+
+// 这种写法容易理解点
+function bubbleSort(arr) {
+	const len = arr.length;
+	for (let i = 0; i < len - 1; i++) {
+		// 内层循环，每次比较相邻的两个元素
+		for (let j = 0; j < len - 1 - i; j++) {
+			if (arr[j] > arr[j + 1]) {
+				// 如果前一个元素大于后一个元素，则交换它们的位置
+				const temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+	return arr;
+}
 ```
 
-## 插入排序
+#### 插入排序：
 
 ```javascript
 function insert(array) {
@@ -741,7 +869,9 @@ function insert(array) {
 }
 ```
 
-## 快速排序
+#### 快速排序：
+
+感觉是最好理解的一种排序🤣，一分为二取中间的值比较大小，然后分两边！
 
 ```javascript
 function quickSort(arr) {
@@ -764,6 +894,12 @@ function quickSort(arr) {
 }
 ```
 
-## 各种排序算法以及解析
+参考：
+
+> [算法的时间与空间复杂度（一看就懂）](https://zhuanlan.zhihu.com/p/50479555)
 
 > [十大排序算法总结](https://zhuanlan.zhihu.com/p/378430869)
+
+## 广度优先与深度优先算法
+
+> [JS 深度优先遍历和广度优先遍历](https://juejin.cn/post/6882627409393221646)

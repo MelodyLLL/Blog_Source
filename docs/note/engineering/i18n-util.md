@@ -16,6 +16,15 @@
 
 <img src="https://cdn.jsdelivr.net/gh/MelodyLLL/cdnImg/myImg/screenshot1.png" style="zoom:65%;display:block;margin:0 auto"/>
 
+## 开发 vscode 插件的流程
+
+1. 使用 yeoman 脚手架工具生成项目
+2. package.json 中配置插件名称等，这里 activationEvents 比较重要，表示激活插件等时机
+3. extension.js 是开发的核心文件，这里导出 active 和 deactive 两个方法，代表在插件激活和禁用时运行
+4. 可以从 const vscode = require('vscode') vscode 的包中调用很多重要的 api，如判断是否双击激活插件
+
+## 插件代码
+
 插件实现的核心代码
 
 ```js

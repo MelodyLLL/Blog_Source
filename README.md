@@ -1,1 +1,1 @@
-# one blog of melodyLLL, is live at kangkang.fun!
+# one blog of melodyLLL, is live at ljq666.com

@@ -352,9 +352,9 @@ return result instanceof Object ? result : obj;
 
 ## JS 垃圾回收
 
-问的概率不大
+问的概率不大（真的有公司会问！），与内存泄漏一起问
 
-> [Javascript 的垃圾回收机制总结 - zzzlight - 博客园](https://www.cnblogs.com/zzzlight/articles/16566806.html)
+> [JavaScript的内存是怎么进行管理的](https://noneed.me/subject/6606bd466fbfbad8b62f9e90?typeId=0&levelId=0)
 
 ## setTimeOut 与 setInterval 的区别？
 

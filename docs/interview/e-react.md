@@ -19,11 +19,11 @@ vue 的一大特色，实际上也是它好上手的原因之一，Vue2 响应�
 
 1. 只做同层级比较
 2. 类型不同即删除，这里的类型 react 比较的是 Class 类，vue 比较的是组件的 name 或者 slot 等等。这是一个不同的地方
-3. 二者都利用key减少不必要的创建删除
+3. 二者都利用 key 减少不必要的创建删除
 
-同层级的diff比较
+同层级的 diff 比较
 
-这里vue2中采用了双端指针比较的方式，而react则是从左往右依次比较。另外vue3中加入了最长增长子序列的方式来进一步优化算法，而且利用template的优势，在编译时标记了一些静态节点跳过diff。
+这里 vue2 中采用了双端指针比较的方式，而 react 则是从左往右依次比较。另外 vue3 中加入了最长增长子序列的方式来进一步优化算法，而且利用 template 的优势，在编译时标记了一些静态节点跳过 diff。
 
 **核心思想：**
 
@@ -131,6 +131,8 @@ console.log(state); // Subsequent-render: ['Rudi', 'Yardley']
 
 > [React Fiber 是什么?](https://zhuanlan.zhihu.com/p/297971861)
 
+> [React 的双缓存 Fiber 树](https://react.iamkasong.com/process/doubleBuffer.html#%E5%8F%8C%E7%BC%93%E5%AD%98-fiber-%E6%A0%91)
+
 ## hooks 与 HOC
 
 逻辑抽离，然后会问如何抽离，和 HOC 的区别
@@ -141,12 +143,39 @@ console.log(state); // Subsequent-render: ['Rudi', 'Yardley']
 
 ## setState 的执行时机与同步异步
 
-在生命周期、事件触发等情况下，连续的 setState 并不会马上更新值，而是批量更新
-在 setTimeout 类似的回调中则会同步更新，性能差很多
-batchedUpdate 机制
+setState 只在合成事件和钩子函数中是“异步”的，在原生事件和 setTimeout 中都是同步的(这一点在 react18 后有变更)
+
+合成事件：就是 react 在组件中的 onClick 等都是属于它自定义的合成事件。
+
+原生事件：比如通过 addeventListener 添加的 dom 中的原生事件。
 
 > [Component State – React](https://zh-hans.reactjs.org/docs/faq-state.html#when-is-setstate-asynchronous)
 
 ## 对 redux 的理解
 
 > [完全理解 redux（从零实现一个 redux） · Issue #22 · brickspert/blog](https://github.com/brickspert/blog/issues/22)
+
+## 简述下 setState 后发生了什么
+
+1. 调度更新
+   当 setState 被调用时，React 首先将这个更新操作加入到一个内部的更新队列中。这个更新队列是异步的，意味着多个 setState 调用可以被合并为一个更新操作以提高性能。这也解释了为什么 setState 操作可能不会立即反映到组件状态上。
+
+2. 更新合并
+   React 会对等待中的状态更新进行合并（如果有多个 setState 被调用）。这意味着如果你多次调用 setState，React 可能会把这些更新合并成一个更新来处理，以减少不必要的渲染和性能损耗。
+
+3. 触发重新渲染
+   更新合并完成后，React 将开始重新渲染过程。首先，React 会通过新的状态计算组件的新的渲染输出。这一步涉及到调用组件的 render 方法来获取最新的渲染输出（JSX）。需要注意的是，在这个阶段，DOM 还没有被更新。
+
+4. 调用生命周期方法和 Hooks
+   对于类组件，如果定义了 shouldComponentUpdate 方法，React 会调用它来决定是否需要继续更新过程。如果 shouldComponentUpdate 返回 false，更新过程将停止。
+   对于使用了 Hooks 的函数组件，React 会在这个阶段处理 useEffect 等 Hooks。
+5. Diff 算法对比差异
+   React 接下来会将新的渲染输出（虚拟 DOM）与上一次的渲染输出进行比较。通过这种方式，React 能够确定实际 DOM 需要做哪些具体的更改。
+
+6. 更新 DOM
+   根据虚拟 DOM 的比较结果，React 知道了需要对真实 DOM 做哪些更改。接下来，React 会批量更新 DOM，这个步骤被设计得尽可能高效，以最小化对性能的影响。
+
+7. 调用生命周期方法和 Hooks（更新完成后）
+   对于类组件，React 将调用 componentDidUpdate 方法，表明组件已经完成更新。
+   对于函数组件，通过 useEffect 等 Hooks，React 允许你在组件更新后执行副作用操作。
+   通过上述步骤，React 确保了组件状态的更新能够高效且正确地反映到用户界面上。这个过程体现了 React 的声明式编程模型，开发者只需关注状态的管理，而不用手动操作 DOM。

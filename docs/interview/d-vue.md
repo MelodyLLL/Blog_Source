@@ -4,6 +4,28 @@
 
 MVVM 是 Model-View-ViewModel 缩写，Model 代表数据模型，View 代表 UI 组件，ViewModel 是 View 和 Model 的桥梁，数据会绑定到 ViewModel 层并自动将数据渲染到页面中，视图变化时会通知 ViewModel 层更新数据。
 
+## Vue 的 data 重新赋值后发生了什么？
+
+1. 数据劫持：
+
+Vue 2 使用 Object.defineProperty，Vue 3 使用 Proxy 对 data 进行劫持，监听数据的变化。
+
+2. 触发 setter：
+
+当你重新赋值 data 时，Vue 会触发 setter 方法，通知系统数据发生了变化。
+
+3. 依赖收集与派发更新：
+
+Vue 会找到所有依赖该数据的组件或计算属性，并标记它们为“需要更新”。Vue 2 通过 Watcher 机制，Vue 3 通过 Effect 机制来实现依赖收集和派发更新。
+
+4. 虚拟 DOM 更新：
+
+Vue 会生成新的虚拟 DOM 树，并通过 diff 算法对比新旧虚拟 DOM 的差异。Vue 2 使用双端比较算法，Vue 3 使用最长递增子序列算法来优化 diff 过程。
+
+5. DOM 更新：
+
+根据 diff 结果，Vue 会将变更应用到真实 DOM 上。更新完成后，Vue 会触发相关的生命周期钩子（如 updated）。
+
 ## vue 的双向绑定原理
 
 1. 初始化 data，做两件事情，一把 vm.data.xxx 代理到 vm.xxx，二调用 observe 方法观测整个 data，给非 VNode 的对象类型数据添加一个 Observer

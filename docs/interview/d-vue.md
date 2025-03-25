@@ -4,6 +4,16 @@
 
 MVVM 是 Model-View-ViewModel 缩写，Model 代表数据模型，View 代表 UI 组件，ViewModel 是 View 和 Model 的桥梁，数据会绑定到 ViewModel 层并自动将数据渲染到页面中，视图变化时会通知 ViewModel 层更新数据。
 
+## vue 生命周期简述
+
+- beforeCreate 是 new Vue()之后触发的第一个钩子，在当前阶段 data，computed，methods 以及 watch 上的数据和方法都不能被触发。
+- created 在实例创建完成后发生，这个阶段可以使用数据，更改数据，但不会触发 update 函数，无法与 Dom 进行交互。
+- mounted 在挂载完成后发生，数据完成双向绑定，可以访问到 Dom 节点，使用$ref 属性对 Dom 进行操作。
+- beforeUpdate 发生在更新之前，响应式数据发生更新，虚拟 Dom 被渲染之前
+- updated 发生在更新完成之后，Dom 更新完成
+- beforeDestroy 发生在实例销毁之前，可以清除定时器。
+- destroyed 发生在实例销毁之后，这个时候 Dom 是空的，组件被拆解，数据绑定被卸除，监听被移除，子实也 都销毁。
+
 ## Vue 的 data 重新赋值后发生了什么？
 
 1. 数据劫持：
@@ -76,17 +86,10 @@ $set方法相当于手动的去把set进去的属性处理成一个响应式的�
 ## name 的作用？
 
 1.注册组件使用组件名.name
-2.keep-alive exclude=‘name’ 3.使用 vue-tool 工具时显示的是 name
 
-## vue 生命周期简述
+2.keep-alive exclude=‘name’ 
 
-- beforeCreate 是 new Vue()之后触发的第一个钩子，在当前阶段 data，computed，methods 以及 watch 上的数据和方法都不能被触发。
-- created 在实例创建完成后发生，这个阶段可以使用数据，更改数据，但不会触发 update 函数，无法与 Dom 进行交互。
-- mounted 在挂载完成后发生，数据完成双向绑定，可以访问到 Dom 节点，使用$ref 属性对 Dom 进行操作。
-- beforeUpdate 发生在更新之前，响应式数据发生更新，虚拟 Dom 被渲染之前
-- updated 发生在更新完成之后，Dom 更新完成
-- beforeDestroy 发生在实例销毁之前，可以清除定时器。
-- destroyed 发生在实例销毁之后，这个时候 Dom 是空的，组件被拆解，数据绑定被卸除，监听被移除，子实也 都销毁。
+3.使用 vue-tool 工具时显示的是 name
 
 ## proxy 只会代理对象的第一层，vue3 是怎么解决这个问题？
 
@@ -160,7 +163,7 @@ new Vue({
 }).$mount('#app');
 ```
 
-## vue 中的性能优化有哪些
+## 简述 vue 中的性能优化有哪些
 
 编码阶段：
 

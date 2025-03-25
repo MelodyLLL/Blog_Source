@@ -110,6 +110,33 @@ iOS 和 Android 在处理日期和时间格式上可能存在差异，因此需�
 
 ## 结合实际说说webpack调优
 
+### 1. 减少打包体积
+
+- **代码分割**：使用 `SplitChunksPlugin` 插件，将代码拆分成更小的块，以便更好地利用浏览器缓存。
+- **Tree Shaking**：确保使用 ES6 模块语法，启用 `mode: 'production'`，移除未使用的代码。
+- **压缩代码**：使用 `TerserPlugin` 压缩 JavaScript，使用 `cssnano` 压缩 CSS。
+- **图片优化**：使用 `image-webpack-loader` 对图片进行压缩和优化。
+
+### 2. 提升打包速度
+
+- **多线程/多进程构建**：使用 `thread-loader` 和 `parallel-webpack` 等插件，利用多核 CPU 提升构建速度。
+- **缓存**：使用 `cache-loader` 或者 `hard-source-webpack-plugin` 缓存构建结果，减少重复构建时间。
+- **缩小构建范围**：通过 `include` 和 `exclude` 选项限制 `loader` 的处理范围，减少不必要的文件处理。
+
+### 3. 优化开发体验
+
+- **热模块替换（HMR）**：使用 `HotModuleReplacementPlugin` 实现模块热替换，提升开发效率。
+- **快速重建**：使用 `webpack-dev-server` 提供快速的开发服务器，支持实时重载和模块热替换。
+- **Source Maps**：在开发模式下启用 `source-map`，方便调试代码。
+
+### 4. 其他优化
+
+- **DLLPlugin**：使用 `DLLPlugin` 和 `DLLReferencePlugin` 预编译第三方库，减少构建时间。
+- **按需加载**：使用 `import()` 动态引入模块，实现按需加载，减少初始加载时间。
+- **分析工具**：使用 `webpack-bundle-analyzer` 分析打包结果，找出体积较大的模块进行优化。
+
+通过以上方法，可以有效提升 webpack 的打包性能和开发体验。
+
 ## 你们埋点是怎么实现的
 
 直接接第三方服务商 😂

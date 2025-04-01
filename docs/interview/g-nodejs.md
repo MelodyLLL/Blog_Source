@@ -1,6 +1,6 @@
 # NodeJS 和服务器
 
-## js模块导出的两种方式？
+## js 模块导出的两种方式？
 
 在 Node.js 中，有两种主要的导出模块的方式：CommonJS 和 ES6 的导出方式。下面是它们的主要区别：
 
@@ -52,47 +52,139 @@ ES6 模块系统更加现代化，支持静态分析和 tree-shaking，有助于
 
 ## 知道洋葱模型吗？
 
-在 Koa 中，洋葱模型是一种中间件的执行模式。中间件被组织成类似于洋葱层层叠加的结构，请求和响应通过这些中间件的层层处理，最终到达应用程序的核心。在请求阶段，请求对象从外向内穿过中间件，每个中间件都有机会对请求进行处理。洋葱核心是整个应用的主要业务逻辑。在响应阶段，响应对象从内向外穿过中间件，每个中间件同样有机会对响应进行处理。中间件的异步特性使得在其中可以方便地执行异步操作，使得代码结构更加清晰和易于维护。洋葱模型提供了一种优雅而灵活的方式来组织和管理中间件，是 Koa 框架的一个显著特点。
+洋葱模型是 Koa 中间件执行流程的核心机制，它实现了请求从外到内、再从内到外依次通过所有中间件的处理过程。下面详细解析其实现原理。
+
+1. 洋葱模型的基本概念
+   洋葱模型形象地描述了请求处理的流程：
+
+进入阶段：请求从第一个中间件开始，依次通过各个中间件，直到最内层
+
+返回阶段：从最内层中间件开始，逆序返回经过各个中间件，直到第一个中间件结束
+
+2. 核心实现机制
+   2.1 中间件的组合（compose）
+   Koa 使用 koa-compose 模块将多个中间件组合成一个函数：
+
+```js
+function compose(middleware) {
+	return function (context, next) {
+		let index = -1;
+		return dispatch(0);
+
+		function dispatch(i) {
+			if (i <= index)
+				return Promise.reject(new Error('next() called multiple times'));
+			index = i;
+			let fn = middleware[i];
+			if (i === middleware.length) fn = next;
+			if (!fn) return Promise.resolve();
+			try {
+				return Promise.resolve(fn(context, dispatch.bind(null, i + 1)));
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		}
+	};
+}
+```
+
+2.2 执行流程解析
+
+以一个包含 3 个中间件的应用为例：
 
 ```js
 const Koa = require('koa');
-
 const app = new Koa();
 
 // 中间件1
 app.use(async (ctx, next) => {
-	console.log('Middleware 1 - Request Phase');
+	console.log('1-start');
 	await next();
-	console.log('Middleware 1 - Response Phase');
+	console.log('1-end');
 });
 
 // 中间件2
 app.use(async (ctx, next) => {
-	console.log('Middleware 2 - Request Phase');
+	console.log('2-start');
 	await next();
-	console.log('Middleware 2 - Response Phase');
-});
-
-// 洋葱核心
-app.use(async (ctx, next) => {
-	console.log('Onion Core - Request Phase');
-
-	// 模拟异步操作
-	await new Promise((resolve) => setTimeout(resolve, 1000));
-
-	console.log('Onion Core - Response Phase');
-	await next();
+	console.log('2-end');
 });
 
 // 中间件3
-app.use(async (ctx, next) => {
-	console.log('Middleware 3 - Request Phase');
-	await next();
-	console.log('Middleware 3 - Response Phase');
+app.use(async (ctx) => {
+	console.log('3');
+	ctx.body = 'Hello';
 });
 
-app.listen(3000, () => {
-	console.log('Server is running on http://localhost:3000');
+app.listen(3000);
+```
+
+执行顺序：
+
+```shell
+1-start
+2-start
+3
+2-end
+1-end
+```
+
+2.3 执行流程详解
+请求进入时，执行第一个中间件：
+
+执行 console.log('1-start')
+
+遇到 await next()，暂停当前中间件，进入下一个中间件
+
+执行第二个中间件：
+
+执行 console.log('2-start')
+
+遇到 await next()，暂停当前中间件，进入下一个中间件
+
+执行第三个中间件：
+
+执行 console.log('3')
+
+没有 next()，中间件执行完毕，开始返回
+
+返回到第二个中间件：
+
+继续执行 await next() 之后的代码：console.log('2-end')
+
+返回到第一个中间件：
+
+继续执行 await next() 之后的代码：console.log('1-end')
+
+3. 关键实现细节
+
+3.1 next 函数的作用
+每个中间件接收的 next 参数实际上是下一个中间件的包装函数。调用 next() 就是执行下一个中间件。
+
+3.2 Promise 链
+Koa2 使用 Promise 链来管理中间件的执行顺序：
+
+每个中间件都被包装成 Promise
+
+await next() 会等待下一个中间件的 Promise 解析完成
+
+这使得中间件可以按顺序执行，并且能正确处理异步操作
+
+3.3 错误处理
+洋葱模型的错误处理也是按照洋葱顺序：
+
+可以在中间件中使用 try/catch 捕获下游中间件的错误
+
+错误会沿着中间件链反向传播
+
+```js
+app.use(async (ctx, next) => {
+	try {
+		await next();
+	} catch (err) {
+		ctx.status = 500;
+		ctx.body = 'Internal Server Error';
+	}
 });
 ```
 

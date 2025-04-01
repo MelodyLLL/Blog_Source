@@ -79,15 +79,11 @@ Vue 会生成新的虚拟 DOM 树，并通过 diff 算法对比新旧虚拟 DOM 
 - getter
 - module（模块化 vuex）
 
-## $set 方法是什么
-
-$set方法相当于手动的去把set进去的属性处理成一个响应式的属性。this.$set(this.obj, 'b', 'obj.b')
-
 ## name 的作用？
 
 1.注册组件使用组件名.name
 
-2.keep-alive exclude=‘name’ 
+2.keep-alive exclude=‘name’
 
 3.使用 vue-tool 工具时显示的是 name
 
@@ -107,10 +103,16 @@ $set方法相当于手动的去把set进去的属性处理成一个响应式的�
 
 原生事件绑定是通过 addEventListener 绑定给真实元素的，组件事件绑定是通过$on 实现的。
 
-## hash 路由和 history 的实现原理
+## hash 路由和 history 的对比
 
-location.hash 的值实际就是 URL#后面的东西
-history 实际采用了 HTML5 中的提供的 API 来实现，主要有 history.pushState()和 history.replaceState().
+| 对比项     | Hash 路由                      | History 路由                       |
+| ---------- | ------------------------------ | ---------------------------------- |
+| URL 格式   | `http://example.com/#/path`    | `http://example.com/path`          |
+| 底层 API   | `location.hash` + `hashchange` | `history.pushState()` + `popstate` |
+| 页面刷新   | 不会刷新                       | 不会刷新（但需服务器支持）         |
+| SEO 支持   | 不支持                         | 支持                               |
+| 兼容性     | IE8+                           | IE10+                              |
+| 服务器要求 | 无需配置                       | 需配置所有路径返回 `index.html`    |
 
 ## vue2.x 和 vue3.x 渲染器的 diff 算法:
 
@@ -121,12 +123,6 @@ diff 算法有以下过程：
 比较都有子节点的情况，递归的比较子节点。
 vue2 的核心 Diff 算法采用了双端比较的算法，同时从新旧 children 的两端开始进行比较，借助 key 找到可以复用的节点，在进行相关操作。
 vue3 在创建 VNode 的时候就确定其类型，在 patch 的过程中采用位运算来判断一个 VNode 的类型，再配合核心 diff 算法。
-
-## keep-alive 使用和原理
-
-keep-alive 可以实现组件缓存，当组件切换时不会对组件进行卸载。
-常用的两个属性 include/exclude，允许组件有条件的进行缓存。
-两个生命周期 activated/deactivated，用来判断当前组件是否处于活跃状态。
 
 ## vue 中组件生命周期的调用顺序
 

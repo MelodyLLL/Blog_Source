@@ -2,7 +2,9 @@
 
 ## webpack 基本配置
 
-公司的 web 项目构建工具还是使用的 webpack3，热更新功能时好时坏，配置也比较混乱，而且无法使用 babel7 解析 es11 的一些语法。本次记录下关于 webpack 的一次升级。
+公司的 web 项目构建工具还是使用的 webpack3，热更新功能时好时坏，配置也比较混乱，而且无法使用 babel7 解析 es11 的一些语法。
+以及如 webpack5 的一些强大特性 splitChunks 也无法使用(虽然 3 的 CommonsChunkPlugin 也可以拆分，但是它需要额外引入一些差距，其配置比较复杂，也不支持细粒度的配置，而且不支持 webpack runtimechunk 的拆分)，
+本次记录下关于 webpack 的一次升级。
 
 首先是基本的 webpack5 大核心模块 **_entry、output、module、plugins、mode_**
 
@@ -198,6 +200,18 @@ rm(
 
 除了这些基础模块，其他如 resolve,devtool,devServer 也都有相应的参数变化。尤其是新增的 optimization 模块
 
+## 关于升级的一些测试保障
+
+- 渐进式升级：先在开发环境验证，再推送到测试环境，可以搭建 test2 环境进行一个中长期的验证。
+
+- 对比构建产物：用 webpack-bundle-analyzer 分析新旧版本的包差异，查看升级是否真的生效以及各个包的情况。
+
+- 回滚预案：通过 Git 分支保留旧版配置，随时可回退。
+
+- 复制出新的文件，防止影响老代码的改动
+
+- 阿里云的一些监控，监控是否有 js 报错等
+
 ## babel 配置
 
 babel7 的改变比较大，最明显的是包名的变化，v7 的包名都变成了@babel/xxx，参考[官方指南](https://babeljs.io/docs/v7-migration)，里面有提到 babel-upgrade 工具可进行自动升级，会替换`package.json` 与`.babelrc`中的配置，参考文档可以看到 @babel/preset-env 替换了之前零散的预设，Stage Preset 包 和 polyfill 的引入也进行了变更。<font color="#dd0000">另外要注意 babel-plugin-transform-vue-jsx 对 babel7 的适配，因为有可能出现相关的报错。</font>看到 [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) 推荐的是 v4.x 的版本
@@ -210,4 +224,4 @@ babel7 的改变比较大，最明显的是包名的变化，v7 的包名都变�
 - 还有一些关于 postcss scss 相关的变化，mac 可能会因为 node-sass 版本原因出现诸如此类的报错
   ::: danger
   Node Sass does not yet support your current environment: OS X Unsupported architecture (arm64) with Unsupported runtime (102)
-  ::: 
+  :::

@@ -23,7 +23,7 @@ features:
     details: code farmer in guangzhou
   - title: Contact Me
     details: make a friend with me, wx number is amazing-melody
-footer: MIT Licensed | Copyright © 2024-present MelodyLLL
+footer: MIT Licensed | Copyright © 2023-present MelodyLLL
 ---
 
 ```vue

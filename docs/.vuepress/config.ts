@@ -10,14 +10,6 @@ const REPO = '/MelodyLLL_BLOG/';
 export default defineUserConfig({
 	head: [
 		['link', { rel: 'icon', href: `/images/avator.webp` }],
-		// [
-		// 	'link',
-		// 	{
-		// 		rel: 'stylesheet',
-		// 		href: 'https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css',
-		// 		media: 'all',
-		// 	},
-		// ],
 	],
 	pagePatterns: ['**/*.md', '!.vuepress', '!node_modules','!**/_*.md'],
 	lang: 'zh-CN',

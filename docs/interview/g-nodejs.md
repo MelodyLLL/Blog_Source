@@ -192,3 +192,83 @@ app.use(async (ctx, next) => {
 
 ssr 也就是服务端渲染，也就是把 vue 在客户端把标签渲染成 HTML·的工作放在服务端完成，然后再把 html 直接返回给客户端。
 服务器渲染只支持 created 和 beforeCreated 两个钩子，ssr 有着更好的 seo，首屏加载速度更快。
+
+## nginx 常用配置
+
+**主配置文件（通常位于 /etc/nginx/nginx.conf 或 /etc/nginx/sites-enabled/default）**
+
+### 单域名部署多项目
+
+- root：用于定义基础路径，请求的 URI 会直接拼接到 root 指定的目录后。
+- alias：用于路径替换，匹配的 location 路径（如 /test）会被替换为 alias 指定的目录。
+
+- 子域名配置
+
+```bash
+server {
+    listen 80;
+    server_name admin.example.com;  # 子域名1
+    root /var/www/admin-project/dist;  # 项目1的打包目录
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;  # 支持前端路由（如Vue/React的history模式）
+    }
+}
+
+server {
+    listen 80;
+    server_name app.example.com;    # 子域名2
+    root /var/www/app-project/dist; # 项目2的打包目录
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+- 多路径映射
+
+```bash
+location /test {
+    alias /www/test_web/dist;
+    index index.html;
+    try_files $uri $uri/ /index.html;
+}
+
+location / {
+    root /www/web/dist;
+    index index.html;
+    try_files $uri $uri/ /index.html;
+}
+```
+
+### GZIP 压缩
+
+```bash
+gzip on;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+gzip_min_length 1k;
+```
+
+### 静态文件缓存
+
+```bash
+location /static/ {
+    alias /var/www/app-project/dist/static/;
+    expires 1y;  # 长期缓存
+    add_header Cache-Control "public";
+}
+```
+
+### 证书配置
+
+```bash
+server {
+    listen 443 ssl;
+    server_name admin.example.com;
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+}
+```

@@ -17,19 +17,12 @@ const sidebar: SidebarConfig = {
 		{
 			text: '前端工程化笔记',
 			// collapsible: true,
-			children: [
-				'/note/engineering/Engineering1.md',
-				'/note/engineering/Engineering2.md',
-				'/note/engineering/Engineering3.md',
-				'/note/engineering/Engineering4.md',
-        '/note/engineering/Engineering5.md',
-        '/note/engineering/i18n-util.md',
-			],
-		},
-	],
-	'/note/typescript/': [
-		{
-			text: 'Typescript笔记',
+      children: Array.from({ length: 7 }, (_, i) => `/note/engineering/Engineering${i + 1}.md`)
+    },
+  ],
+  '/note/typescript/': [
+    {
+      text: 'Typescript笔记',
 			// collapsible: true,
 			children: ['/note/typescript/Typescript1.md'],
 		},

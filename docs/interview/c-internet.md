@@ -1,5 +1,28 @@
 # 浏览器和网络相关
 
+## 网络模型结构
+
+OSI 模型（Open Systems Interconnection）是国际标准化组织提出的通用通信模型，分为七层：
+
+| 层级 | 名称       | 作用简述                    |
+| ---- | ---------- | --------------------------- |
+| 7    | 应用层     | 直接面向用户，如 HTTP、FTP  |
+| 6    | 表示层     | 编码/加密/压缩，如 TLS、SSL |
+| 5    | 会话层     | 建立/管理/终止会话，如 RPC  |
+| 4    | 传输层     | 端到端传输控制，如 TCP/UDP  |
+| 3    | 网络层     | 路由选择与逻辑寻址，如 IP   |
+| 2    | 数据链路层 | 物理寻址，帧传输，如以太网  |
+| 1    | 物理层     | 比特流传输，接头接线等      |
+
+TCP/IP 模型是互联网协议基础，更贴近真实网络实现，分为四层：
+
+| 层级 | 名称       | 包含的协议（示例）       |
+| ---- | ---------- | ------------------------ |
+| 4    | 应用层     | HTTP、FTP、SMTP、DNS     |
+| 3    | 传输层     | TCP、UDP                 |
+| 2    | 网络层     | IP、ICMP、ARP            |
+| 1    | 网络接口层 | 以太网、Wi-Fi 等链路协议 |
+
 ## axios、fetch、ajax 区别
 
 Ajax、Axios 和 Fetch 都是用于发送 HTTP 请求的工具，但它们有一些区别：
@@ -36,6 +59,22 @@ CDN 是指内容分发网络，也称内容传送网络，是主要应用内容�
 引申问题，处理 cdn 缓存刷新问题
 
 > [阿里云 cdn 的配置](https://help.aliyun.com/zh/cdn/user-guide/add-a-cache-rule)
+
+## 如何查看DNS缓存
+
+win
+
+```bash
+ipconfig /displaydns
+ipconfig /flushdns
+```
+
+mac
+
+```bash
+sudo dscacheutil -cachedump -entries
+sudo killall -HUP mDNSResponder
+```
 
 ## 关于跨域
 
@@ -106,9 +145,18 @@ HTTP/1.1 新增字段，表示文件唯一标识，只要文件内容改动，ET
 
 - ETag 比 Last-Modified 更准确：如果我们打开文件但并没有修改，Last-Modified 也会改变，并且 Last-  Modified 的单位时间为一秒，如果一秒内修改完了文件，那么还是会命中缓存如果什么缓存策略都没有设置，那么浏览器会取响应头中的 Date 减去 Last-Modified 值的 10% 作为缓存时间
 
-## 输入网址后页面的渲染过程？⭐️
+## 输入 url 到页面渲染发生了什么？⭐️
 
-多结合网上知识整合
+多结合网上知识整合，下面是一个简述
+
+1. 域名解析（DNS），拿到目标服务器的 IP 地址；
+2. 建立连接（TCP + TLS），若是 HTTPS，还需进行 TLS 握手（对称加密 + 非对称加密 + 证书校验）；
+3. 服务端处理请求，返回 HTML 页面；
+4. 浏览器解析 HTML，构建 DOM 树；
+5. 浏览器解析 CSS，构建 CSSOM 树（css 解析优先度高，会阻塞 js 执行，但不会阻塞 DOM 构建，JS 会阻塞 DOM 构建，所以一般放到最后或者异步使用）；
+6. 浏览器将 DOM + CSSOM 合并生成 Render Tree（不包含 display: none 的节点）；
+7. 浏览器根据 Render Tree 计算每个节点的几何信息（位置、大小），将每个节点绘制到屏幕（Paint）；
+8. 如果有复杂图层，会进入合成（Compositing）阶段，如使用了 transform、position: fixed 等
 
 描述并不是很明确
 

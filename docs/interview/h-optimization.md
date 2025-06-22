@@ -30,6 +30,7 @@ rem 是一个相对于页面根元素 html 的 font-size 的一个单位，举�
 
 在高密度屏幕上（如 Retina 屏幕），1 像素的线可能看起来过于细，影响视觉效果。解决方法包括：
 
+- 媒体查询 + transform缩放（最常用方案）
 - 使用 CSS `border` 的 `dpr` 属性来处理 Retina 屏幕下的 1px 问题。
 - 使用伪类元素 `::after` 或 `::before` 来创建半透明边框，从而模拟出 1px 的效果。
 - 使用 JavaScript 来动态计算设备像素比（devicePixelRatio），并设置相应的样式。

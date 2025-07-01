@@ -167,13 +167,11 @@ console.log(s.language); // undefined
 
 ## JS 的 Event Loop 机制
 
-JavaScript 是单线程的，异步任务的调度依赖于 **事件循环（Event Loop）** 机制。事件循环将任务分为 **宏任务（Macrotask）** 和 **微任务（Microtask）** 两类，执行顺序如下：
+JavaScript 是单线程的，异步任务的调度依赖于 **事件循环（Event Loop）** 机制。事件循环将任务分为 **宏任务（Macrotask）** 和 **微任务（Microtask）** 两类。有如下重点需要理解：
 
-1. 执行同步代码（主线程）。
-2. 执行当前宏任务。
-3. 当前宏任务完成后，立即清空所有微任务队列。
-4. 进入下一个宏任务。
-5. 每轮循环可能还会触发 DOM 渲染。
+1. 没有 js 线程的说法，都是在渲染主线程上进行，可以说：主线程包含 JS 引擎执行上下文，与渲染任务（Style/Layout/Paint）互斥运行
+2. 宏任务和微任务都有可能依赖其他线程，如网络线程，但是回调一定都是由主线程执行。主线程执行 js 同步任务，遇到宏任务或者微任务放入对应的队列，等待主线程空闲时，执行队列中的任务。
+3. 为什么微任务优先级高？这是浏览器定义的标准，类似 Promise 的状态变更（.then()/.catch()）、MutationObserver 的 DOM 变更通知都是属于高优先级，轻量级的异步操作。
 
 ### 常见任务类型
 
@@ -191,8 +189,8 @@ console.log('start');
 setTimeout(() => console.log('timeout'), 0);
 
 Promise.resolve()
-  .then(() => console.log('microtask1'))
-  .then(() => console.log('microtask2'));
+	.then(() => console.log('microtask1'))
+	.then(() => console.log('microtask2'));
 
 console.log('end');
 ```
@@ -206,13 +204,6 @@ microtask1
 microtask2
 timeout
 ```
-
-### 说明
-
-- `Promise` 的 `.then` 回调（微任务）比 `setTimeout`（宏任务）优先执行。
-- 所有微任务执行完后，才会进入下一个宏任务队列。
-
-这种机制让我们可以更精细地控制异步执行的时机，例如：在 UI 更新前批量处理任务、控制并发逻辑等。
 
 > 更多参考：[2 分钟了解 JavaScript Event Loop | 面试必备\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1kf4y1U7Ln?from=search&seid=17290685586591017592)
 

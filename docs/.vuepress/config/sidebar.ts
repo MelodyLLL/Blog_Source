@@ -17,7 +17,7 @@ const sidebar: SidebarConfig = {
 		{
 			text: '前端工程化笔记',
 			// collapsible: true,
-      children: Array.from({ length: 7 }, (_, i) => `/note/engineering/Engineering${i + 1}.md`)
+      children: Array.from({ length: 8 }, (_, i) => `/note/engineering/Engineering${i + 1}.md`)
     },
   ],
   '/note/typescript/': [
